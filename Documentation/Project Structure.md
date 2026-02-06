@@ -17,7 +17,7 @@ Example repo:
 
 ### Do not put personal Unity experiments in the git repository. Try to keep file sizes down and do not add unnecessary files.
 
-## 1.2 Asset Folder Strructure
+## 1.2 Asset Folder Structure
 
 Example asset folder:
 
