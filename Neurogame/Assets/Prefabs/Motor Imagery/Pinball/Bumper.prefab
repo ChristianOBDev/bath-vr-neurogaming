@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BumperForce
-  repulsionForce: 50
+  repulsionForce: 10
   upwardForce: 20
   forceDuration: 0.15
   burstOnContact: 1
