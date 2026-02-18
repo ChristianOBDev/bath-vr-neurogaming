@@ -362,11 +362,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KickerForce
   inputRouter: {fileID: 1553480281}
   isLeftKicker: 1
-  launchForce: 100
+  launchForce: 50
   lateralInfluence: 0.25
   minLaunchAngle: 70
   maxUpwardVelocity: 4.5
   graduatedForce: 1
+  forwardDirection: {x: 0, y: 0, z: 1}
 --- !u!1 &41013352
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,12 +494,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KickerForce
   inputRouter: {fileID: 1553480281}
-  isLeftKicker: 1
-  launchForce: 100
+  isLeftKicker: 0
+  launchForce: 50
   lateralInfluence: 0.25
   minLaunchAngle: 70
   maxUpwardVelocity: 4.5
   graduatedForce: 1
+  forwardDirection: {x: 0, y: 0, z: 1}
 --- !u!1 &73808061
 GameObject:
   m_ObjectHideFlags: 0
@@ -14889,8 +14891,8 @@ Transform:
   m_GameObject: {fileID: 1832245998}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 11}
-  m_LocalScale: {x: 8, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 21.383, z: 11}
+  m_LocalScale: {x: 17.2312, y: 43.7661, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2066972514}
@@ -14922,7 +14924,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

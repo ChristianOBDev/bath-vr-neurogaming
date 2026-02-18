@@ -28,6 +28,10 @@ public class KickerForce : MonoBehaviour
     [Tooltip("If false, force is always max when active")]
     public bool graduatedForce = true;
 
+    [Header("Launch Direction")]
+    [Tooltip("Unit vector pointing from kicker toward the waterfall")]
+    public Vector3 forwardDirection = Vector3.forward;
+
     private Rigidbody currentBalloon;
 
     void OnCollisionEnter(Collision collision)
@@ -55,40 +59,30 @@ public class KickerForce : MonoBehaviour
         if (strength <= 0f)
             return;
 
-        // Base upward direction
-        Vector3 direction = Vector3.up;
+        // --- Build the launch direction ---
+        Vector3 direction = forwardDirection.normalized;
 
-        // Lateral influence based on contact position
-        Vector3 contactOffset =
-            currentBalloon.position - transform.position;
+        // Add upward component for minimum launch angle
+        float upY = Mathf.Tan(minLaunchAngle * Mathf.Deg2Rad);
+        direction.y += upY;
 
-        Vector3 lateral =
-            Vector3.ProjectOnPlane(contactOffset, Vector3.up).normalized;
-
+        // Add lateral influence based on contact position
+        Vector3 contactOffset = currentBalloon.position - transform.position;
+        Vector3 lateral = Vector3.ProjectOnPlane(contactOffset, Vector3.up).normalized;
         direction += lateral * lateralInfluence;
 
-        // Enforce minimum launch angle
-        float minY = Mathf.Tan(minLaunchAngle * Mathf.Deg2Rad);
-        direction.y = Mathf.Max(direction.y, minY);
-
+        // Normalize to keep force consistent
         direction.Normalize();
 
-        currentBalloon.AddForce(
-            direction * launchForce * strength,
-            ForceMode.Force
-        );
+        // Apply force to the ball
+        currentBalloon.AddForce(direction * launchForce * strength, ForceMode.Force);
 
         // Clamp upward velocity
-
-        if (strength > 0f)
+        Vector3 v = currentBalloon.linearVelocity;
+        if (v.y > maxUpwardVelocity)
         {
-            Vector3 v = currentBalloon.linearVelocity;
-            if (v.y > maxUpwardVelocity)
-            {
-                v.y = maxUpwardVelocity;
-                currentBalloon.linearVelocity = v;
-            }
+            v.y = maxUpwardVelocity;
+            currentBalloon.linearVelocity = v;
         }
-
     }
 }
