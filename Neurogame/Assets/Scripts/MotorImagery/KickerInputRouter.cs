@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class KickerInputRouter : MonoBehaviour
 {
+    [Header("Debug / Auto-Fire")]
+    [Tooltip("If true, the kickers always fire at full strength")]
+    public bool autoFire = false;
+
     [Header("XR Input")]
     [Tooltip("Vector2 action bound to RightHand primary2DAxis")]
     public InputActionProperty kickerAxis;
@@ -47,6 +51,11 @@ public class KickerInputRouter : MonoBehaviour
     /// </summary>
     public float GetStrength(bool isLeft, bool graduated)
     {
+        // If autoFire is on, always return max strength for the appropriate kicker
+        if (autoFire)
+            return 1f;
+
+        // Otherwise, use player input
         if (isLeft && controlValue >= 0f) return 0f;
         if (!isLeft && controlValue <= 0f) return 0f;
 
