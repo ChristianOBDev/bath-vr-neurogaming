@@ -82,7 +82,7 @@ public class KickerForce : MonoBehaviour
         if (v.y > maxUpwardVelocity)
         {
             v.y = maxUpwardVelocity;
-            currentBalloon.linearVelocity = v;
+            currentBalloon.linearVelocity = v;  
         }
     }
 }

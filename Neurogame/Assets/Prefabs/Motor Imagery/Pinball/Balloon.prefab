@@ -198,3 +198,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   bobAmplitude: 0.15
   bobFrequency: 2
+  lateralDriftMin: 0.1
+  lateralDriftMax: 0.7
+  enableCenterGuidance: 1
+  waterfallCenterX: 0
+  waterfallHalfWidth: 2.5
+  centerPullStrength: 2
+  maxSideForce: 3
