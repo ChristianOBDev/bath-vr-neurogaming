@@ -1,0 +1,276 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8399263368983342564
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Moss_Enchanted_Triplanar_01
+  m_Shader: {fileID: -6465566751694194690, guid: 19e269a311c45cd4482cf0ac0e694503, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ALPHATEST_ON
+  - _OVERLAY_UV_CHANNEL_UV0
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AO_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Base_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic_Smoothness_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Overlay_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Emission_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Normal_Texture_Bottom:
+        m_Texture: {fileID: 2800000, guid: 6fda4c429122e80469b9e35c06550d4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Normal_Texture_Side:
+        m_Texture: {fileID: 2800000, guid: 6fda4c429122e80469b9e35c06550d4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Normal_Texture_Top:
+        m_Texture: {fileID: 2800000, guid: 8e98b69e82d01694d9175f2edc64aef6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Texture_Bottom:
+        m_Texture: {fileID: 2800000, guid: bd9d033eef6645a4c93f18e98efd7117, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Texture_Side:
+        m_Texture: {fileID: 2800000, guid: bd9d033eef6645a4c93f18e98efd7117, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Texture_Top:
+        m_Texture: {fileID: 2800000, guid: aa2804fc8addc964b84032be7387a8e8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AO_Intensity: 1
+    - _AlphaClip: 1
+    - _AlphaCutoff: 0.5
+    - _AlphaToMask: 1
+    - _Alpha_Clip_Threshold: 0.5
+    - _Alpha_Transparency: 1
+    - _Ambient_Occlusion: 1
+    - _BUILTIN_AlphaClip: 0
+    - _BUILTIN_Blend: 0
+    - _BUILTIN_CullMode: 2
+    - _BUILTIN_DstBlend: 0
+    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueOffset: 0
+    - _BUILTIN_SrcBlend: 1
+    - _BUILTIN_Surface: 0
+    - _BUILTIN_ZTest: 4
+    - _BUILTIN_ZWrite: 1
+    - _BUILTIN_ZWriteControl: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 0
+    - _Bottom_Metallic: 0
+    - _Bottom_Smoothness: 0
+    - _BumpScale: 1
+    - _CastShadows: 1
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Enable_Alpha_Texture: 0
+    - _Enable_Ambient_Occlusion: 0
+    - _Enable_Base_Texture: 0
+    - _Enable_Emission_Texture: 0
+    - _Enable_Normal_Texture: 0
+    - _Enable_Overlay_Texture: 0
+    - _Enable_Snow: 0
+    - _Enable_Triplanar_Emission: 0
+    - _Enable_Triplanar_Normals: 1
+    - _Enable_Triplanar_Texture: 1
+    - _Enable_Wave: 0
+    - _EnvironmentReflections: 1
+    - _Fade_Wave_Scale: 0.1
+    - _Fade_Wave_To_Object_Origin: 0
+    - _Fade_Wave_Vertical_Offset: 0
+    - _FallOff: 4.1
+    - _FallOff1: 40.1
+    - _FallOff2: 100
+    - _Generate_From_Base_Normals: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _Normal_Intensity: 1
+    - _OVERLAY_UV_CHANNEL: 0
+    - _OcclusionStrength: 1
+    - _Overlay_Intensity: 1
+    - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Sea_Level: 0
+    - _Side_Metallic: 0
+    - _Side_Smoothness: 0
+    - _Smoothness: 0
+    - _SmoothnessTextureChannel: 0
+    - _Snow_Angle_Threshold: 0.42
+    - _Snow_Level: 0
+    - _Snow_Metallic: 0
+    - _Snow_Noise_Fade: 64
+    - _Snow_Noise_Top_To_Side_Difference: 0.2
+    - _Snow_Normal_Fade: 64
+    - _Snow_Normal_Intensity: 1
+    - _Snow_Overrides_Normals: 0
+    - _Snow_Smoothness: 0
+    - _Snow_Transition: 0.95
+    - _Snow_Transition_Threshold: 1
+    - _Snow_Transition_Threshold_Step_Count: 4
+    - _Snow_Transition_Threshold_Steps: 0
+    - _Snow_Use_World_Up: 1
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _Tiling: 0.5
+    - _Top_Metallic: 0
+    - _Top_Smoothness: 0
+    - _Triplanar_Emission_Blend: 1
+    - _Triplanar_Emission_Fade: 1
+    - _Triplanar_Emission_Intensity: 1
+    - _Triplanar_Emission_Tiling: 0.25
+    - _Triplanar_Emission_Top_To_Side_Difference: 0
+    - _Triplanar_Fade: 1
+    - _Triplanar_Intensity: 1
+    - _Triplanar_Normal_Fade: 8
+    - _Triplanar_Normal_Intensity_Bottom: 1
+    - _Triplanar_Normal_Intensity_Side: 1
+    - _Triplanar_Normal_Intensity_Top: 1
+    - _Triplanar_Normal_Top_To_Side_Difference: 0.25
+    - _Triplanar_Top_To_Side_Difference: 0.3
+    - _UVSec: 0
+    - _Wave_Object_Offset: 0
+    - _Wave_Scale: 1
+    - _Wave_Speed: 1
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
+    - __dirty: 0
+    m_Colors:
+    - _AO_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _AO_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Alpha_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Alpha_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Base_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Base_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color_Tint: {r: 1, g: 1, b: 1, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Emission_Color_Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Normal_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Normal_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Overlay_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Overlay_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Snow_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Snow_Metallic_Smoothness_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Snow_Metallic_Smoothness_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Snow_Noise_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Snow_Noise_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Snow_Normal_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Snow_Normal_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Specular_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Color_Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Offset_Bottom: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Offset_Side: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Tiling_Bottom: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Emission_Tiling_Side: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Emission_Tiling_Top: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Normal_Offset_Bottom: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Normal_Offset_Side: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Normal_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Normal_Tiling_Bottom: {r: 50, g: 50, b: 0, a: 0}
+    - _Triplanar_Normal_Tiling_Side: {r: 50, g: 50, b: 0, a: 0}
+    - _Triplanar_Normal_Tiling_Top: {r: 50, g: 50, b: 0, a: 0}
+    - _Triplanar_Offset_Bottom: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Offset_Side: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Tiling_Bottom: {r: 50, g: 50, b: 0, a: 0}
+    - _Triplanar_Tiling_Side: {r: 50, g: 50, b: 0, a: 0}
+    - _Triplanar_Tiling_Top: {r: 50, g: 50, b: 0, a: 0}
+    - _UVPan: {r: 0, g: 0, b: 0, a: 0}
+    - _Wave_Direction_Vector: {r: 0, g: 1, b: 0, a: 0}
+    - _Wave_Noise_Tiling: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
+--- !u!114 &459436007107356399
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
