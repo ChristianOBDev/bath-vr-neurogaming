@@ -1,0 +1,256 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Glass_Mat_01
+  m_Shader: {fileID: -6465566751694194690, guid: fdea4239d29733541b44cd6960afefcd, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _OVERLAY_UV_CHANNEL_UV0
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords:
+  - _ALPHABLEND_ON
+  - _ZWRITE_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - DepthOnly
+  - SHADOWCASTER
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AO_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Alpha_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Base_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Emission_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic_Smoothness_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Overlay_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AO_Intensity: 1
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Alpha_Clip_Threshold: 0.5
+    - _Alpha_Transparency: 0.5
+    - _BUILTIN_AlphaClip: 0
+    - _BUILTIN_Blend: 0
+    - _BUILTIN_CullMode: 2
+    - _BUILTIN_DstBlend: 0
+    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueOffset: 0
+    - _BUILTIN_SrcBlend: 1
+    - _BUILTIN_Surface: 1
+    - _BUILTIN_ZTest: 4
+    - _BUILTIN_ZWrite: 0
+    - _BUILTIN_ZWriteControl: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _Bottom_Metallic: 0
+    - _Bottom_Smoothness: 0
+    - _BumpScale: 1
+    - _CastShadows: 1
+    - _ClearCoatMask: 0
+    - _ClearCoatSmoothness: 0
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DetailAlbedoMapScale: 1
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 10
+    - _DstBlendAlpha: 10
+    - _Enable_Ambient_Occlusion: 0
+    - _Enable_Base_Texture: 0
+    - _Enable_Emission_Texture: 0
+    - _Enable_Normal_Texture: 0
+    - _Enable_Overlay_Texture: 0
+    - _Enable_Snow: 0
+    - _Enable_Transparency: 1
+    - _Enable_Triplanar_Emission: 0
+    - _Enable_Triplanar_Normals: 0
+    - _Enable_Triplanar_Texture: 0
+    - _Enable_Wave: 0
+    - _EnvironmentReflections: 1
+    - _Fade_Wave_Scale: 0.1
+    - _Fade_Wave_To_Object_Origin: 0
+    - _Fade_Wave_Vertical_Offset: 0
+    - _Generate_From_Base_Normals: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.813
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 3
+    - _Normal_Intensity: 1
+    - _OVERLAY_UV_CHANNEL: 0
+    - _OcclusionStrength: 1
+    - _Overlay_Intensity: 1
+    - _Parallax: 0.02
+    - _QueueControl: -1
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Sea_Level: 0
+    - _Side_Metallic: 0
+    - _Side_Smoothness: 0
+    - _Smoothness: 0.813
+    - _SmoothnessTextureChannel: 0
+    - _Snow_Angle_Threshold: 0.42
+    - _Snow_Level: 0
+    - _Snow_Metallic: 0
+    - _Snow_Noise_Fade: 64
+    - _Snow_Noise_Top_To_Side_Difference: 0.2
+    - _Snow_Normal_Fade: 64
+    - _Snow_Normal_Intensity: 1
+    - _Snow_Overrides_Normals: 0
+    - _Snow_Smoothness: 0
+    - _Snow_Transition: 0.95
+    - _Snow_Transition_Threshold: 1
+    - _Snow_Transition_Threshold_Step_Count: 4
+    - _Snow_Transition_Threshold_Steps: 0
+    - _Snow_Use_World_Up: 1
+    - _SpecularHighlights: 1
+    - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
+    - _Surface: 1
+    - _Top_Metallic: 0
+    - _Top_Smoothness: 0
+    - _Triplanar_Emission_Fade: 1
+    - _Triplanar_Emission_Intensity: 1
+    - _Triplanar_Emission_Top_To_Side_Difference: 0
+    - _Triplanar_Fade: 1
+    - _Triplanar_Intensity: 1
+    - _Triplanar_Normal_Fade: 0
+    - _Triplanar_Normal_Intensity_Bottom: 1
+    - _Triplanar_Normal_Intensity_Side: 1
+    - _Triplanar_Normal_Intensity_Top: 1
+    - _Triplanar_Normal_Top_To_Side_Difference: 0.2
+    - _Triplanar_Top_To_Side_Difference: 0.2
+    - _UVSec: 0
+    - _Use_Separate_Alpha_Map: 0
+    - _Wave_Object_Offset: 0
+    - _Wave_Scale: 1
+    - _Wave_Speed: 1
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 0
+    m_Colors:
+    - _AO_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _AO_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Alpha_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Alpha_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _BaseColor: {r: 0.62264144, g: 0.073424675, b: 0.5794995, a: 0.50980395}
+    - _Base_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Base_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Color: {r: 0.62264144, g: 0.073424645, b: 0.5794995, a: 0.50980395}
+    - _Color_Tint: {r: 0.74165326, g: 0.30584726, b: 0.8207547, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Emission_Color_Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Normal_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Normal_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Overlay_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Overlay_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Snow_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Snow_Metallic_Smoothness_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Snow_Metallic_Smoothness_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Snow_Noise_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Snow_Noise_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _Snow_Normal_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Snow_Normal_Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Specular_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Color_Tint: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Offset_Bottom: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Offset_Side: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Emission_Tiling_Bottom: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Emission_Tiling_Side: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Emission_Tiling_Top: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Normal_Offset_Bottom: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Normal_Offset_Side: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Normal_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Normal_Tiling_Bottom: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Normal_Tiling_Side: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Normal_Tiling_Top: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Offset_Bottom: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Offset_Side: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Offset_Top: {r: 0, g: 0, b: 0, a: 0}
+    - _Triplanar_Tiling_Bottom: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Tiling_Side: {r: 1, g: 1, b: 0, a: 0}
+    - _Triplanar_Tiling_Top: {r: 1, g: 1, b: 0, a: 0}
+    - _UVPan: {r: 0, g: 0, b: 0, a: 0}
+    - _Wave_Direction_Vector: {r: 0, g: 1, b: 0, a: 0}
+    - _Wave_Noise_Tiling: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
+--- !u!114 &3489844034352390561
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!114 &8859751707668096368
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10
