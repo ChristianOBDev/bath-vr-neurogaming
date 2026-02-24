@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MVEPStimulus : MonoBehaviour
@@ -7,7 +8,17 @@ public class MVEPStimulus : MonoBehaviour
 
   [Header("Rect Settings")]
   [SerializeField] private Vector2 startPos = new(45f, 0f), endPos = new(-45f, 0f);
-  [SerializeField] private float pulseDuration = 0.14f;
+  private float pulseDuration = 0.14f;
+
+  [Header("Settings")]
+  [SerializeField] private int stimulusIndex;
+
+  public static Action<int> OnStimulusPulsed;
+
+  void Awake()
+  {
+    pulseDuration = MVEPGameSettings.Instance.mvepConfig.pulseDuration;
+  }
 
   public void Pulse()
   {
@@ -20,5 +31,6 @@ public class MVEPStimulus : MonoBehaviour
   {
     line.gameObject.SetActive(false);
     line.anchoredPosition = startPos;
+    OnStimulusPulsed?.Invoke(stimulusIndex);
   }
 }
