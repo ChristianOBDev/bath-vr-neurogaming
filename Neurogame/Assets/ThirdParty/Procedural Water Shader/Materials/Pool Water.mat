@@ -53,7 +53,7 @@ Material:
     - _BaseColor: {r: 0.079999976, g: 0.54999995, b: 0.7, a: 0.45}
     - _DeepColor: {r: 0.02, g: 0.17999998, b: 0.27999997, a: 0.65}
     - _FoamColor: {r: 0.92, g: 0.96999997, b: 1, a: 1}
-    - _GAmplitude: {r: 0.01, g: 0.07, b: 0.04, a: 0.02}
+    - _GAmplitude: {r: 0.01, g: 0, b: 0.04, a: 0.02}
     - _GDirectionAB: {r: 0.25, g: 0.85, b: 0.9, a: 0.2}
     - _GDirectionCD: {r: 0.1, g: 0.95, b: 0.55, a: 0.55}
     - _GFrequency: {r: 1.25, g: 1.65, b: 1.1, a: 0.85}

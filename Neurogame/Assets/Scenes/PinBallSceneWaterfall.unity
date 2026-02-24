@@ -990,7 +990,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 59a410df77f0c1e44b2c47816320e40e, type: 2}
+  - {fileID: 2100000, guid: 326643ecd94438344a877524b1aba396, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1031,8 +1031,8 @@ Transform:
   m_GameObject: {fileID: 140367020}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 9.16}
-  m_LocalScale: {x: 1, y: 1, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0.1, z: 9.6164}
+  m_LocalScale: {x: 1, y: 1, z: 1.5911999}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1747,6 +1747,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 610830551852683834, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 187076844}
+    - targetCorrespondingSourceObject: {fileID: 610830551852683834, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 187076847}
   m_SourcePrefab: {fileID: 100100000, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
 --- !u!4 &187076842 stripped
 Transform:
@@ -1777,10 +1780,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.72540087
+  m_Radius: 1.2
   m_Height: 1.3367923
   m_Direction: 1
   m_Center: {x: 0.10629421, y: -0.07550379, z: 0.030014722}
+--- !u!114 &187076847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187076843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &192135050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2822,6 +2842,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3428947474597435797, guid: 9af7bc1de85fada4490857335cb4b727, type: 3}
       insertIndex: -1
       addedObject: {fileID: 283615410}
+    - targetCorrespondingSourceObject: {fileID: 3428947474597435797, guid: 9af7bc1de85fada4490857335cb4b727, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 283615413}
   m_SourcePrefab: {fileID: 100100000, guid: 9af7bc1de85fada4490857335cb4b727, type: 3}
 --- !u!4 &283615408 stripped
 Transform:
@@ -2852,10 +2875,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7123642
+  m_Radius: 1.2
   m_Height: 1.2141579
   m_Direction: 1
   m_Center: {x: 0.010289549, y: -0.043991502, z: 0.047931727}
+--- !u!114 &283615413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283615409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1001 &296043388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2927,6 +2967,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 610830551852683834, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 296043391}
+    - targetCorrespondingSourceObject: {fileID: 610830551852683834, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 296043394}
   m_SourcePrefab: {fileID: 100100000, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
 --- !u!4 &296043389 stripped
 Transform:
@@ -2957,10 +3000,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.72540087
+  m_Radius: 1.2
   m_Height: 1.3367923
   m_Direction: 1
   m_Center: {x: 0.10629421, y: -0.07550379, z: 0.030014722}
+--- !u!114 &296043394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296043390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &299768770
 GameObject:
   m_ObjectHideFlags: 0
@@ -3067,6 +3127,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4423071090435520619, guid: 4032bc0cd51f63a4db05b3a2006340e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 304504667}
+    - targetCorrespondingSourceObject: {fileID: 4423071090435520619, guid: 4032bc0cd51f63a4db05b3a2006340e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 304504670}
   m_SourcePrefab: {fileID: 100100000, guid: 4032bc0cd51f63a4db05b3a2006340e0, type: 3}
 --- !u!4 &304504665 stripped
 Transform:
@@ -3097,10 +3160,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.71630937
+  m_Radius: 1.2
   m_Height: 0.905739
   m_Direction: 1
   m_Center: {x: -0.022328613, y: 0.07340316, z: 0.023294596}
+--- !u!114 &304504670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304504666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &329674977
 GameObject:
   m_ObjectHideFlags: 0
@@ -9484,6 +9564,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1969192603740655825, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
       insertIndex: -1
       addedObject: {fileID: 917201951}
+    - targetCorrespondingSourceObject: {fileID: 1969192603740655825, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 917201954}
   m_SourcePrefab: {fileID: 100100000, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
 --- !u!4 &917201949 stripped
 Transform:
@@ -9514,10 +9597,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8286863
-  m_Height: 1.6573726
+  m_Radius: 1.2
+  m_Height: 2.3
   m_Direction: 1
-  m_Center: {x: 0.058700144, y: 0.075938754, z: 0.15196905}
+  m_Center: {x: 0.05870024, y: 0.0759387, z: -0.21202803}
+--- !u!114 &917201954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917201950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &931379610
 GameObject:
   m_ObjectHideFlags: 0
@@ -9673,6 +9773,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1969192603740655825, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
       insertIndex: -1
       addedObject: {fileID: 940431308}
+    - targetCorrespondingSourceObject: {fileID: 1969192603740655825, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 940431311}
   m_SourcePrefab: {fileID: 100100000, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
 --- !u!4 &940431306 stripped
 Transform:
@@ -9703,10 +9806,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8286863
+  m_Radius: 1.2
   m_Height: 1.6573726
   m_Direction: 1
   m_Center: {x: 0.058700144, y: 0.075938754, z: 0.15196905}
+--- !u!114 &940431311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940431307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!4 &941582946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3283785463155816736, guid: e912fbd5396dace4dbdffbc8b79a6c14, type: 3}
@@ -9746,8 +9866,8 @@ Transform:
   m_GameObject: {fileID: 969705108}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 8.5, z: 20}
-  m_LocalScale: {x: 5, y: 1, z: 15}
+  m_LocalPosition: {x: -0, y: 8.5, z: 20.4998}
+  m_LocalScale: {x: 5, y: 1, z: 14.000238}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2066972514}
@@ -10975,6 +11095,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 597106223415300186, guid: 9a7807950894d41429dc2c1d999e3e94, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1104551722}
+    - targetCorrespondingSourceObject: {fileID: 597106223415300186, guid: 9a7807950894d41429dc2c1d999e3e94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1104551725}
   m_SourcePrefab: {fileID: 100100000, guid: 9a7807950894d41429dc2c1d999e3e94, type: 3}
 --- !u!4 &1104551720 stripped
 Transform:
@@ -11005,10 +11128,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5137138
+  m_Radius: 1.2
   m_Height: 1.3976079
   m_Direction: 1
   m_Center: {x: 0.017609416, y: 0.13501723, z: 0.02983412}
+--- !u!114 &1104551725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104551721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &1107834732
 GameObject:
   m_ObjectHideFlags: 0
@@ -11854,6 +11994,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3428947474597435797, guid: 9af7bc1de85fada4490857335cb4b727, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1195403205}
+    - targetCorrespondingSourceObject: {fileID: 3428947474597435797, guid: 9af7bc1de85fada4490857335cb4b727, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1195403208}
   m_SourcePrefab: {fileID: 100100000, guid: 9af7bc1de85fada4490857335cb4b727, type: 3}
 --- !u!4 &1195403203 stripped
 Transform:
@@ -11884,10 +12027,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7123642
+  m_Radius: 1.2
   m_Height: 1.2141579
   m_Direction: 1
   m_Center: {x: 0.010289549, y: -0.043991502, z: 0.047931727}
+--- !u!114 &1195403208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195403204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &1198760459
 GameObject:
   m_ObjectHideFlags: 0
@@ -12426,6 +12586,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 597106223415300186, guid: 9a7807950894d41429dc2c1d999e3e94, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1251927511}
+    - targetCorrespondingSourceObject: {fileID: 597106223415300186, guid: 9a7807950894d41429dc2c1d999e3e94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1251927514}
   m_SourcePrefab: {fileID: 100100000, guid: 9a7807950894d41429dc2c1d999e3e94, type: 3}
 --- !u!4 &1251927509 stripped
 Transform:
@@ -12456,10 +12619,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5137138
+  m_Radius: 1.2
   m_Height: 1.3976079
   m_Direction: 1
   m_Center: {x: 0.017609416, y: 0.13501723, z: 0.02983412}
+--- !u!114 &1251927514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251927510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &1255638673
 GameObject:
   m_ObjectHideFlags: 0
@@ -13024,6 +13204,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 610830551852683834, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1342730743}
+    - targetCorrespondingSourceObject: {fileID: 610830551852683834, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1342730746}
   m_SourcePrefab: {fileID: 100100000, guid: e4ef2a8a3811c6c4a9149de8e9bef49b, type: 3}
 --- !u!4 &1342730741 stripped
 Transform:
@@ -13054,10 +13237,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.72540087
+  m_Radius: 1.2
   m_Height: 1.3367923
   m_Direction: 1
   m_Center: {x: 0.10629421, y: -0.07550379, z: 0.030014722}
+--- !u!114 &1342730746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342730742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &1351058435
 GameObject:
   m_ObjectHideFlags: 0
@@ -13772,6 +13972,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4423071090435520619, guid: 4032bc0cd51f63a4db05b3a2006340e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1414802288}
+    - targetCorrespondingSourceObject: {fileID: 4423071090435520619, guid: 4032bc0cd51f63a4db05b3a2006340e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1414802291}
   m_SourcePrefab: {fileID: 100100000, guid: 4032bc0cd51f63a4db05b3a2006340e0, type: 3}
 --- !u!4 &1414802286 stripped
 Transform:
@@ -13802,10 +14005,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.71630937
+  m_Radius: 1.2
   m_Height: 0.905739
   m_Direction: 1
   m_Center: {x: -0.022328613, y: 0.07340316, z: 0.023294596}
+--- !u!114 &1414802291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414802287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!114 &1415647738 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5005649301645334909, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
@@ -15449,7 +15669,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 3.5, z: 21}
-  m_LocalScale: {x: 5, y: 10, z: 15}
+  m_LocalScale: {x: 4.8, y: 10, z: 15}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2066972514}
@@ -15471,7 +15691,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -15820,6 +16040,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1969192603740655825, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1627081035}
+    - targetCorrespondingSourceObject: {fileID: 1969192603740655825, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1627081038}
   m_SourcePrefab: {fileID: 100100000, guid: 6649b2f5cd1488d49be654766dfe7855, type: 3}
 --- !u!4 &1627081033 stripped
 Transform:
@@ -15850,10 +16073,27 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8286863
+  m_Radius: 1.2
   m_Height: 1.6573726
   m_Direction: 1
   m_Center: {x: 0.058700144, y: 0.075938754, z: 0.15196905}
+--- !u!114 &1627081038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627081034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bcfd76a9b8cb79449b7867a3d83c06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bumper
+  repulsionForce: 10
+  upwardForce: 20
+  forceDuration: 0.1
+  burstOnContact: 0
+  burstEffect: {fileID: 0}
 --- !u!1 &1645451340
 GameObject:
   m_ObjectHideFlags: 0
@@ -16825,7 +17065,7 @@ Transform:
   m_GameObject: {fileID: 1832245998}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 19.5071}
+  m_LocalPosition: {x: 0, y: 0, z: 19.5071}
   m_LocalScale: {x: 14, y: 1, z: 18.014208}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18434,8 +18674,8 @@ Transform:
   m_GameObject: {fileID: 2019931653}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 12.58}
-  m_LocalScale: {x: 5, y: 10, z: 1}
+  m_LocalPosition: {x: 0, y: 3.694, z: 12.58}
+  m_LocalScale: {x: 5, y: 9.388176, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2066972514}
