@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class ResponseController : MonoBehaviour
+public class MVEPResponseController : MonoBehaviour
 {
   [SerializeField] private CanoeController canoeController;
   private Phase phase;
