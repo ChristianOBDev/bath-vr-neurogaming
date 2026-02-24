@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MVEPConfig", menuName = "ScriptableObjects/MVEPConfig", order = 2)]
+[CreateAssetMenu(fileName = "MVEPConfig", menuName = "MVEP/MVEPConfig", order = 2)]
 public class MVEPConfiguration : ScriptableObject
 {
   [Header("Stimuli Settings")]

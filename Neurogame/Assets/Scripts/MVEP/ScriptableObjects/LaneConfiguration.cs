@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "LaneConfig", menuName = "ScriptableObjects/LaneConfig", order = 1)]
+[CreateAssetMenu(fileName = "LaneConfig", menuName = "MVEP/LaneConfig", order = 1)]
 public class LaneConfiguration : ScriptableObject
 {
   public int laneCount = 5;

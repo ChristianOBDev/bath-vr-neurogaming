@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ChunkConfig", menuName = "ScriptableObjects/ChunkConfig", order = 1)]
+[CreateAssetMenu(fileName = "ChunkConfig", menuName = "MVEP/ChunkConfig", order = 1)]
 public class ChunkConfiguration : ScriptableObject
 {
   [Header("Chunk Settings")]
@@ -9,4 +9,6 @@ public class ChunkConfiguration : ScriptableObject
 
   [Header("Prefab")]
   public Chunk chunkPrefab;
+  public PowerUp powerUpPrefab;
+  public Obstacle obstaclePrefab;
 }
