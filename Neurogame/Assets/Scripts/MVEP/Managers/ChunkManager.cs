@@ -7,10 +7,6 @@ public class ChunkManager : MonoBehaviour
   [Header("Component References")]
   private ChunkDesigner chunkDesigner;
 
-  [Header("Prefabs")]
-  [SerializeField] private Obstacle obstaclePrefab;
-  [SerializeField] private PowerUp powerUpPrefab;
-
   [Header("Settings")]
   private ChunkConfiguration chunkConfig;
   [SerializeField] private int startingChunks = 2;
@@ -39,8 +35,8 @@ public class ChunkManager : MonoBehaviour
     chunkDesigner = GetComponent<ChunkDesigner>();
 
     chunkPool = new ObjectPool<Chunk>(chunkConfig.chunkPrefab, initialChunkPoolSize, transform);
-    obstaclePool = new ObjectPool<Obstacle>(obstaclePrefab, initialObstaclePoolSize, transform);
-    powerUpPool = new ObjectPool<PowerUp>(powerUpPrefab, initialPowerUpPoolSize, transform);
+    obstaclePool = new ObjectPool<Obstacle>(chunkConfig.obstaclePrefab, initialObstaclePoolSize, transform);
+    powerUpPool = new ObjectPool<PowerUp>(chunkConfig.powerUpPrefab, initialPowerUpPoolSize, transform);
   }
 
   private void Start()
