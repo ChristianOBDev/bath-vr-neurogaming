@@ -36,6 +36,13 @@ public class KickerForce : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        BallController ballController = collision.gameObject.GetComponent<BallController>();
+
+        if (ballController != null)
+        {
+            ballController.SetState(BallState.Launching);
+        }
+
         if (collision.rigidbody != null)
         {
             currentBalloon = collision.rigidbody;
