@@ -2849,6 +2849,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5280090e1b6e0f045953b2ba55a8d989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnergyBar3D
+  fillImage: {fileID: 1888199753}
+  bandLow: {fileID: 1220839615}
+  bandMid: {fileID: 1861728447}
+  bandHigh: {fileID: 1027039554}
+  chargeKey: 32
+  vrChargeAction: {fileID: 0}
+  pumpRate: 0.2
+  leakRate: 0.1
+  smoothing: 0
+  low:
+    min: 0.174
+    max: 0.303
+    holdSeconds: 2
+  mid:
+    min: 0.532
+    max: 0.652
+    holdSeconds: 2
+  high:
+    min: 0.89
+    max: 1
+    holdSeconds: 2
+  cannon: {fileID: 1738993886}
 --- !u!4 &1567913868
 Transform:
   m_ObjectHideFlags: 0
@@ -3211,6 +3233,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8a5b142a9d32245ad3278256889b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CannonShooter
+  muzzle: {fileID: 1491973567}
+  projectilePrefab: {fileID: 639454333454206484, guid: b9c2781f0a32a8543a6072a9fb7b6685, type: 3}
+  targetManager: {fileID: 1426101999}
+  minFlightTime: 0.25
+  maxFlightTime: 1
+  distanceForMaxTime: 25
+  lowDamage: 10
+  lowTimeMultiplier: 1.4
+  midDamage: 18
+  midTimeMultiplier: 2
+  highDamage: 30
+  highTimeMultiplier: 0.6
+  highSecondShotDelay: 0.12
 --- !u!1 &1784566881
 GameObject:
   m_ObjectHideFlags: 0
@@ -16771,6 +16806,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b7ad02fb24ffb488d05be79d96891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PirateShipRespawnMover
+  health: {fileID: 746543287}
+  reachPoint: {fileID: 1105587739}
+  moveSpeed: 0.1
+  stopDistance: 1
+  spawnPoint: {fileID: 159227462}
+  spawnPointIsDynamic: 0
+  deathExplosionPrefab: {fileID: 3864505798176277645, guid: 764355ae35b482c4cbb01bea84213e20, type: 3}
+  deathExplosionLife: 4
+  deathVfxOffset: {x: 0, y: 0.5, z: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  objectsToHide: []
 --- !u!33 &5052817621665525436
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24833,6 +24880,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b7ad02fb24ffb488d05be79d96891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PirateShipRespawnMover
+  health: {fileID: 690453508}
+  reachPoint: {fileID: 869211083}
+  moveSpeed: 0.1
+  stopDistance: 1
+  spawnPoint: {fileID: 1555705007}
+  spawnPointIsDynamic: 0
+  deathExplosionPrefab: {fileID: 3864505798176277645, guid: 764355ae35b482c4cbb01bea84213e20, type: 3}
+  deathExplosionLife: 4
+  deathVfxOffset: {x: 0, y: 0.5, z: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  objectsToHide: []
 --- !u!65 &8713182706920517953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24866,6 +24925,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b7ad02fb24ffb488d05be79d96891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PirateShipRespawnMover
+  health: {fileID: 204407975}
+  reachPoint: {fileID: 1272238004}
+  moveSpeed: 0.1
+  stopDistance: 1
+  spawnPoint: {fileID: 2019792248}
+  spawnPointIsDynamic: 0
+  deathExplosionPrefab: {fileID: 3864505798176277645, guid: 764355ae35b482c4cbb01bea84213e20, type: 3}
+  deathExplosionLife: 4
+  deathVfxOffset: {x: 0, y: 0.5, z: 0}
+  renderersToHide: []
+  collidersToDisable: []
+  objectsToHide: []
 --- !u!4 &8740103518187353903
 Transform:
   m_ObjectHideFlags: 0
