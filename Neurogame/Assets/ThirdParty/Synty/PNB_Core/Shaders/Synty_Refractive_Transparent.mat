@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6845971555519808091
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Synty_Refractive_Transparent
+  m_Shader: {fileID: -6465566751694194690, guid: 5808064c5204e554c89f589a7059c558, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _SURFACE_TYPE_TRANSPARENT
+  m_InvalidKeywords:
+  - _ALPHABLEND_ON
+  - _ZWRITE_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Base_Albedo:
+        m_Texture: {fileID: 2800000, guid: d9ddea5ee082d6b45a4d67b4958ebcb3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Base_Normal:
+        m_Texture: {fileID: 2800000, guid: 554447a73db1a0b4e833701b159dddf3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Refraction_Height:
+        m_Texture: {fileID: 2800000, guid: 97b8ad3d215eba040ad6e10843d48c4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Refraction_Texture:
+        m_Texture: {fileID: 2800000, guid: 97b8ad3d215eba040ad6e10843d48c4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Top_Albedo:
+        m_Texture: {fileID: 2800000, guid: 1d0b4cd34f364f64db07922fd022cfc9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Top_Normal:
+        m_Texture: {fileID: 2800000, guid: a4a2d65c83079fb40bb0568d96a4af64, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Amplitude: -50
+    - _BUILTIN_AlphaClip: 0
+    - _BUILTIN_Blend: 0
+    - _BUILTIN_CullMode: 2
+    - _BUILTIN_DstBlend: 0
+    - _BUILTIN_QueueControl: 0
+    - _BUILTIN_QueueOffset: 0
+    - _BUILTIN_SrcBlend: 1
+    - _BUILTIN_Surface: 0
+    - _BUILTIN_ZTest: 4
+    - _BUILTIN_ZWrite: 0
+    - _BUILTIN_ZWriteControl: 2
+    - _Base_Metallic: 0.084
+    - _Base_Normal_Intensity: -0.3
+    - _Base_Specular_Power: 0.85
+    - _Base_Tiling: 0.4
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _CastShadows: 1
+    - _Cull: 2
+    - _Deep_Power: 6.72
+    - _Depth_Power_Multiplier: 1.1
+    - _DstBlend: 10
+    - _Enable_Depth: 1
+    - _Enable_Refraction: 1
+    - _Enable_Side_Fresnel: 1
+    - _Enable_Top_Projection: 1
+    - _Enable_Triplanar: 1
+    - _Fade_Amount: 38.6
+    - _Fresnel_Border: 9.62
+    - _Fresnel_Power: 4.85
+    - _Inner_Distortion: 1
+    - _Inner_Distortion_Power: 0.0209
+    - _Metallic: 0.239
+    - _Noise_Tiling: 22.45
+    - _Opacity: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Refraction_Power: 2
+    - _Refraction_Tiling: 5
+    - _Shallow_Power: 3.51
+    - _Smoothness: 0.2
+    - _Spread: 0.215
+    - _SrcBlend: 1
+    - _Steps: 0
+    - _Surface: 1
+    - _Top_Metallic: 0
+    - _Top_Normal_Intensity: 1
+    - _Top_Opacity: 1
+    - _Top_Specular_Power: 0.2
+    - _Top_Tiling: 0.2
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 0
+    - _ZWriteControl: 2
+    m_Colors:
+    - _Base_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Base_Color_Multiplier: {r: 0.05700427, g: 0.1691054, b: 0.5754717, a: 0}
+    - _Deep_Color: {r: 0, g: 0.049652383, b: 0.2830189, a: 0}
+    - _Fresnel_Color: {r: 0.36037737, g: 1.0028218, b: 1.4980394, a: 0}
+    - _Refraction_Color: {r: 0.071956225, g: 0.09608789, b: 0.31132078, a: 0}
+    - _Shallow_Color: {r: 0.16019936, g: 0.27248794, b: 0.4528302, a: 0}
+    - _Top_Color_Multiplier: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
+--- !u!114 &8237638825396807318
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 10
