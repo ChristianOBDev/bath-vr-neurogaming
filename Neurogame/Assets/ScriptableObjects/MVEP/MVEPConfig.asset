@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eac3bd4dd049a4c48a0e550219b404ac, type: 3}
+  m_Name: MVEPConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MVEPConfiguration
+  numStimuli: 5
+  arrowPreactivationTime: 1
+  pulseDuration: 0.14
+  pulseOffset: 0.06
+  p300Interval: 0.3
