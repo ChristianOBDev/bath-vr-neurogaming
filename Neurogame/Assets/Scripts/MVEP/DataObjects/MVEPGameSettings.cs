@@ -14,5 +14,6 @@ public class MVEPGameSettings : Singleton<MVEPGameSettings>
   public Phase CurrentPhase;
   public LaneConfiguration laneConfig;
   public ChunkConfiguration chunkConfig;
+  public CanoeScoreConfig scoreConfig;
   public MVEPConfiguration mvepConfig;
 }
