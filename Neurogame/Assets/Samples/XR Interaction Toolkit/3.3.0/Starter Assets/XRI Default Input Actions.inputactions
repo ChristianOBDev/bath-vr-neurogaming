@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "XRI Default Input Actions",
     "maps": [
         {
@@ -3395,6 +3396,34 @@
                     "action": "Spawn Object",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Kicker Controls",
+            "id": "36e5fc0f-4172-41b4-9258-5ef3db2ee1d9",
+            "actions": [
+                {
+                    "name": "KickerAxis",
+                    "type": "Value",
+                    "id": "dfe5c534-1bff-4cf4-864f-193463c5a418",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "35ade947-4ee0-4619-9d7a-e21e6891f0e2",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KickerAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
