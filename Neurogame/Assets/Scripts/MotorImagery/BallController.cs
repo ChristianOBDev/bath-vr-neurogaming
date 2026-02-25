@@ -33,6 +33,9 @@ public class BallController : MonoBehaviour
     [SerializeField, Min(0f)]
     private float lateralDriftMax = 0.7f;
 
+    [Header("Clamp Velocity")]
+    [SerializeField] private float maxVelocity = 20f;
+
     // Lateral offset randomly chosen when ball spawns
     private float lateralOffset = 0f;
     // Phase offset for independent side-to-side drift
@@ -80,7 +83,7 @@ public class BallController : MonoBehaviour
                 flowVelocity += Physics.gravity;
 
             // Apply flow velocity directly; overrides other forces
-            rb.linearVelocity = flowVelocity;
+            rb.AddForce(currentFlowDirection * currentFlowSpeed, ForceMode.Acceleration);
 
             return; // Skip center guidance or other logic while flowing
         }
@@ -106,6 +109,11 @@ public class BallController : MonoBehaviour
                 transform.position + Vector3.right * totalForce,
                 Color.green
             );
+
+            if (rb.linearVelocity.magnitude > maxVelocity)
+            {
+                rb.linearVelocity = rb.linearVelocity.normalized * maxVelocity;
+            }
         }
 
         // ------------------- FALLING STATE -------------------

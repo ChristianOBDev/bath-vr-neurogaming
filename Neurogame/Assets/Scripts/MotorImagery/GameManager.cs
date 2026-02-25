@@ -12,6 +12,19 @@ public class GameManager : MonoBehaviour
     [Tooltip("If true, choose one random spawner per bumper destruction")]
     public bool chooseRandomSpawner = true;
 
+    [Header("Scoring")]
+    public int baseBumperPoints = 100;
+    public float comboWindow = 1f;
+    public int maxComboMultiplier = 5;
+
+
+    [Header("Debug")]
+    public int currentScore;
+    public int CurrentScore => currentScore;
+    public int currentComboMultiplier = 1;
+
+    private float lastHitTime;
+
     [Header("Ball Spawn Control")]
     public Transform leftSpawnPoint;
     public Transform rightSpawnPoint;
@@ -44,6 +57,22 @@ public class GameManager : MonoBehaviour
     {
         bool spawnRight = GetNextSpawnSide();
         SpawnBall(spawnRight);
+    }
+
+    public (int points, int combo) RegisterBumperHit()
+    {
+        float timeSinceLastHit = Time.time - lastHitTime;
+        if (timeSinceLastHit <= comboWindow)
+            currentComboMultiplier = Mathf.Min(currentComboMultiplier + 1, maxComboMultiplier);
+        else
+            currentComboMultiplier = 1;
+
+        int pointsEarned = baseBumperPoints * currentComboMultiplier;
+        currentScore += pointsEarned;
+        lastHitTime = Time.time;
+
+        Debug.Log($"Bumper Hit! +{pointsEarned} | Combo x{currentComboMultiplier} | Total: {currentScore}");
+        return (pointsEarned, currentComboMultiplier);
     }
 
     /// <summary>
