@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Debug")]
+    public bool verboseLogging = true;
     public int currentScore;
     public int CurrentScore => currentScore;
     public int currentComboMultiplier = 1;
@@ -80,32 +81,32 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void OnBumperDestroyed(Bumper bumper)
     {
-
-        Debug.Log($"Bumper destroyed: {bumper.name}");
+        bumperSpawners.RemoveAll(s => s == null);
 
         if (bumperSpawners.Count == 0)
         {
-            Debug.LogWarning("No spawners registered!");
-            return;
+            if (verboseLogging)
+            {
+                Debug.LogWarning("No valid spawners registered!");
+                return;
+            }
         }
-
-        if (bumperSpawners.Count == 0)
-            return;
 
         if (chooseRandomSpawner)
         {
-            Spawner spawner =
-                bumperSpawners[Random.Range(0, bumperSpawners.Count)];
-
+            Spawner spawner = bumperSpawners[Random.Range(0, bumperSpawners.Count)];
             spawner.RequestSpawn();
         }
         else
         {
-            // Trigger all spawners (optional behavior)
             foreach (var spawner in bumperSpawners)
-            {
                 spawner.RequestSpawn();
-            }
+        }
+        if (verboseLogging)
+        {
+            Debug.Log($"OnBumperDestroyed called. List count: {bumperSpawners.Count}");
+            for (int i = 0; i < bumperSpawners.Count; i++)
+                Debug.Log($"Spawner[{i}]: {(bumperSpawners[i] == null ? "NULL" : bumperSpawners[i].name)}");
         }
     }
 
