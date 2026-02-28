@@ -12,6 +12,20 @@ public class GameManager : MonoBehaviour
     [Tooltip("If true, choose one random spawner per bumper destruction")]
     public bool chooseRandomSpawner = true;
 
+    [Header("Scoring")]
+    public int baseBumperPoints = 100;
+    public float comboWindow = 1f;
+    public int maxComboMultiplier = 5;
+
+
+    [Header("Debug")]
+    public bool verboseLogging = true;
+    public int currentScore;
+    public int CurrentScore => currentScore;
+    public int currentComboMultiplier = 1;
+
+    private float lastHitTime;
+
     [Header("Ball Spawn Control")]
     public Transform leftSpawnPoint;
     public Transform rightSpawnPoint;
@@ -46,37 +60,53 @@ public class GameManager : MonoBehaviour
         SpawnBall(spawnRight);
     }
 
+    public (int points, int combo) RegisterBumperHit()
+    {
+        float timeSinceLastHit = Time.time - lastHitTime;
+        if (timeSinceLastHit <= comboWindow)
+            currentComboMultiplier = Mathf.Min(currentComboMultiplier + 1, maxComboMultiplier);
+        else
+            currentComboMultiplier = 1;
+
+        int pointsEarned = baseBumperPoints * currentComboMultiplier;
+        currentScore += pointsEarned;
+        lastHitTime = Time.time;
+
+        Debug.Log($"Bumper Hit! +{pointsEarned} | Combo x{currentComboMultiplier} | Total: {currentScore}");
+        return (pointsEarned, currentComboMultiplier);
+    }
+
     /// <summary>
     /// Called by a bumper when it is destroyed.
     /// </summary>
     public void OnBumperDestroyed(Bumper bumper)
     {
-
-        Debug.Log($"Bumper destroyed: {bumper.name}");
+        bumperSpawners.RemoveAll(s => s == null);
 
         if (bumperSpawners.Count == 0)
         {
-            Debug.LogWarning("No spawners registered!");
-            return;
+            if (verboseLogging)
+            {
+                Debug.LogWarning("No valid spawners registered!");
+                return;
+            }
         }
-
-        if (bumperSpawners.Count == 0)
-            return;
 
         if (chooseRandomSpawner)
         {
-            Spawner spawner =
-                bumperSpawners[Random.Range(0, bumperSpawners.Count)];
-
+            Spawner spawner = bumperSpawners[Random.Range(0, bumperSpawners.Count)];
             spawner.RequestSpawn();
         }
         else
         {
-            // Trigger all spawners (optional behavior)
             foreach (var spawner in bumperSpawners)
-            {
                 spawner.RequestSpawn();
-            }
+        }
+        if (verboseLogging)
+        {
+            Debug.Log($"OnBumperDestroyed called. List count: {bumperSpawners.Count}");
+            for (int i = 0; i < bumperSpawners.Count; i++)
+                Debug.Log($"Spawner[{i}]: {(bumperSpawners[i] == null ? "NULL" : bumperSpawners[i].name)}");
         }
     }
 
