@@ -25,6 +25,17 @@ public class NeuroMeter : MonoBehaviour
     [Tooltip("Higher = meter changes feel heavier/slower.")]
     public float meterSmooth = 10f;
 
+    [Header("Optimal Band (Green Zone)")]
+    [Range(0f, 1f)] public float optimalMin = 0.55f;
+    [Range(0f, 1f)] public float optimalMax = 0.75f;
+
+    [Tooltip("Optional: require holding inside optimal band for this many seconds.")]
+    public float requiredOptimalHold = 0.6f;
+
+    public float optimalHoldTime { get; private set; }
+    public bool InOptimalBand => meterValue >= optimalMin && meterValue <= optimalMax;
+    public bool OptimalReady => optimalHoldTime >= requiredOptimalHold;
+
     [Header("Debug")]
     public bool debugLogs = true;
 
@@ -37,7 +48,6 @@ public class NeuroMeter : MonoBehaviour
         float s = Mathf.Clamp01(neuro.stabilityScore); // 0..1 continuous
 
         // Convert stability into a signed drive value (-1..+1)
-        // neutralPoint means: above it tends to fill, below it tends to drain.
         float drive = (s - neutralPoint) / Mathf.Max(0.0001f, (1f - neutralPoint));
         drive = Mathf.Clamp(drive, -1f, 1f);
 
@@ -56,13 +66,17 @@ public class NeuroMeter : MonoBehaviour
         float k = 1f - Mathf.Exp(-Mathf.Max(0.01f, meterSmooth) * Time.deltaTime);
         meterValue = Mathf.Lerp(meterValue, target, k);
 
+        // Track time spent inside the optimal band
+        if (InOptimalBand) optimalHoldTime += Time.deltaTime;
+        else optimalHoldTime = 0f;
+
         if (debugLogs)
         {
             dbgT += Time.deltaTime;
             if (dbgT >= 1f)
             {
                 dbgT = 0f;
-                Debug.Log($"[METER] meter:{meterValue:F2} | stability:{s:F2} | drive:{drive:F2} | rate/s:{rate:F2}");
+                Debug.Log($"[METER] meter:{meterValue:F2} | stability:{s:F2} | drive:{drive:F2} | rate/s:{rate:F2} | optimal:{(InOptimalBand ? "YES" : "no")} hold:{optimalHoldTime:F2}");
             }
         }
     }
