@@ -32,6 +32,9 @@ public class KickerForce : MonoBehaviour
     [Tooltip("Unit vector pointing from kicker toward the waterfall")]
     public Vector3 forwardDirection = Vector3.forward;
 
+    [Header("Audio")]
+    public AudioClip hitSound;
+
     private Rigidbody currentBalloon;
 
     void OnCollisionEnter(Collision collision)
@@ -89,7 +92,10 @@ public class KickerForce : MonoBehaviour
         if (v.y > maxUpwardVelocity)
         {
             v.y = maxUpwardVelocity;
-            currentBalloon.linearVelocity = v;  
+            currentBalloon.linearVelocity = v;
         }
+
+        if (hitSound != null)
+            GetComponent<AudioSource>().PlayOneShot(hitSound);
     }
 }
