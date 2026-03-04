@@ -35,7 +35,27 @@ public class KickerForce : MonoBehaviour
     [Header("Audio")]
     public AudioClip hitSound;
 
+    [Header("Glow")]
+    public bool glowEnabled = true;
+    public Renderer glowRenderer;
+    public Color glowColor = Color.cyan;
+    public float maxGlowIntensity = 3f;
+    public float glowLerpSpeed = 5f;
+
+    private Material glowMaterial;
+    private float currentGlowIntensity = 0f;
+    private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+
     private Rigidbody currentBalloon;
+
+    void Start()
+    {
+        if (glowRenderer != null)
+        {
+            glowMaterial = glowRenderer.material;
+            glowMaterial.EnableKeyword("_EMISSION");
+        }
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -59,7 +79,25 @@ public class KickerForce : MonoBehaviour
             currentBalloon = null;
         }
     }
+    void UpdateGlow()
+    {
+        if (!glowEnabled || glowMaterial == null) return;
 
+        float targetIntensity = 0f;
+
+        if (inputRouter != null)
+        {
+            float strength = inputRouter.GetStrength(isLeftKicker, graduatedForce);
+            targetIntensity = strength * maxGlowIntensity;
+        }
+
+        currentGlowIntensity = Mathf.Lerp(currentGlowIntensity, targetIntensity, Time.deltaTime * glowLerpSpeed);
+
+        Color finalColor = glowColor * Mathf.LinearToGammaSpace(currentGlowIntensity);
+        glowMaterial.SetColor(EmissionColor, finalColor);
+
+        glowRenderer.enabled = glowEnabled;
+    }   
     void FixedUpdate()
     {
         if (currentBalloon == null || inputRouter == null)
@@ -97,5 +135,7 @@ public class KickerForce : MonoBehaviour
 
         if (hitSound != null)
             GetComponent<AudioSource>().PlayOneShot(hitSound);
+
+        UpdateGlow();
     }
 }

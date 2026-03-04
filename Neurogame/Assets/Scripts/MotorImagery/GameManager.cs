@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Ball Settings")]
     public GameObject ballPrefab;
+    public float ballRespawnDelay = 2f;
 
     BallController currentBall;
 
@@ -60,7 +62,7 @@ public class GameManager : MonoBehaviour
         SpawnBall(spawnRight);
     }
 
-    public (int points, int combo) RegisterBumperHit()
+    public (int points, int combo) RegisterBumperHit(int pointOverride = -1)
     {
         float timeSinceLastHit = Time.time - lastHitTime;
         if (timeSinceLastHit <= comboWindow)
@@ -68,11 +70,11 @@ public class GameManager : MonoBehaviour
         else
             currentComboMultiplier = 1;
 
-        int pointsEarned = baseBumperPoints * currentComboMultiplier;
+        int basePoints = pointOverride >= 0 ? pointOverride : baseBumperPoints;
+        int pointsEarned = basePoints * currentComboMultiplier;
         currentScore += pointsEarned;
         lastHitTime = Time.time;
 
-        Debug.Log($"Bumper Hit! +{pointsEarned} | Combo x{currentComboMultiplier} | Total: {currentScore}");
         return (pointsEarned, currentComboMultiplier);
     }
 
@@ -147,9 +149,13 @@ public class GameManager : MonoBehaviour
     public void HandleBallDeath(BallController ball)
     {
         Destroy(ball.gameObject);
+        StartCoroutine(RespawnBallAfterDelay());
+    }
 
+    private IEnumerator RespawnBallAfterDelay()
+    {
+        yield return new WaitForSeconds(ballRespawnDelay);
         bool spawnRight = GetNextSpawnSide();
-
         SpawnBall(spawnRight);
     }
 

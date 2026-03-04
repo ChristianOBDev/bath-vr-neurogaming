@@ -26,6 +26,10 @@ public class Bumper : MonoBehaviour
     [Header("Audio")]
     public AudioClip hitSound;
 
+    [Header("Points")]
+    public bool overridePoints = false;
+    public int pointOverride = 200;
+
     private bool activated;
     private bool dying;
     private BumperFlash flash;
@@ -74,7 +78,7 @@ public class Bumper : MonoBehaviour
         int combo = 1;
 
         if (GameManager.Instance != null)
-            (pointsEarned, combo) = GameManager.Instance.RegisterBumperHit();
+            (pointsEarned, combo) = GameManager.Instance.RegisterBumperHit(overridePoints ? pointOverride : -1);
 
         SpawnPopup(pointsEarned, combo);
 
