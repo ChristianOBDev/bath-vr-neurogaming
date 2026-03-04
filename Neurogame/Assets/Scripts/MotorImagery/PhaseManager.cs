@@ -12,6 +12,9 @@ public class PhaseManager : MonoBehaviour
 {
     public static PhaseManager Instance { get; private set; }
 
+    [Header("Debug UI")]
+    public bool showDebugUI = true;
+
     [Header("Current Phase")]
     [SerializeField] private GamePhase currentPhase = GamePhase.PhaseOne;
     public GamePhase CurrentPhase => currentPhase;
@@ -131,6 +134,8 @@ public class PhaseManager : MonoBehaviour
 
     void OnGUI()
     {
+        if (!showDebugUI) return;
+
         GUILayout.BeginArea(new Rect(10, 10, 200, 120));
         GUILayout.Label($"Current Phase: {currentPhase}");
         if (GUILayout.Button("Phase 1")) SetPhase(GamePhase.PhaseOne);

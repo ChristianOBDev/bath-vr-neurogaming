@@ -5,6 +5,9 @@ using TMPro;
 [RequireComponent(typeof(Collider))]
 public class KickerForce : MonoBehaviour
 {
+    [Header("Audio")]
+    public AudioClip hitSound;
+
     [Header("References")]
     public KickerInputRouter inputRouter;
     [Tooltip("True = Left (Blue), False = Right (Red)")]
@@ -62,6 +65,9 @@ public class KickerForce : MonoBehaviour
         }
         if (collision.rigidbody != null)
             currentBalloon = collision.rigidbody;
+
+        if (hitSound != null)
+            GetComponent<AudioSource>().PlayOneShot(hitSound);
     }
 
     void OnCollisionExit(Collision collision)
