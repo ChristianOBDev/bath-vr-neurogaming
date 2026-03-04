@@ -141,6 +141,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.polybrush": {
+      "version": "file:C:/Users/ctob20/Downloads/com.unity.polybrush-1.2.1/com.unity.polybrush-1.2.1",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.settings-manager": "2.0.1",
+        "com.unity.modules.imgui": "1.0.0"
+      }
+    },
     "com.unity.profiling.core": {
       "version": "1.0.3",
       "depth": 1,

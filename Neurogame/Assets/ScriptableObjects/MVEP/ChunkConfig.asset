@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChunkConfiguration
   chunkLength: 30
   chunkTraversalTime: 5.3
-  chunkPrefab: {fileID: 0}
+  chunkPrefab: {fileID: 8524637003886043558, guid: 9a49bcf32d6cd20408e0370665fe8018, type: 3}
+  powerUpPrefab: {fileID: 2354834657867069149, guid: 5d7c229f48972074aaefe9af975ca029, type: 3}
+  obstaclePrefab: {fileID: 6165811559972059875, guid: 3912e097e2d035a4ab9a29abe91ecd21, type: 3}
