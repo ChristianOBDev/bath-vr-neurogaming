@@ -128,4 +128,14 @@ public class PhaseManager : MonoBehaviour
                 AdvancePhase();
         }
     }
+
+    void OnGUI()
+    {
+        GUILayout.BeginArea(new Rect(10, 10, 200, 120));
+        GUILayout.Label($"Current Phase: {currentPhase}");
+        if (GUILayout.Button("Phase 1")) SetPhase(GamePhase.PhaseOne);
+        if (GUILayout.Button("Phase 2")) SetPhase(GamePhase.PhaseTwo);
+        if (GUILayout.Button("Phase 3")) SetPhase(GamePhase.PhaseThree);
+        GUILayout.EndArea();
+    }
 }

@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("True = Right side, False = Left side")]
     public bool[] spawnDirectives = new bool[60];
 
-    int spawnIndex = 0;
+    public int spawnIndex = 0;
 
     [Header("Ball Settings")]
     public GameObject ballPrefab;
