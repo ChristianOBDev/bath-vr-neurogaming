@@ -63,7 +63,8 @@ public class Bumper : MonoBehaviour
         if (rb == null) return;
 
         BallController ball = collision.gameObject.GetComponent<BallController>();
-        if (ball != null && ball.CurrentState == BallState.Launching) return;
+        if (ball == null) return;
+        if (ball.CurrentState != BallState.OnWaterfall && ball.CurrentState != BallState.Falling) return;
 
         activated = true;
 

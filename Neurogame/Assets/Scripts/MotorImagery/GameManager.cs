@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
 
     BallController currentBall;
 
+    private Coroutine respawnCoroutine;
+
 
     void Awake()
     {
@@ -145,11 +147,13 @@ public class GameManager : MonoBehaviour
         currentBall.BeginReturnPhase(targetPos);
     }
 
-
     public void HandleBallDeath(BallController ball)
     {
         Destroy(ball.gameObject);
-        StartCoroutine(RespawnBallAfterDelay());
+        currentBall = null;
+        if (respawnCoroutine != null)
+            StopCoroutine(respawnCoroutine);
+        respawnCoroutine = StartCoroutine(RespawnBallAfterDelay());
     }
 
     private IEnumerator RespawnBallAfterDelay()
@@ -158,5 +162,26 @@ public class GameManager : MonoBehaviour
         bool spawnRight = GetNextSpawnSide();
         SpawnBall(spawnRight);
     }
+    public void ResetAndRespawn()
+    {
+        // Cancel any pending delayed respawn
+        if (respawnCoroutine != null)
+        {
+            StopCoroutine(respawnCoroutine);
+            respawnCoroutine = null;
+        }
 
+        spawnIndex = 0;
+
+        if (currentBall != null)
+        {
+            Destroy(currentBall.gameObject);
+            currentBall = null;
+        }
+
+        bool spawnRight = GetNextSpawnSide();
+        SpawnBall(spawnRight);
+
+        Debug.Log("Spawn index reset and ball respawned.");
+    }
 }

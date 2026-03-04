@@ -9356,7 +9356,7 @@ MonoBehaviour:
   rightSpawnPoint: {fileID: 260737471}
   leftKickerEntry: {fileID: 399739657}
   rightKickerEntry: {fileID: 1107834733}
-  spawnDirectives: 000101000100010101000001000001010100010000010101000100010100000001010001010000000000000000000000000000000000000000000000
+  spawnDirectives: 000101000100010101000001000001010100010000010101000100010100000001010001010000010000010100000001000001010000010000010100
   spawnIndex: 0
   ballPrefab: {fileID: 1522060980294568364, guid: 8a6e6626c0f4b664ba1eff9686ae93d4, type: 3}
   ballRespawnDelay: 1
@@ -10625,7 +10625,7 @@ GameObject:
   - component: {fileID: 445369509}
   - component: {fileID: 445369508}
   - component: {fileID: 445369507}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PhaseOneButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20561,7 +20561,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1299534964}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25926,16 +25926,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299534960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 57.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 26.2}
+  m_LocalScale: {x: 0.61, y: 0.61, z: 0.61}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 895669708}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 27}
+  m_AnchoredPosition: {x: 0, y: 24.4}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1326031627
@@ -27644,7 +27644,7 @@ GameObject:
   - component: {fileID: 1456991781}
   - component: {fileID: 1456991780}
   - component: {fileID: 1456991779}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PhaseTwoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28380,13 +28380,59 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 904559016}
+  cycleAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Cycle
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: b9f41436-feb4-4408-878c-f756e95753b6
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: a5d53672-d579-4ece-bb2b-62980573f4bc
+        m_Path: <XRController>{LeftHand}/{SecondaryButton}
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Cycle
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  confirmAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Confirm
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 9b1c1628-2252-4d2c-bc50-1b2eca8de725
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 14199660-bb46-48c2-8a58-45fb2edca899
+        m_Path: <XRController>{LeftHand}/{Trigger}
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Confirm
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   leftController: {fileID: 1840991760}
   menuCanvas: {fileID: 2051962677}
+  phaseOneButton: {fileID: 445369505}
+  phaseTwoButton: {fileID: 1456991777}
+  phaseThreeButton: {fileID: 1978706199}
+  useColorHighlight: 0
+  normalScale: 1
+  highlightScale: 1.3
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  lerpSpeed: 8
   positionOffset: {x: 0, y: 0.1, z: 0}
   rotationOffset: {x: 45, y: 0, z: 0}
-  phaseOneButton: {fileID: 445369507}
-  phaseTwoButton: {fileID: 1456991779}
-  phaseThreeButton: {fileID: 1978706201}
 --- !u!4 &1520732929
 Transform:
   m_ObjectHideFlags: 0
@@ -29491,7 +29537,7 @@ GameObject:
   - component: {fileID: 1596585234}
   - component: {fileID: 1596585236}
   - component: {fileID: 1596585235}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30822,7 +30868,7 @@ MonoBehaviour:
   leftKicker: {fileID: 33290684}
   rightKicker: {fileID: 41013357}
   inputRouter: {fileID: 1553480281}
-  phaseTwoMinStrength: 0.5
+  phaseTwoMinStrength: 0.75
   autoAdvanceFromPhaseOne: 0
   autoAdvanceFromPhaseTwo: 0
   phaseTwoBallThreshold: 0
@@ -30855,7 +30901,7 @@ GameObject:
   - component: {fileID: 1782802672}
   - component: {fileID: 1782802674}
   - component: {fileID: 1782802673}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31239,8 +31285,8 @@ Transform:
   m_GameObject: {fileID: 1832245998}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 19.5071}
-  m_LocalScale: {x: 14, y: 1, z: 18.014208}
+  m_LocalPosition: {x: 0.7377, y: 0, z: 14.0551}
+  m_LocalScale: {x: 15.475599, y: 1, z: 28.918207}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2066972514}
@@ -31432,7 +31478,7 @@ Transform:
   m_GameObject: {fileID: 1859342537}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -31871,7 +31917,7 @@ GameObject:
   - component: {fileID: 1904845873}
   - component: {fileID: 1904845875}
   - component: {fileID: 1904845874}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32701,7 +32747,7 @@ GameObject:
   - component: {fileID: 1978706203}
   - component: {fileID: 1978706202}
   - component: {fileID: 1978706201}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PhaseThreeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33534,7 +33580,7 @@ GameObject:
   - component: {fileID: 2051962680}
   - component: {fileID: 2051962676}
   - component: {fileID: 2051962679}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PhaseMenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38774,7 +38820,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 127
   m_IsActive: 1
 --- !u!154 &2085130433
 TerrainCollider:
@@ -42074,10 +42120,10 @@ SceneRoots:
   - {fileID: 299768771}
   - {fileID: 373142229}
   - {fileID: 1772194677}
+  - {fileID: 1520732929}
   - {fileID: 429169306}
   - {fileID: 2066972514}
   - {fileID: 1008459419}
   - {fileID: 1299534964}
   - {fileID: 2085130435}
   - {fileID: 1283275982}
-  - {fileID: 1520732929}
