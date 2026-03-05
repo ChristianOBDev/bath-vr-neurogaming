@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using NeuroFeedback;
 
 public class NeuroChargeController : MonoBehaviour
 {

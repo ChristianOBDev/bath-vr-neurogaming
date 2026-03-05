@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using NeuroFeedback;    
 public class NeuroAccuracyTrial : MonoBehaviour
 {
     [Header("Refs")]

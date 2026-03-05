@@ -1,4 +1,5 @@
 using UnityEngine;
+using NeuroFeedback;
 
 public class NeuroBandTrainer : MonoBehaviour
 {

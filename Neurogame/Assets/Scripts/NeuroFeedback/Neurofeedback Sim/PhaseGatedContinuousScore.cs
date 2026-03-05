@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-
+using NeuroFeedback;
 public class PhaseGatedContinuousScore : MonoBehaviour
 {
     public static PhaseGatedContinuousScore Instance { get; private set; }
