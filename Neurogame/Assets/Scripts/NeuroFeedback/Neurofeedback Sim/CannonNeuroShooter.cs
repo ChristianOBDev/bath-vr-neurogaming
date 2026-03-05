@@ -1,4 +1,5 @@
 using UnityEngine;
+using NeuroFeedback;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;

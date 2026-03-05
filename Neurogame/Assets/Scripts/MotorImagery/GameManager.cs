@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
     [Tooltip("If true, choose one random spawner per bumper destruction")]
     public bool chooseRandomSpawner = true;
 
+    [Header("Bumper Population Control")]
+    public int minimumBumperCount = 8;
+    public float bumperCheckInterval = 2f;
+    private float bumperCheckTimer = 0f;
+
     [Header("Scoring")]
     public int baseBumperPoints = 100;
     public float comboWindow = 1f;
@@ -64,6 +69,16 @@ public class GameManager : MonoBehaviour
         SpawnBall(spawnRight);
     }
 
+    void Update()
+    {
+        bumperCheckTimer += Time.deltaTime;
+        if (bumperCheckTimer >= bumperCheckInterval)
+        {
+            bumperCheckTimer = 0f;
+            CheckBumperPopulation();
+        }
+    }
+
     public (int points, int combo) RegisterBumperHit(int pointOverride = -1)
     {
         float timeSinceLastHit = Time.time - lastHitTime;
@@ -113,7 +128,29 @@ public class GameManager : MonoBehaviour
                 Debug.Log($"Spawner[{i}]: {(bumperSpawners[i] == null ? "NULL" : bumperSpawners[i].name)}");
         }
     }
+    void CheckBumperPopulation()
+    {
+        int activeBumpers = FindObjectsByType<Bumper>(FindObjectsSortMode.None).Length;
 
+        if (verboseLogging)
+            Debug.Log($"Active bumpers: {activeBumpers} / minimum: {minimumBumperCount}");
+
+        if (activeBumpers < minimumBumperCount)
+        {
+            int deficit = minimumBumperCount - activeBumpers;
+
+            if (verboseLogging)
+                Debug.Log($"Bumper deficit of {deficit}, requesting spawns.");
+
+            for (int i = 0; i < deficit; i++)
+            {
+                if (bumperSpawners.Count == 0) break;
+                Spawner spawner = bumperSpawners[Random.Range(0, bumperSpawners.Count)];
+                if (spawner != null)
+                    spawner.RequestSpawn();
+            }
+        }
+    }
     public bool GetNextSpawnSide()
     {
         if (spawnDirectives == null || spawnDirectives.Length == 0)

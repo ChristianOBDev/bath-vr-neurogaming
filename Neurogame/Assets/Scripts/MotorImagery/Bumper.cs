@@ -17,8 +17,11 @@ public class Bumper : MonoBehaviour
     public bool playEffectOnKillzone = false;
 
     [Header("Drift")]
-    public float driftSpeed = 0.5f;
+    public float driftSpeedMin = 0.3f;
+    public float driftSpeedMax = 0.8f;
     public float driftStartDelay = 1f;
+
+    private float driftSpeed;
 
     [Header("Score Popup")]
     public GameObject scorePopupPrefab;
@@ -41,6 +44,7 @@ public class Bumper : MonoBehaviour
 
     void Start()
     {
+        driftSpeed = Random.Range(driftSpeedMin, driftSpeedMax);
         StartCoroutine(BeginDrift());
     }
 

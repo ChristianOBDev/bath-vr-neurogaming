@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using MotorImagery;
 using TMPro;
 
 public class PhaseMenuController : MonoBehaviour
