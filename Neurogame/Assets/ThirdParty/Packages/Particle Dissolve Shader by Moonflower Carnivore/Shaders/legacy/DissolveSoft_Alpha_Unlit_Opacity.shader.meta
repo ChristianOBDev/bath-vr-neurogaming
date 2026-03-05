@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 096645ed41dc5414b8b6d26a3aa9a3ef
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Shaders/legacy/DissolveSoft_Alpha_Unlit_Opacity.shader
+  uploadId: 184138

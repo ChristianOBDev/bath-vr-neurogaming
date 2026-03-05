@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 41a4ddea1f1bafa498c998e2c62fd528
+timeCreated: 1427584490
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Materials/Particle
+    sheet add.mat
+  uploadId: 184138
