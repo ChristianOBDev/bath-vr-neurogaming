@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d65195766ebf62f49821c9c5452fbe39
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Shaders/softrim/Particle_softrim_add_stretch.shader
+  uploadId: 184138

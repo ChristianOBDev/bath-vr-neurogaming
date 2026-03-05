@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using NeuroFeedback;
 
 #if ENABLE_INPUT_SYSTEM
@@ -9,7 +9,7 @@ public class CannonNeuroShooterAutoAim : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private PhaseManager phaseManager;
-    [SerializeField] private NeuroMultiTargetManager targetManager;   // <-- NEW: manager drives target selection
+    [SerializeField] private NeuroMultiTargetManager targetManager;
     [SerializeField] private NeuroFeedbackController neuro;
     [SerializeField] private NeuroMeter meter;
 
@@ -29,12 +29,15 @@ public class CannonNeuroShooterAutoAim : MonoBehaviour
     public float aimHeightOffset = 1.0f;
 
     [Header("Phase 1 Auto Fire")]
+    [Tooltip("Seconds between shots in Phase 1.")]
     public float phase1AutoFireInterval = 1.2f;
 
-    [Header("Charge (Phase 2/3)")]
-    public float chargeTime = 1.2f;
-    public float minChargeToFire = 0.2f;
-    private float charge;
+    [Header("Phase 2/3 Focus Window")]
+    [Tooltip("Seconds between shots in Phase 2/3 (gives user time to focus).")]
+    public float timeBetweenShotsPhase23 = 30f;
+
+    [Tooltip("If true, cannon auto-fires as soon as ready + locked stable in Phase 2/3.")]
+    public bool autoFireWhenReady = false;
 
     [Header("Spread/Wobble")]
     public Transform aimPivot;
@@ -42,19 +45,36 @@ public class CannonNeuroShooterAutoAim : MonoBehaviour
     public float maxSpreadDegrees = 6f;
     public float minSpreadDegrees = 0.5f;
 
-    [Header("Reload")]
-    public float baseReload = 0.7f;
-    public float maxExtraReloadWhenUnstable = 1.0f;
-    private float reloadTimer;
+    [Header("Aim Assist (Phase 2/3)")]
+    [Tooltip("Blend toward perfect aim in Phase 2 (0=no assist, 1=perfect).")]
+    [Range(0f, 1f)] public float phase2AimAssist = 0.65f;
 
-    [Header("Fallback")]
-    public float fallbackSpreadMultiplier = 1.6f;
+    [Tooltip("Blend toward perfect aim in Phase 3 (0=no assist, 1=perfect).")]
+    [Range(0f, 1f)] public float phase3AimAssist = 0.35f;
+
+    [Tooltip("Extra assist gained from stabilityScore (0..1).")]
+    [Range(0f, 1f)] public float stabilityAssistGain = 0.35f;
+
+    [Header("Manual Aim Assist (optional testing)")]
+    [Range(0f, 1f)] public float manualAimAssist01 = 0f;
+
+    [Header("Optimal Band Accuracy Boost")]
+    [Tooltip("When meter is in green band, spread is multiplied by this (smaller = more accurate).")]
+    [Range(0.01f, 1f)] public float optimalSpreadMultiplier = 0.25f;
+
+    [Tooltip("If true, you only get the accuracy boost when OptimalReady is true.")]
+    public bool requireOptimalHold = false;
+
+    [Header("UI Hit Chance (0..1)")]
+    [Range(0f, 1f)] public float hitChance01 = 0f;
 
     [Header("Debug")]
     public bool debugLogs = true;
 
     private float wobblePhase;
-    private float autoFireT;
+
+    // Unified cooldown used in all phases (Phase 1 uses phase1 interval, Phase 2/3 uses 30s)
+    private float shotCooldown;
 
 #if ENABLE_INPUT_SYSTEM
     void OnEnable()
@@ -77,57 +97,57 @@ public class CannonNeuroShooterAutoAim : MonoBehaviour
     void Update()
     {
         if (phaseManager == null || muzzle == null || projectilePrefab == null) return;
-        if (targetManager == null) return; // must be assigned
-
-        if (reloadTimer > 0f) reloadTimer -= Time.deltaTime;
+        if (targetManager == null) return;
 
         UpdateWobble();
 
+        if (shotCooldown > 0f)
+            shotCooldown -= Time.deltaTime;
+
         var phase = phaseManager.CurrentPhase;
 
-        // Phase 1: auto-fire
+        // -----------------------------
+        // Phase 1: auto-fire baseline
+        // -----------------------------
         if (phase == PhaseManager.Phase.Phase1_Baseline)
         {
-            autoFireT += Time.deltaTime;
-            if (autoFireT >= phase1AutoFireInterval)
-            {
-                autoFireT = 0f;
-                FireAtCurrentTarget(locked: true);
-            }
+            if (shotCooldown > 0f) return;
+
+            FireAtCurrentTarget();              // fires once
+            shotCooldown = phase1AutoFireInterval; // then waits
             return;
         }
 
-        // Phase 2/3: hold to charge, release to fire
-        bool holding = Input.GetKey(fireKey)
+        // -----------------------------------------
+        // Phase 2/3: one shot per focus window
+        // -----------------------------------------
+        bool pressed = Input.GetKeyDown(fireKey)
 #if ENABLE_INPUT_SYSTEM
                        || triggerHeld
 #endif
                        ;
 
-        if (holding)
-        {
-            float stability = (neuro != null) ? neuro.stabilityScore : 0.7f;
-            float m = (meter != null) ? meter.meterValue : 0.6f;
+        bool ready = shotCooldown <= 0f;
+        bool locked = (neuro != null) ? neuro.IsLockedStable : true;
 
-            float efficiency = Mathf.Lerp(0.8f, 1.35f, stability) * Mathf.Lerp(0.9f, 1.15f, m);
-            charge += (Time.deltaTime / Mathf.Max(0.01f, chargeTime)) * efficiency;
-            charge = Mathf.Clamp01(charge);
+        bool canFireNow = ready && locked;
+
+        if (autoFireWhenReady)
+        {
+            if (canFireNow)
+                FireAtCurrentTarget();
         }
         else
         {
-            if (charge >= minChargeToFire)
-            {
-                bool locked = (neuro != null) ? neuro.IsLockedStable : true;
-                FireAtCurrentTarget(locked);
-            }
-            charge = 0f;
+            if (pressed && canFireNow)
+                FireAtCurrentTarget();
+            else if (pressed && !canFireNow && debugLogs)
+                Debug.Log($"[CANNON] Can't fire. ready:{ready} locked:{locked} cooldown:{Mathf.Max(0f, shotCooldown):F1}s phase:{phase}");
         }
     }
 
-    private void FireAtCurrentTarget(bool locked)
+    private void FireAtCurrentTarget()
     {
-        if (reloadTimer > 0f) return;
-
         NeuroTargetHealth target = targetManager.GetCurrentAliveTarget();
         if (target == null)
         {
@@ -137,29 +157,67 @@ public class CannonNeuroShooterAutoAim : MonoBehaviour
 
         Vector3 targetPos = target.transform.position + Vector3.up * aimHeightOffset;
 
-        Vector3 v = ComputeBallisticVelocity(muzzle.position, targetPos, flightTime);
+        // Perfect ballistic velocity
+        Vector3 perfectV = ComputeBallisticVelocity(muzzle.position, targetPos, flightTime);
 
-        float stab = (neuro != null) ? neuro.stabilityScore : 0.7f;
+        float stab = (neuro != null) ? Mathf.Clamp01(neuro.stabilityScore) : 0.7f;
+
+        // Spread from stability
         float spread = Mathf.Lerp(maxSpreadDegrees, minSpreadDegrees, stab);
 
-        if (!locked)
-            spread *= fallbackSpreadMultiplier;
+        // Optimal band reduces spread
+        bool optimal = false;
+        if (meter != null)
+        {
+            optimal = requireOptimalHold ? meter.OptimalReady : meter.InOptimalBand;
+            if (optimal)
+                spread *= optimalSpreadMultiplier;
+        }
 
-        Rigidbody rb = Instantiate(projectilePrefab, muzzle.position, Quaternion.LookRotation(v.normalized, Vector3.up));
-        rb.linearVelocity = ApplySpread(v, spread);
+        // Apply spread first
+        Vector3 spreadV = ApplySpread(perfectV, spread);
 
-        float extraReload = Mathf.Lerp(maxExtraReloadWhenUnstable, 0f, stab);
-        reloadTimer = baseReload + extraReload;
+        // Aim assist blend (Phase2 > Phase3)
+        float baseAssist = (phaseManager.CurrentPhase == PhaseManager.Phase.Phase2_Assisted) ? phase2AimAssist : phase3AimAssist;
+        float assist = Mathf.Clamp01(baseAssist + stab * stabilityAssistGain + manualAimAssist01);
+
+        Vector3 finalDir = Vector3.Slerp(spreadV.normalized, perfectV.normalized, assist);
+        Vector3 finalV = finalDir * perfectV.magnitude;
+
+        // UI hit chance estimate
+        float spreadFactor = Mathf.InverseLerp(maxSpreadDegrees, minSpreadDegrees, Mathf.Clamp(spread, minSpreadDegrees, maxSpreadDegrees));
+        float meterFactor = (meter != null) ? meter.meterValue : 0.6f;
+        float optimalFactor = optimal ? 1f : 0.6f;
+
+        hitChance01 = Mathf.Clamp01(
+            (0.40f * spreadFactor) +
+            (0.25f * stab) +
+            (0.15f * meterFactor) +
+            (0.20f * assist)
+        ) * optimalFactor;
+
+        // Spawn projectile + shoot
+        Rigidbody rb = Instantiate(projectilePrefab, muzzle.position, Quaternion.LookRotation(finalV.normalized, Vector3.up));
+        rb.linearVelocity = finalV;
+
+        // Set cooldown depending on phase
+        if (phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline)
+            shotCooldown = phase1AutoFireInterval;
+        else
+            shotCooldown = timeBetweenShotsPhase23;
+
+        // Optional: reward “good shot” attempt (Phase-gated inside score manager)
+        PhaseGatedContinuousScore.Instance?.OnShotFired(stab, optimal, hitChance01);
 
         if (debugLogs)
-            Debug.Log($"[CANNON] Fired -> target:{target.name} locked:{locked} spread:{spread:F2} phase:{phaseManager.CurrentPhase}");
+            Debug.Log($"[CANNON] Fired. phase:{phaseManager.CurrentPhase} stab:{stab:F2} assist:{assist:F2} spread:{spread:F2} optimal:{optimal} chance:{hitChance01:F2} next:{shotCooldown:F0}s");
     }
 
     private void UpdateWobble()
     {
         if (aimPivot == null) return;
 
-        float stab = (neuro != null) ? neuro.stabilityScore : 0.7f;
+        float stab = (neuro != null) ? Mathf.Clamp01(neuro.stabilityScore) : 0.7f;
         float wobbleAmp = Mathf.Lerp(maxWobbleDegrees, 0.3f, stab);
 
         wobblePhase += Time.deltaTime * Mathf.Lerp(2.5f, 0.8f, stab);

@@ -14,7 +14,7 @@ public class FakeNeurofeedbackSource : MonoBehaviour, INeuroSignal
     [Header("Realism")]
     [Range(0.2f, 5f)] public float responsiveness = 1.2f; // low-pass speed
     [Range(0f, 1f)] public float noise = 0.18f;           // jitter
-    [Range(0f, 0.2f)] public float drift = 0.02f;          // slow drift
+    [Range(0f, 0.2f)] public float drift = 0.02f;         // slow drift
 
     [Header("Quality / Dropouts")]
     [Range(0f, 1f)] public float baseQuality = 0.95f;
@@ -24,6 +24,21 @@ public class FakeNeurofeedbackSource : MonoBehaviour, INeuroSignal
     [Header("Artifact Spikes")]
     [Range(0f, 1f)] public float artifactChancePerSecond = 0.04f;
     public Vector2 artifactStrengthRange = new Vector2(0.2f, 0.8f);
+
+    [Header("Manual Signal Offsets (testing)")]
+    public bool allowManualOffsets = true;
+
+    [Tooltip("Added to alpha target before noise/filtering.")]
+    [Range(-0.5f, 0.5f)] public float manualAlphaOffset = 0f;
+
+    [Tooltip("Added to beta target before noise/filtering.")]
+    [Range(-0.5f, 0.5f)] public float manualBetaOffset = 0f;
+
+    [Tooltip("Added to theta target before noise/filtering.")]
+    [Range(-0.5f, 0.5f)] public float manualThetaOffset = 0f;
+
+    [Tooltip("How fast offsets change when keys held.")]
+    public float offsetSpeed = 0.35f;
 
     [Header("Debug")]
     public bool debugLogs = true;
@@ -59,6 +74,24 @@ public class FakeNeurofeedbackSource : MonoBehaviour, INeuroSignal
             if (Input.GetKeyDown(KeyCode.Alpha3)) state = MentalState.Stressed;
         }
 
+        // Manual offsets for tuning/demo:
+        // Alpha: Q/E, Beta: A/D, Theta: Z/C
+        if (allowManualOffsets)
+        {
+            if (Input.GetKey(KeyCode.Q)) manualAlphaOffset -= offsetSpeed * Time.deltaTime;
+            if (Input.GetKey(KeyCode.E)) manualAlphaOffset += offsetSpeed * Time.deltaTime;
+
+            if (Input.GetKey(KeyCode.A)) manualBetaOffset -= offsetSpeed * Time.deltaTime;
+            if (Input.GetKey(KeyCode.D)) manualBetaOffset += offsetSpeed * Time.deltaTime;
+
+            if (Input.GetKey(KeyCode.Z)) manualThetaOffset -= offsetSpeed * Time.deltaTime;
+            if (Input.GetKey(KeyCode.C)) manualThetaOffset += offsetSpeed * Time.deltaTime;
+
+            manualAlphaOffset = Mathf.Clamp(manualAlphaOffset, -0.5f, 0.5f);
+            manualBetaOffset = Mathf.Clamp(manualBetaOffset, -0.5f, 0.5f);
+            manualThetaOffset = Mathf.Clamp(manualThetaOffset, -0.5f, 0.5f);
+        }
+
         if (Time.time >= nextTick)
         {
             nextTick += tickDt;
@@ -71,7 +104,7 @@ public class FakeNeurofeedbackSource : MonoBehaviour, INeuroSignal
             if (dbgT >= 1f)
             {
                 dbgT = 0f;
-                Debug.Log($"[EEG] State:{state} | Alpha:{Alpha:F2} | Beta:{Beta:F2} | Theta:{Theta:F2} | Quality:{Quality:F2}");
+                Debug.Log($"[EEG] State:{state} | Alpha:{Alpha:F2} | Beta:{Beta:F2} | Theta:{Theta:F2} | Quality:{Quality:F2} | Offsets A:{manualAlphaOffset:F2} B:{manualBetaOffset:F2} T:{manualThetaOffset:F2}");
             }
         }
     }
@@ -98,9 +131,9 @@ public class FakeNeurofeedbackSource : MonoBehaviour, INeuroSignal
                 break;
         }
 
-        aTarget += alphaDrift;
-        bTarget += betaDrift;
-        tTarget += thetaDrift;
+        aTarget += alphaDrift + manualAlphaOffset;
+        bTarget += betaDrift + manualBetaOffset;
+        tTarget += thetaDrift + manualThetaOffset;
 
         // dropouts (quality dips)
         if (dropoutTimer <= 0f && Random.value < dropoutChancePerSecond * dt)
