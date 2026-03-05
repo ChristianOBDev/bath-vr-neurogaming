@@ -7,7 +7,9 @@ public class WaterfallKillZone : MonoBehaviour
         BallController ball = other.GetComponent<BallController>();
         if (ball == null) return;
         if (ball.CurrentState == BallState.ReturningToKicker) return;
+        //if (ball.CurrentState == BallState.IdleInPool) return;
 
-        GameManager.Instance.HandleBallDeath(ball);
+        if (GameManager.Instance != null)
+            GameManager.Instance.HandleBallDeath(ball);
     }
 }

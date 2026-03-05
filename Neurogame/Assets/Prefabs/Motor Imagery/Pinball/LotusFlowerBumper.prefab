@@ -163,7 +163,8 @@ MonoBehaviour:
   burstOnContact: 0
   burstEffect: {fileID: 0}
   playEffectOnKillzone: 0
-  driftSpeed: 0.5
+  driftSpeedMin: 0.4
+  driftSpeedMax: 0.6
   driftStartDelay: 1
   scorePopupPrefab: {fileID: 5668767176656735919, guid: 67b085cf2c5d66b4f85962e814e6dee0, type: 3}
   hitSound: {fileID: 8300000, guid: 8a94abeacced12342a37a1f54f2a111d, type: 3}
