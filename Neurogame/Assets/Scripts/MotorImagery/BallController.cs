@@ -18,6 +18,10 @@ public class BallController : MonoBehaviour
 
     Rigidbody rb;
 
+    [Header("Layers")]
+    public string inactiveLayer = "Ball";
+    public string activeLayer = "BallActive";
+
     [Header("Return Motion")]
     public float returnDuration = 7f;
     public AnimationCurve returnCurve = AnimationCurve.Linear(0, 0, 1, 1);
@@ -32,6 +36,9 @@ public class BallController : MonoBehaviour
     [Tooltip("Maximum sideways drift applied during return")]
     [SerializeField, Min(0f)]
     private float lateralDriftMax = 0.7f;
+
+    [Header("Clamp Velocity")]
+    [SerializeField] private float maxVelocity = 20f;
 
     // Lateral offset randomly chosen when ball spawns
     private float lateralOffset = 0f;
@@ -80,7 +87,7 @@ public class BallController : MonoBehaviour
                 flowVelocity += Physics.gravity;
 
             // Apply flow velocity directly; overrides other forces
-            rb.linearVelocity = flowVelocity;
+            rb.AddForce(currentFlowDirection * currentFlowSpeed, ForceMode.Acceleration);
 
             return; // Skip center guidance or other logic while flowing
         }
@@ -106,6 +113,11 @@ public class BallController : MonoBehaviour
                 transform.position + Vector3.right * totalForce,
                 Color.green
             );
+
+            if (rb.linearVelocity.magnitude > maxVelocity)
+            {
+                rb.linearVelocity = rb.linearVelocity.normalized * maxVelocity;
+            }
         }
 
         // ------------------- FALLING STATE -------------------
@@ -118,8 +130,12 @@ public class BallController : MonoBehaviour
         }
     }
 
-
-
+    private void UpdateCollisionLayer()
+    {
+        bool bumperActive = currentState == BallState.OnWaterfall
+                         || currentState == BallState.Falling;
+        gameObject.layer = LayerMask.NameToLayer(bumperActive ? activeLayer : inactiveLayer);
+    }
 
     IEnumerator ReturnToKicker(Vector3 targetPos)
     {
@@ -163,6 +179,7 @@ public class BallController : MonoBehaviour
     {
         Debug.Log("Ball State changed to: " + newState);
         currentState = newState;
+        UpdateCollisionLayer();
     }
 
     public void BeginReturnPhase(Vector3 targetPos)

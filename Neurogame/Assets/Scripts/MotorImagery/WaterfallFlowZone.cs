@@ -30,5 +30,13 @@ public class WaterfallFlowZone : MonoBehaviour
             ball.ExitWaterfall();
         }
     }
+    private void OnTriggerStay(Collider other)
+    {
+        BallController ball = other.GetComponent<BallController>();
+        if (ball != null && ball.CurrentState != BallState.OnWaterfall)
+        {
+            ball.EnterWaterfall(flowDirection.normalized, flowSpeed, applyGravity);
+        }
+    }
 
 }
