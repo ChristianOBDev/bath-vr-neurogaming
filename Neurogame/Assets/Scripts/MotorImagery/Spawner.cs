@@ -20,6 +20,11 @@ public class Spawner : MonoBehaviour
 
     BoxCollider spawnVolume;
 
+    [Header("Special Bumper")]
+    public GameObject specialBumperPrefab;
+    [Range(0f, 1f)]
+    public float specialSpawnChance = 0.2f;
+
     void Awake()
     {
         spawnVolume = GetComponent<BoxCollider>();
@@ -42,20 +47,29 @@ public class Spawner : MonoBehaviour
         int spawned = 0;
         int safety = 0;
 
+        Debug.Log($"SpawnRoutine started. bumpersPerBurst: {bumpersPerBurst}, bumperPrefab: {(bumperPrefab == null ? "NULL" : bumperPrefab.name)}");
+
         while (spawned < bumpersPerBurst && safety < 50)
         {
             safety++;
-
             Vector3 candidatePosition = GetRandomPointInVolume();
 
             if (IsPositionClear(candidatePosition))
             {
-                Instantiate(bumperPrefab, candidatePosition, Quaternion.identity);
+                Debug.Log($"Position clear at {candidatePosition}, attempting instantiate...");
+                GameObject prefabToSpawn = bumperPrefab;
+                if (specialBumperPrefab != null && Random.value < specialSpawnChance)
+                    prefabToSpawn = specialBumperPrefab;
+
+                Instantiate(prefabToSpawn, candidatePosition, prefabToSpawn.transform.rotation);
                 spawned++;
             }
 
-            yield return null; // spread work over frames
+            yield return null;
         }
+
+        if (spawned < bumpersPerBurst)
+            Debug.LogWarning($"SpawnRoutine only spawned {spawned}/{bumpersPerBurst} bumpers after {safety} attempts.");
     }
 
     Vector3 GetRandomPointInVolume()
@@ -78,6 +92,9 @@ public class Spawner : MonoBehaviour
             collisionMask,
             QueryTriggerInteraction.Ignore
         );
+
+        foreach (var hit in hits)
+            Debug.Log($"Position blocked by: {hit.gameObject.name} on layer: {hit.gameObject.layer}");
 
         return hits.Length == 0;
     }

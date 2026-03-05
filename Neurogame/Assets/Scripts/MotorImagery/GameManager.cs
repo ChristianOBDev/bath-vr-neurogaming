@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,20 @@ public class GameManager : MonoBehaviour
     [Tooltip("If true, choose one random spawner per bumper destruction")]
     public bool chooseRandomSpawner = true;
 
+    [Header("Scoring")]
+    public int baseBumperPoints = 100;
+    public float comboWindow = 1f;
+    public int maxComboMultiplier = 5;
+
+
+    [Header("Debug")]
+    public bool verboseLogging = true;
+    public int currentScore;
+    public int CurrentScore => currentScore;
+    public int currentComboMultiplier = 1;
+
+    private float lastHitTime;
+
     [Header("Ball Spawn Control")]
     public Transform leftSpawnPoint;
     public Transform rightSpawnPoint;
@@ -22,12 +37,15 @@ public class GameManager : MonoBehaviour
     [Tooltip("True = Right side, False = Left side")]
     public bool[] spawnDirectives = new bool[60];
 
-    int spawnIndex = 0;
+    public int spawnIndex = 0;
 
     [Header("Ball Settings")]
     public GameObject ballPrefab;
+    public float ballRespawnDelay = 2f;
 
     BallController currentBall;
+
+    private Coroutine respawnCoroutine;
 
 
     void Awake()
@@ -46,37 +64,53 @@ public class GameManager : MonoBehaviour
         SpawnBall(spawnRight);
     }
 
+    public (int points, int combo) RegisterBumperHit(int pointOverride = -1)
+    {
+        float timeSinceLastHit = Time.time - lastHitTime;
+        if (timeSinceLastHit <= comboWindow)
+            currentComboMultiplier = Mathf.Min(currentComboMultiplier + 1, maxComboMultiplier);
+        else
+            currentComboMultiplier = 1;
+
+        int basePoints = pointOverride >= 0 ? pointOverride : baseBumperPoints;
+        int pointsEarned = basePoints * currentComboMultiplier;
+        currentScore += pointsEarned;
+        lastHitTime = Time.time;
+
+        return (pointsEarned, currentComboMultiplier);
+    }
+
     /// <summary>
     /// Called by a bumper when it is destroyed.
     /// </summary>
     public void OnBumperDestroyed(Bumper bumper)
     {
-
-        Debug.Log($"Bumper destroyed: {bumper.name}");
+        bumperSpawners.RemoveAll(s => s == null);
 
         if (bumperSpawners.Count == 0)
         {
-            Debug.LogWarning("No spawners registered!");
-            return;
+            if (verboseLogging)
+            {
+                Debug.LogWarning("No valid spawners registered!");
+                return;
+            }
         }
-
-        if (bumperSpawners.Count == 0)
-            return;
 
         if (chooseRandomSpawner)
         {
-            Spawner spawner =
-                bumperSpawners[Random.Range(0, bumperSpawners.Count)];
-
+            Spawner spawner = bumperSpawners[Random.Range(0, bumperSpawners.Count)];
             spawner.RequestSpawn();
         }
         else
         {
-            // Trigger all spawners (optional behavior)
             foreach (var spawner in bumperSpawners)
-            {
                 spawner.RequestSpawn();
-            }
+        }
+        if (verboseLogging)
+        {
+            Debug.Log($"OnBumperDestroyed called. List count: {bumperSpawners.Count}");
+            for (int i = 0; i < bumperSpawners.Count; i++)
+                Debug.Log($"Spawner[{i}]: {(bumperSpawners[i] == null ? "NULL" : bumperSpawners[i].name)}");
         }
     }
 
@@ -113,14 +147,41 @@ public class GameManager : MonoBehaviour
         currentBall.BeginReturnPhase(targetPos);
     }
 
-
     public void HandleBallDeath(BallController ball)
     {
         Destroy(ball.gameObject);
-
-        bool spawnRight = GetNextSpawnSide();
-
-        SpawnBall(spawnRight);
+        currentBall = null;
+        if (respawnCoroutine != null)
+            StopCoroutine(respawnCoroutine);
+        respawnCoroutine = StartCoroutine(RespawnBallAfterDelay());
     }
 
+    private IEnumerator RespawnBallAfterDelay()
+    {
+        yield return new WaitForSeconds(ballRespawnDelay);
+        bool spawnRight = GetNextSpawnSide();
+        SpawnBall(spawnRight);
+    }
+    public void ResetAndRespawn()
+    {
+        // Cancel any pending delayed respawn
+        if (respawnCoroutine != null)
+        {
+            StopCoroutine(respawnCoroutine);
+            respawnCoroutine = null;
+        }
+
+        spawnIndex = 0;
+
+        if (currentBall != null)
+        {
+            Destroy(currentBall.gameObject);
+            currentBall = null;
+        }
+
+        bool spawnRight = GetNextSpawnSide();
+        SpawnBall(spawnRight);
+
+        Debug.Log("Spawn index reset and ball respawned.");
+    }
 }
