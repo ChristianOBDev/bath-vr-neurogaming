@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 578c7b5ceacee2f4ca4c7b9c1ec31b75
+timeCreated: 1427584696
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Prefabs/Explosion
+    loop mobile.prefab
+  uploadId: 184138

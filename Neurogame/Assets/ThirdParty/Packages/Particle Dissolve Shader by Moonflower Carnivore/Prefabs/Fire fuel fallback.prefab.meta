@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 245191202050321409424466409a4448
+timeCreated: 1427029762
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Prefabs/Fire
+    fuel fallback.prefab
+  uploadId: 184138
