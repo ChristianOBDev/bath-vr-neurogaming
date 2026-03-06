@@ -101,7 +101,7 @@ Material:
     - _CameraNearFadeDistance: 1
     - _Camera_Fade_Far: 20
     - _Camera_Fade_Near: 0
-    - _Camera_Fade_Smoothness: 1.5
+    - _Camera_Fade_Smoothness: 2
     - _CastShadows: 0
     - _ColorMode: 1
     - _Cull: 2
@@ -114,9 +114,9 @@ Material:
     - _DstBlend: 1
     - _DstBlendAlpha: 1
     - _EmissionEnabled: 0
-    - _Enable_Camera_Fade: 0
+    - _Enable_Camera_Fade: 1
     - _Enable_Scene_Fog: 0
-    - _Enable_Soft_Particles: 1
+    - _Enable_Soft_Particles: 0
     - _FlipbookBlending: 0
     - _FlipbookMode: 0
     - _GlossMapScale: 1
@@ -134,7 +134,7 @@ Material:
     - _SoftParticlesFarFadeDistance: 1
     - _SoftParticlesNearFadeDistance: 0
     - _Soft_Distance: 2
-    - _Soft_Power: 1
+    - _Soft_Power: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _SrcBlendAlpha: 1

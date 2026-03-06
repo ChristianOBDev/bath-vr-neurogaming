@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Anchor
+  - Killzone
   - PowerUp
   - Obstacle
   - Canoe
@@ -16,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Bumper
+  - Ball
+  - BallActive
   - 
   - 
   - 

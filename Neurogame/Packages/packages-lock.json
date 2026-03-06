@@ -36,6 +36,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.cinemachine": {
+      "version": "2.10.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.31"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.collections": {
       "version": "2.6.2",
       "depth": 2,
@@ -141,14 +150,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.polybrush": {
-      "version": "file:C:/Users/ctob20/Downloads/com.unity.polybrush-1.2.1/com.unity.polybrush-1.2.1",
+    "com.unity.postprocessing": {
+      "version": "3.5.3",
       "depth": 0,
-      "source": "local",
+      "source": "registry",
       "dependencies": {
-        "com.unity.settings-manager": "2.0.1",
-        "com.unity.modules.imgui": "1.0.0"
-      }
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.profiling.core": {
       "version": "1.0.3",
@@ -222,6 +232,16 @@
         "com.unity.searcher": "4.9.3"
       }
     },
+    "com.unity.terrain-tools": {
+      "version": "5.3.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.terrain": "1.0.0",
+        "com.unity.modules.terrainphysics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
       "version": "1.6.0",
       "depth": 1,
@@ -286,7 +306,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.arfoundation": {
-      "version": "6.3.2",
+      "version": "6.3.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
