@@ -82,7 +82,7 @@ public class Chunk : MonoBehaviour, IPoolable<Chunk>
 
     moveSpeed = speed;
     chunkLength = length;
-    transform.position = startPosition;
+    transform.localPosition = startPosition;
     gameObject.SetActive(true);
   }
 
@@ -145,7 +145,7 @@ public class Chunk : MonoBehaviour, IPoolable<Chunk>
   public void Tick(float deltaTime)
   {
     float moveAmount = moveSpeed * deltaTime;
-    transform.Translate(Vector3.back * moveAmount, Space.World);
+    transform.Translate(Vector3.back * moveAmount, Space.Self);
 
     CheckAndFireActivation();
     if (active) CheckAndFirePassed();
@@ -185,7 +185,7 @@ public class Chunk : MonoBehaviour, IPoolable<Chunk>
   {
     if (active) return;
 
-    if (transform.position.z <= ACTIVATION_THRESHOLD)
+    if (transform.localPosition.z <= ACTIVATION_THRESHOLD)
     {
       MVEPGameEvents.OnChunkActivated?.Invoke(this);
       active = true;
@@ -199,7 +199,7 @@ public class Chunk : MonoBehaviour, IPoolable<Chunk>
   {
     if (passed) return;
 
-    if (transform.position.z <= -chunkLength)
+    if (transform.localPosition.z <= -chunkLength)
     {
       MVEPGameEvents.OnChunkPassed?.Invoke(this);
       passed = true;

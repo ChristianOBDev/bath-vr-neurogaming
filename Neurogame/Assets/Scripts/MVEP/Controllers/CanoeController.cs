@@ -140,7 +140,7 @@ public class CanoeController : MonoBehaviour
   private void PerformLaneChange(int targetLaneIndex, float duration, System.Action onComplete = null)
   {
     float targetX = laneConfig.GetLaneXPosition(targetLaneIndex);
-    LTDescr tween = transform.LeanMoveX(targetX, duration)
+    LTDescr tween = transform.LeanMoveLocalX(targetX, duration)
       .setEaseInOutSine()
       .setOnComplete(() =>
       {
@@ -155,7 +155,7 @@ public class CanoeController : MonoBehaviour
   private void RockTheBoat()
   {
     float randomX = Random.Range(-ROCK_OFFSET_RANGE, ROCK_OFFSET_RANGE);
-    transform.LeanMoveX(transform.position.x + randomX, ROCK_DURATION)
+    transform.LeanMoveLocalX(transform.position.x + randomX, ROCK_DURATION)
       .setEaseInOutSine()
       .setLoopPingPong(2);
     transform.LeanRotateZ(ROCK_ANGLE, ROCK_DURATION)
