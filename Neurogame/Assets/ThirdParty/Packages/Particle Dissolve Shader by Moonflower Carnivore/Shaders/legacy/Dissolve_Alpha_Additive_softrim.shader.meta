@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 21e71ef5d6df5054a9447e6b23e6d37a
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Shaders/legacy/Dissolve_Alpha_Additive_softrim.shader
+  uploadId: 184138

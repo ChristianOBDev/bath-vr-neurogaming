@@ -3411,6 +3411,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PhaseMenu",
+                    "type": "Button",
+                    "id": "17ceb58a-c350-4633-a2ca-eeb866f514f6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -3422,6 +3431,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "KickerAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8b820b87-fa35-441f-88b7-e5441a5cf70d",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PhaseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

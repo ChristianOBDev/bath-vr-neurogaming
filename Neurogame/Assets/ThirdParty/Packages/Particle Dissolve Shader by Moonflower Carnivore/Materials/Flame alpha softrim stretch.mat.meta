@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 686c6926e5ca779418fef75409735697
+timeCreated: 1427528374
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Materials/Flame
+    alpha softrim stretch.mat
+  uploadId: 184138

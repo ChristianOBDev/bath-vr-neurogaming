@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 46ffdb0e4f680fa43ac8145aca7dc14c
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 33631
+  packageName: Particle Dissolve Shader Package
+  packageVersion: 1.2
+  assetPath: Assets/Particle Dissolve Shader by Moonflower Carnivore/Shaders/softrim/Particle_softrim_add.shader
+  uploadId: 184138
