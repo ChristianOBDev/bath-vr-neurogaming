@@ -12,7 +12,6 @@ public class FishJumper : MonoBehaviour
   private const float JUMP_ROTATION_ANGLE = 60f;
   private const float JUMP_UP_DURATION = 1f;
   private const float JUMP_DOWN_DURATION = 0f;
-  private const int INVALID_LANE = -1;
 
   // Configuration
   private LaneConfiguration laneConfig;
