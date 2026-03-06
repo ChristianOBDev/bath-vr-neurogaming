@@ -122,7 +122,7 @@ public class ChunkManager : MonoBehaviour
   /// <returns>World position for the chunk.</returns>
   private Vector3 GetChunkPosition(int index)
   {
-    return chunkLength * index * Vector3.forward;
+    return transform.localPosition + chunkLength * index * Vector3.forward;
   }
 
   /// <summary>
@@ -147,7 +147,7 @@ public class ChunkManager : MonoBehaviour
 
     Chunk firstChunk = activeChunks[0];
 
-    if (firstChunk.transform.position.z <= -recycleThreshold)
+    if (firstChunk.transform.localPosition.z <= -recycleThreshold)
     {
       RecycleChunk(firstChunk);
     }
@@ -163,8 +163,8 @@ public class ChunkManager : MonoBehaviour
     activeChunks.Remove(chunk);
     chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
 
-    float newZ = activeChunks[^1].transform.position.z + chunkLength;
-    chunk.transform.position = new Vector3(0, 0, newZ);
+    float newZ = activeChunks[^1].transform.localPosition.z + chunkLength;
+    chunk.transform.localPosition = new Vector3(0, 0, newZ);
     chunk.SetSpeed(chunkSpeed);
     chunk.Reset();
 
