@@ -9,11 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eac3bd4dd049a4c48a0e550219b404ac, type: 3}
-  m_Name: MVEPConfig
-  m_EditorClassIdentifier: Assembly-CSharp::MVEPConfiguration
+  m_Script: {fileID: 11500000, guid: 6ead9b68bce93684498003aa563acc56, type: 3}
+  m_Name: MVEPTimingConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MVEPTimingConfiguration
+  chunkLength: 30
+  traversalDuration: 2.5
+  laneChangeDuration: 1
+  laneResetDuration: 1
   numStimuli: 5
-  arrowPreactivationTime: 1
+  arrowPreactivationDuration: 1.2
   pulseDuration: 0.14
   pulseOffset: 0.06
   p300Interval: 0.3
