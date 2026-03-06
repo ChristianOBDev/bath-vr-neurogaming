@@ -121,6 +121,7 @@ Material:
     - _Deep_Power: 8.18
     - _Depth_Power_Multiplier: 1.99
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _Enable_Depth: 1
     - _Enable_Refraction: 1
     - _Enable_Side_Fresnel: 1
@@ -150,6 +151,7 @@ Material:
     - _Smoothness: 0.2
     - _Spread: 0.337
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _Steps: 0
     - _Surface: 1
     - _Tiling: 1
