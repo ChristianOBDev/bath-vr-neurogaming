@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class Spawner : MonoBehaviour
 {
+    [Header("Debug")]
+    public bool spawnerDebugLogging = false;
+
     [Header("Spawned Object")]
     public GameObject bumperPrefab;
 
@@ -93,8 +96,11 @@ public class Spawner : MonoBehaviour
             QueryTriggerInteraction.Ignore
         );
 
-        foreach (var hit in hits)
-            Debug.Log($"Position blocked by: {hit.gameObject.name} on layer: {hit.gameObject.layer}");
+        if (spawnerDebugLogging)
+        {
+            foreach (var hit in hits)
+                Debug.Log($"Position blocked by: {hit.gameObject.name} on layer: {hit.gameObject.layer}");
+        }
 
         return hits.Length == 0;
     }

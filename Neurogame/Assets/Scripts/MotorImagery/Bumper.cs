@@ -98,7 +98,7 @@ public class Bumper : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Bumper trigger entered by: {other.gameObject.name} tag: {other.tag}");
+        // Debug.Log($"Bumper trigger entered by: {other.gameObject.name} tag: {other.tag}"); // Debug log
         if (dying) return;
         if (other.CompareTag("Killzone"))
             StartCoroutine(KillzoneBurst());
@@ -132,11 +132,17 @@ public class Bumper : MonoBehaviour
     void SpawnPopup(int points, int combo)
     {
         if (scorePopupPrefab == null) return;
+
+        Quaternion spawnRotation = SceneOrientation.Instance != null
+            ? SceneOrientation.Instance.transform.rotation
+            : Quaternion.identity;
+
         GameObject popup = Instantiate(
             scorePopupPrefab,
             transform.position + Vector3.up * 0.5f,
-            Quaternion.identity
+            spawnRotation
         );
+
         ScorePopup sp = popup.GetComponent<ScorePopup>();
         if (sp != null) sp.Init(points, combo);
     }
@@ -156,8 +162,9 @@ public class Bumper : MonoBehaviour
         if (burstEffect != null)
             Instantiate(burstEffect, transform.position, Quaternion.identity);
 
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnBumperDestroyed(this);
+        if (GameManager.Instance.verboseLogging)
+            Debug.Log($"Bumper destroyed: {gameObject.name}");
+        GameManager.Instance.OnBumperDestroyed(this);
 
         Destroy(gameObject);
     }
