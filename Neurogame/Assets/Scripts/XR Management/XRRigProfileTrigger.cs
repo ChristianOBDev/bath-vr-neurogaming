@@ -7,11 +7,16 @@ public class XRRigProfileTrigger : MonoBehaviour
   public Transform constraintSource;
   public Vector3 constraintOffset;
 
+  public Transform resetPoint;
+
   private XRRigController rigController;
 
   void Start()
   {
     rigController = XRRigController.Instance;
+
+    if (profile.inputActions != null)
+      profile.inputActions.Disable();
   }
 
   void OnTriggerEnter(Collider other)
@@ -32,6 +37,17 @@ public class XRRigProfileTrigger : MonoBehaviour
     if (constraintSource != null)
     {
       rigController.ApplyConstraints(constraintSource, constraintOffset);
+    }
+  }
+
+  public void Reset()
+  {
+    if (rigController != null)
+    {
+      rigController.ResetRig(resetPoint);
+
+      if (profile.inputActions != null)
+        profile.inputActions.Disable();
     }
   }
 }
