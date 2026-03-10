@@ -18,12 +18,11 @@ public class XRRigController : Singleton<XRRigController>
   [Header("Constraints")]
   public PositionConstraint positionConstraint;
 
-  XRRigProfile activeProfile;
+  [Header("Default Profile")]
+  public XRRigProfile defaultProfile;
 
   public void ApplyProfileSettings(XRRigProfile profile)
   {
-    activeProfile = profile;
-
     ApplyCameraSettings(profile);
     ApplyLocomotion(profile);
     ApplyInput(profile);
@@ -72,5 +71,17 @@ public class XRRigController : Singleton<XRRigController>
     }
   }
 
+  public void ResetRig(Transform newResetPoint)
+  {
+    Debug.Log("Resetting rig to default profile and position.");
+    if (positionConstraint != null)
+    {
+      positionConstraint.constraintActive = false;
+      positionConstraint.RemoveSource(0);
+      positionConstraint.enabled = false;
+    }
 
+    ApplyPositionAndRotation(newResetPoint);
+    ApplyProfileSettings(defaultProfile);
+  }
 }
