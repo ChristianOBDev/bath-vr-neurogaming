@@ -47,4 +47,10 @@ public static class MVEPGameEvents
   /// Fired when a chunk is completely passed and no longer in play. Contains the passed chunk.
   /// </summary>
   public static Action<Chunk> OnChunkPassed;
+
+  // ========== Game Phase Events ==========
+  /// <summary>
+  /// Fired when the game phase changes. Contains the new game phase.
+  /// </summary>
+  public static Action<MVEPGamePhase> OnPhaseChanged;
 }
