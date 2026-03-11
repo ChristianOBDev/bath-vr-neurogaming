@@ -215,4 +215,9 @@ public class Chunk : MonoBehaviour, IPoolable<Chunk>
   {
     return laneIndex >= 0 && laneIndex < slalomPoles.Length;
   }
+
+  public bool IsValid()
+  {
+    return powerUpLane >= 0 && powerUpLane < slalomPoles.Length || obstacleLane >= 0 && obstacleLane < slalomPoles.Length;
+  }
 }
