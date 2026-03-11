@@ -7,11 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MVEPScoreManager : MonoBehaviour
 {
-  // Default Score Values
-  private const int DEFAULT_SCORE_PER_CHUNK = 10;
-  private const int DEFAULT_SCORE_PER_POWERUP = 50;
-  private const int DEFAULT_SCORE_PENALTY_PER_OBSTACLE = 30;
-
   // Configuration
   private int scorePerChunk;
   private int scorePerPowerUp;
@@ -33,7 +28,7 @@ public class MVEPScoreManager : MonoBehaviour
   /// </summary>
   private void Start()
   {
-    var settings = MVEPGameSettings.Instance;
+    var settings = MVEPGameManager.Instance;
     scorePerChunk = settings.scoreConfig.scorePerChunk;
     scorePerPowerUp = settings.scoreConfig.scorePerPowerUp;
     scorePenaltyPerObstacle = settings.scoreConfig.scorePenaltyPerObstacle;
@@ -67,7 +62,7 @@ public class MVEPScoreManager : MonoBehaviour
   private void HandleChunkPassed(Chunk chunk)
   {
     // Only award chunk points if chunk had an obstacle (ObstacleLane >= 0)
-    if (chunk.ObstacleLane >= 0)
+    if (chunk.IsValid())
     {
       chunkScore += scorePerChunk;
       RecalculateScore();
