@@ -63,15 +63,25 @@ public class XRRigController : Singleton<XRRigController>
   {
     if (pokeInteractors != null)
       foreach (var interactor in pokeInteractors)
+      {
+        interactor.enabled = profile.enablePokeInteractor;
         interactor.gameObject.SetActive(profile.enablePokeInteractor);
+      }
 
     if (nearFarInteractors != null)
       foreach (var interactor in nearFarInteractors)
+      {
+        interactor.enabled = profile.enableNearFarInteractor;
         interactor.gameObject.SetActive(profile.enableNearFarInteractor);
+      }
+
 
     if (teleportRayInteractors != null)
       foreach (var interactor in teleportRayInteractors)
+      {
+        interactor.enabled = profile.enableTeleport;
         interactor.gameObject.SetActive(profile.enableTeleport);
+      }
   }
 
   public void ApplyVisuals(XRRigProfile profile)
