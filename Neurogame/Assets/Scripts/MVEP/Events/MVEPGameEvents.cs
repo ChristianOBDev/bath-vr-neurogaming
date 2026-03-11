@@ -27,6 +27,21 @@ public static class MVEPGameEvents
   // ========== Game State Events ==========
 
   /// <summary>
+  /// Fired when the game starts.
+  /// </summary>
+  public static Action OnGameStarted;
+
+  /// <summary>
+  /// Fired when the game is paused.
+  /// </summary>
+  public static Action OnGamePaused;
+
+  /// <summary>
+  /// Fired when the game is resumed.
+  /// </summary>
+  public static Action OnGameResumed;
+
+  /// <summary>
   /// Fired when the game speed changes. Contains the new speed value.
   /// </summary>
   public static Action<float> OnSpeedChanged;
@@ -47,6 +62,11 @@ public static class MVEPGameEvents
   /// Fired when a chunk is completely passed and no longer in play. Contains the passed chunk.
   /// </summary>
   public static Action<Chunk> OnChunkPassed;
+
+  /// <summary>
+  /// Fired when the game ends.
+  /// </summary>
+  public static Action OnGameEnded;
 
   // ========== Game Phase Events ==========
   /// <summary>
