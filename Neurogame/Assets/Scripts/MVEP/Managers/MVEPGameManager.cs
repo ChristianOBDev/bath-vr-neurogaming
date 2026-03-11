@@ -45,17 +45,11 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
 
   private void OnEnable()
   {
-    if (rigProfileTrigger != null)
-      rigProfileTrigger.onRigProfileApplied += SpawnChunks;
-
     MVEPGameEvents.OnChunkPassed += HandleChunkPassed;
   }
 
   private void OnDisable()
   {
-    if (rigProfileTrigger != null)
-      rigProfileTrigger.onRigProfileApplied -= SpawnChunks;
-
     MVEPGameEvents.OnChunkPassed -= HandleChunkPassed;
   }
 
@@ -63,20 +57,26 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
 
   #region Public API
 
-  /// <summary>
-  /// fire once the appropriate rig profile has been applied.
-  /// </summary>
-  public void SpawnChunks() => chunkManager.SpawnInitialChunks();
+  public void StartGame()
+  {
+    TrialsCompleted = 0;
+    MVEPGameEvents.OnGameStarted?.Invoke();
+  }
 
-  public void StartGame() => chunkManager.ActivateGame(true);
+  public void PauseGame()
+  {
+    MVEPGameEvents.OnGamePaused?.Invoke();
+  }
 
-  public void PauseGame() => chunkManager.ActivateGame(false);
+  public void ResumeGame()
+  {
+    MVEPGameEvents.OnGameResumed?.Invoke();
+  }
 
   public void QuitGame()
   {
     if (rigProfileTrigger != null) rigProfileTrigger.Reset();
-    PauseGame();
-    chunkManager.ClearChunks();
+    MVEPGameEvents.OnGameEnded?.Invoke();
   }
 
   /// <summary>
