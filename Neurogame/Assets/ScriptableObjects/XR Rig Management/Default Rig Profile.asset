@@ -16,4 +16,7 @@ MonoBehaviour:
   enableContinuousMove: 1
   enableTeleport: 1
   enableSnapTurn: 1
+  enablePokeInteractor: 1
+  enableNearFarInteractor: 1
+  controllerVisuals: 0
   inputActions: {fileID: 0}

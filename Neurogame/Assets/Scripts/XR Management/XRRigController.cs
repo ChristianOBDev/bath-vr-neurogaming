@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.XR.CoreUtils;
 using UnityEngine.Animations;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
@@ -15,8 +16,19 @@ public class XRRigController : Singleton<XRRigController>
   public TeleportationProvider teleportProvider;
   public SnapTurnProvider snapTurnProvider;
 
+  [Header("Interactors")]
+  public XRPokeInteractor[] pokeInteractors;
+  public NearFarInteractor[] nearFarInteractors;
+  public XRRayInteractor[] teleportRayInteractors;
+
   [Header("Constraints")]
   public PositionConstraint positionConstraint;
+
+  [Header("Visuals")]
+  public GameObject[] defaultVisuals;
+  public GameObject[] motorImageryVisuals;
+  public GameObject[] mvepVisuals;
+  public GameObject[] neuroFeedbackVisuals;
 
   [Header("Default Profile")]
   public XRRigProfile defaultProfile;
@@ -25,6 +37,8 @@ public class XRRigController : Singleton<XRRigController>
   {
     ApplyCameraSettings(profile);
     ApplyLocomotion(profile);
+    ApplyInteractors(profile);
+    ApplyVisuals(profile);
     ApplyInput(profile);
   }
 
@@ -43,6 +57,73 @@ public class XRRigController : Singleton<XRRigController>
 
     if (snapTurnProvider != null)
       snapTurnProvider.enabled = profile.enableSnapTurn;
+  }
+
+  public void ApplyInteractors(XRRigProfile profile)
+  {
+    if (pokeInteractors != null)
+      foreach (var interactor in pokeInteractors)
+      {
+        interactor.enabled = profile.enablePokeInteractor;
+        interactor.gameObject.SetActive(profile.enablePokeInteractor);
+      }
+
+    if (nearFarInteractors != null)
+      foreach (var interactor in nearFarInteractors)
+      {
+        interactor.enabled = profile.enableNearFarInteractor;
+        interactor.gameObject.SetActive(profile.enableNearFarInteractor);
+      }
+
+
+    if (teleportRayInteractors != null)
+      foreach (var interactor in teleportRayInteractors)
+      {
+        interactor.enabled = profile.enableTeleport;
+        interactor.gameObject.SetActive(profile.enableTeleport);
+      }
+  }
+
+  public void ApplyVisuals(XRRigProfile profile)
+  {
+    switch (profile.controllerVisuals)
+    {
+      case ControllerVisuals.Default:
+        SetVisualsActive(defaultVisuals, true);
+        SetVisualsActive(motorImageryVisuals, false);
+        SetVisualsActive(mvepVisuals, false);
+        SetVisualsActive(neuroFeedbackVisuals, false);
+        break;
+      case ControllerVisuals.MotorImagery:
+        SetVisualsActive(defaultVisuals, false);
+        SetVisualsActive(motorImageryVisuals, true);
+        SetVisualsActive(mvepVisuals, false);
+        SetVisualsActive(neuroFeedbackVisuals, false);
+        break;
+      case ControllerVisuals.MVEP:
+        SetVisualsActive(defaultVisuals, false);
+        SetVisualsActive(motorImageryVisuals, false);
+        SetVisualsActive(mvepVisuals, true);
+        SetVisualsActive(neuroFeedbackVisuals, false);
+        break;
+      case ControllerVisuals.NeuroFeedback:
+        SetVisualsActive(defaultVisuals, false);
+        SetVisualsActive(motorImageryVisuals, false);
+        SetVisualsActive(mvepVisuals, false);
+        SetVisualsActive(neuroFeedbackVisuals, true);
+        break;
+    }
+  }
+
+  private void SetVisualsActive(GameObject[] visuals, bool active)
+  {
+    if (visuals == null) return;
+
+    foreach (var visual in visuals)
+    {
+      if (visual != null)
+        visual.SetActive(active);
+    }
   }
 
   public void ApplyInput(XRRigProfile profile)
