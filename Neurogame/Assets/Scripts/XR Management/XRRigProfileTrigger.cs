@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class XRRigProfileTrigger : MonoBehaviour
@@ -10,6 +11,9 @@ public class XRRigProfileTrigger : MonoBehaviour
   public Transform resetPoint;
 
   private XRRigController rigController;
+
+  public Action onRigProfileApplied;
+  public Action onRigReset;
 
   void Start()
   {
@@ -38,6 +42,8 @@ public class XRRigProfileTrigger : MonoBehaviour
     {
       rigController.ApplyConstraints(constraintSource, constraintOffset);
     }
+
+    onRigProfileApplied?.Invoke();
   }
 
   public void Reset()
@@ -48,6 +54,8 @@ public class XRRigProfileTrigger : MonoBehaviour
 
       if (profile.inputActions != null)
         profile.inputActions.Disable();
+
+      onRigReset?.Invoke();
     }
   }
 }
