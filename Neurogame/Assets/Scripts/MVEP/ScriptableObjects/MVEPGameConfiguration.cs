@@ -9,6 +9,6 @@ public class MVEPGameConfiguration : ScriptableObject
   [SerializeField] private float scoreMax;
   public float ScoreMax => scoreMax;
 
-  [SerializeField] private float warmUpChunks;
-  public float WarmUpChunks => warmUpChunks;
+  [SerializeField] private int warmUpChunks;
+  public int WarmUpChunks => warmUpChunks;
 }
