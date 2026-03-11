@@ -153,7 +153,7 @@ public class CanoeController : MonoBehaviour
   private void RockTheBoat()
   {
     float randomX = Random.Range(-ROCK_OFFSET_RANGE, ROCK_OFFSET_RANGE);
-    transform.LeanMoveLocalX(transform.position.x + randomX, ROCK_DURATION)
+    transform.LeanMoveLocalX(transform.localPosition.x + randomX, ROCK_DURATION)
       .setEaseInOutSine()
       .setLoopPingPong(2);
     transform.LeanRotateZ(ROCK_ANGLE, ROCK_DURATION)
