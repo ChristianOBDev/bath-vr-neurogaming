@@ -14,9 +14,9 @@ public class MVEPInputManager : MonoBehaviour
   public static Action<int> OnLaneInput;
 
   // Test inputs
-  [SerializeField] private InputActionReference spawnChunks;
   [SerializeField] private InputActionReference startGame;
   [SerializeField] private InputActionReference pauseGame;
+  [SerializeField] private InputActionReference resumeGame;
   [SerializeField] private InputActionReference quitGame;
 
   [SerializeField] private InputActionAsset inputActions;
@@ -31,9 +31,9 @@ public class MVEPInputManager : MonoBehaviour
     lane4.action.performed += (ctx) => OnLaneInput?.Invoke(3);
     lane5.action.performed += (ctx) => OnLaneInput?.Invoke(4);
 
-    spawnChunks.action.performed += SpawnChunks;
     startGame.action.performed += StartGame;
     pauseGame.action.performed += PauseGame;
+    resumeGame.action.performed += ResumeGame;
     quitGame.action.performed += QuitGame;
   }
 
@@ -47,15 +47,10 @@ public class MVEPInputManager : MonoBehaviour
     lane4.action.performed -= (ctx) => OnLaneInput?.Invoke(3);
     lane5.action.performed -= (ctx) => OnLaneInput?.Invoke(4);
 
-    spawnChunks.action.performed -= SpawnChunks;
     startGame.action.performed -= StartGame;
     pauseGame.action.performed -= PauseGame;
+    resumeGame.action.performed -= ResumeGame;
     quitGame.action.performed -= QuitGame;
-  }
-
-  void SpawnChunks(InputAction.CallbackContext context)
-  {
-    MVEPGameManager.Instance.SpawnChunks();
   }
 
   void StartGame(InputAction.CallbackContext context)
@@ -66,6 +61,11 @@ public class MVEPInputManager : MonoBehaviour
   void PauseGame(InputAction.CallbackContext context)
   {
     MVEPGameManager.Instance.PauseGame();
+  }
+
+  void ResumeGame(InputAction.CallbackContext context)
+  {
+    MVEPGameManager.Instance.ResumeGame();
   }
 
   void QuitGame(InputAction.CallbackContext context)
