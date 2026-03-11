@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -21,24 +22,14 @@ public class MVEPResponseController : MonoBehaviour
   [SerializeField] private CanoeController canoeController;
 
   // Configuration
-  private Phase phase;
+  private MVEPGamePhase phase;
   private float p300Interval;
-
-  // State
+  private float p300min, p300max;
   private float[] timers = new float[STIMULUS_COUNT];
   private bool[] timerActive = new bool[STIMULUS_COUNT];
   private bool[] laneInputReceived = new bool[STIMULUS_COUNT];
   private bool changedLanesThisChunk;
   private int targetLane = CENTER_LANE;
-
-  /// <summary>
-  /// Initializes phase and timing configuration from game settings.
-  /// </summary>
-  void Awake()
-  {
-    phase = MVEPGameSettings.Instance.CurrentPhase;
-    p300Interval = MVEPGameSettings.Instance.timingConfig.P300Interval;
-  }
 
   void OnEnable()
   {
@@ -46,6 +37,7 @@ public class MVEPResponseController : MonoBehaviour
     MVEPGameEvents.OnChunkActivated += GetActiveChunk;
     MVEPStimulus.OnStimulusPulsed += HandleStimulusPulse;
     MVEPStimuliController.PulseComplete += HandlePulseComplete;
+    MVEPGameEvents.OnPhaseChanged += (newPhase) => phase = newPhase;
   }
 
   void OnDisable()
@@ -54,6 +46,18 @@ public class MVEPResponseController : MonoBehaviour
     MVEPGameEvents.OnChunkActivated -= GetActiveChunk;
     MVEPStimulus.OnStimulusPulsed -= HandleStimulusPulse;
     MVEPStimuliController.PulseComplete -= HandlePulseComplete;
+    MVEPGameEvents.OnPhaseChanged -= (newPhase) => phase = newPhase;
+  }
+
+  /// <summary>
+  /// Initializes phase and timing configuration from game settings.
+  /// </summary>
+  void Start()
+  {
+    phase = MVEPGameManager.Instance.CurrentPhase;
+    p300Interval = MVEPGameManager.Instance.timingConfig.P300Interval;
+    p300min = MVEPGameManager.Instance.timingConfig.P300Range.x;
+    p300max = MVEPGameManager.Instance.timingConfig.P300Range.y;
   }
 
   /// <summary>
@@ -75,9 +79,9 @@ public class MVEPResponseController : MonoBehaviour
   private void ResetChunkState()
   {
     changedLanesThisChunk = false;
-    timers = new float[STIMULUS_COUNT];
-    timerActive = new bool[STIMULUS_COUNT];
-    laneInputReceived = new bool[STIMULUS_COUNT];
+    Array.Clear(timers, 0, timers.Length);
+    Array.Clear(timerActive, 0, timerActive.Length);
+    Array.Clear(laneInputReceived, 0, laneInputReceived.Length);
   }
 
   /// <summary>
@@ -85,20 +89,19 @@ public class MVEPResponseController : MonoBehaviour
   /// </summary>
   void HandleLaneInput(int laneIndex)
   {
-    if (!IsValidLaneIndex(laneIndex, STIMULUS_COUNT) || changedLanesThisChunk)
-      return;
+    if (!IsValidLaneIndex(laneIndex, STIMULUS_COUNT) || changedLanesThisChunk) return;
 
     laneInputReceived[laneIndex] = true;
 
     switch (phase)
     {
-      case Phase.NoControl:
+      case MVEPGamePhase.NoControl:
         // Lane changes handled on pulse complete
         break;
-      case Phase.HalfControl:
+      case MVEPGamePhase.HalfControl:
         AttemptHalfControlLaneChange(laneIndex);
         break;
-      case Phase.FullControl:
+      case MVEPGamePhase.FullControl:
         AttemptFullControlLaneChange(laneIndex);
         break;
     }
@@ -109,7 +112,8 @@ public class MVEPResponseController : MonoBehaviour
   /// </summary>
   private void AttemptHalfControlLaneChange(int laneIndex)
   {
-    if (laneIndex == targetLane && timerActive[laneIndex])
+
+    if (laneIndex == targetLane && IsTimerValid(laneIndex))
     {
       canoeController.ChangeLanes();
       changedLanesThisChunk = true;
@@ -121,8 +125,9 @@ public class MVEPResponseController : MonoBehaviour
   /// </summary>
   private void AttemptFullControlLaneChange(int laneIndex)
   {
-    if (timerActive[laneIndex])
+    if (IsTimerValid(laneIndex))
     {
+
       canoeController.SetTargetLane(laneIndex);
       canoeController.ChangeLanes();
       changedLanesThisChunk = true;
@@ -134,19 +139,18 @@ public class MVEPResponseController : MonoBehaviour
   /// </summary>
   void HandleStimulusPulse(int stimulusIndex)
   {
-    if (changedLanesThisChunk || !IsValidLaneIndex(stimulusIndex, STIMULUS_COUNT))
-      return;
+    if (changedLanesThisChunk || !IsValidLaneIndex(stimulusIndex, STIMULUS_COUNT)) return;
 
     switch (phase)
     {
-      case Phase.NoControl:
+      case MVEPGamePhase.NoControl:
         // Lane changes handled on pulse complete
         break;
-      case Phase.HalfControl:
+      case MVEPGamePhase.HalfControl:
         if (stimulusIndex == targetLane)
           timerActive[stimulusIndex] = true;
         break;
-      case Phase.FullControl:
+      case MVEPGamePhase.FullControl:
         timerActive[stimulusIndex] = true;
         break;
     }
@@ -162,13 +166,13 @@ public class MVEPResponseController : MonoBehaviour
 
     switch (phase)
     {
-      case Phase.NoControl:
-      case Phase.FullControl:
+      case MVEPGamePhase.NoControl:
+      case MVEPGamePhase.FullControl:
         canoeController.ChangeLanes();
         changedLanesThisChunk = true;
         break;
-      case Phase.HalfControl:
-        if (laneInputReceived.Any(inputReceived => inputReceived))
+      case MVEPGamePhase.HalfControl:
+        if (laneInputReceived.Contains(true))
         {
           canoeController.ChangeLanes();
           changedLanesThisChunk = true;
@@ -196,7 +200,7 @@ public class MVEPResponseController : MonoBehaviour
         continue;
 
       timers[i] += Time.deltaTime;
-      if (timers[i] > p300Interval)
+      if (timers[i] > p300max) // Deactivate timer after maximum interval
       {
         timerActive[i] = false;
         timers[i] = 0f;
@@ -210,5 +214,13 @@ public class MVEPResponseController : MonoBehaviour
   private bool IsValidLaneIndex(int laneIndex, int maxLanes)
   {
     return laneIndex >= 0 && laneIndex < maxLanes;
+  }
+
+  /// <summary>
+  /// Checks if the timer for a given stimulus index is active and within the valid P300 response window.
+  /// </summary>
+  private bool IsTimerValid(int stimulusIndex)
+  {
+    return timerActive[stimulusIndex] && timers[stimulusIndex] >= p300min && timers[stimulusIndex] <= p300max;
   }
 }

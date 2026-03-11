@@ -87,7 +87,10 @@ public class MVEPTimingConfiguration : ScriptableObject
   [SerializeField]
   [Tooltip("Time window after pulse for response registration")]
   private float p300Interval = 0.3f;
+  private readonly float p300minimum = 0.25f;
+  private readonly float p300maximum = 0.5f;
   public float P300Interval => p300Interval;
+  public Vector2 P300Range => new(p300minimum, p300maximum);
 
   // ========== DERIVED TIMING CALCULATIONS ==========
 
