@@ -79,6 +79,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ResumeGame",
+                    "type": "Button",
+                    "id": "a71be63c-ddbd-47ab-87ec-fe2b83b66c7a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "QuitGame",
                     "type": "Button",
                     "id": "431876f7-b9b1-4bfc-b742-bf948923c095",
@@ -229,6 +238,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "44a5c96e-9d4a-4957-aeb4-e6ef87a39f90",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResumeGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
