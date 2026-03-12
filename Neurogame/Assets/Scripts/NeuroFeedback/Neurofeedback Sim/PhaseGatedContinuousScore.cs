@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using NeuroFeedback;
+
 public class PhaseGatedContinuousScore : MonoBehaviour
 {
     public static PhaseGatedContinuousScore Instance { get; private set; }
@@ -14,16 +15,11 @@ public class PhaseGatedContinuousScore : MonoBehaviour
     [SerializeField] private PhaseManager phaseManager;
     [SerializeField] private PhaseManager.Phase startScoringPhase = PhaseManager.Phase.Phase2_Assisted;
 
-    [Header("Continuous Scoring (per second)")]
-    [SerializeField] private float basePointsPerSecond = 6f;
-    [SerializeField] private float stabilityBonusPerSecond = 12f;
-    [SerializeField] private float optimalBandBonusPerSecond = 8f;
-
     [Header("Bonuses")]
     [SerializeField] private int pointsPerHit = 20;
     [SerializeField] private int pointsPerKill = 120;
 
-    [Tooltip("Bonus awarded when a shot is fired in Phase2+ (scaled by stability/optimal/chance).")]
+    [Tooltip("Bonus awarded when a shot is fired in Phase2+.")]
     [SerializeField] private int baseShotBonus = 80;
 
     [Header("Display Smoothing")]
@@ -59,32 +55,12 @@ public class PhaseGatedContinuousScore : MonoBehaviour
 
     private void Update()
     {
-        bool active = ScoringActive;
-
-        if (active)
-        {
-            float dt = Time.deltaTime;
-
-            float add = basePointsPerSecond;
-
-            float stability01 = (feedback != null) ? Mathf.Clamp01(feedback.stabilityScore) : 0f;
-            add += stability01 * stabilityBonusPerSecond;
-
-            if (meter != null)
-            {
-                if (meter.InOptimalBand) add += optimalBandBonusPerSecond * 0.5f;
-                if (meter.OptimalReady) add += optimalBandBonusPerSecond;
-            }
-
-            score += add * dt;
-        }
-
         float k = 1f - Mathf.Exp(-displayLerpSpeed * Time.deltaTime);
         displayedScore = Mathf.Lerp(displayedScore, score, k);
 
         if (scoreText != null)
         {
-            if (!active && showMessageBeforeStart)
+            if (!ScoringActive && showMessageBeforeStart)
                 scoreText.text = waitingMessage;
             else
                 scoreText.text = Mathf.FloorToInt(displayedScore).ToString();
@@ -103,15 +79,10 @@ public class PhaseGatedContinuousScore : MonoBehaviour
         score += pointsPerKill;
     }
 
-    // Called by Cannon when it fires a projectile in Phase2/3
     public void OnShotFired(float stability01, bool optimal, float hitChance01)
     {
         if (!ScoringActive) return;
 
-        // Reward the process:
-        // - stability helps
-        // - optimal helps
-        // - hitChance helps (since aim assist is involved)
         float s = Mathf.Clamp01(stability01);
         float c = Mathf.Clamp01(hitChance01);
 
@@ -121,5 +92,11 @@ public class PhaseGatedContinuousScore : MonoBehaviour
         if (optimal) mult += 0.40f;
 
         score += baseShotBonus * mult;
+    }
+
+    public void ResetScore()
+    {
+        score = 0f;
+        displayedScore = 0f;
     }
 }
