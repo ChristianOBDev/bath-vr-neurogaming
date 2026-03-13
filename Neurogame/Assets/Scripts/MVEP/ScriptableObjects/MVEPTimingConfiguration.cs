@@ -16,7 +16,7 @@ public class MVEPTimingConfiguration : ScriptableObject
   /// </summary>
   [SerializeField]
   [Tooltip("Length of each chunk in units")]
-  private float chunkLength = 30f;
+  private float chunkLength = 32f;
   public float ChunkLength => chunkLength;
 
   /// <summary>
