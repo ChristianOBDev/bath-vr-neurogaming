@@ -68,6 +68,7 @@ public class KickerForce : MonoBehaviour
         {
             glowMaterial = glowRenderer.material;
             glowMaterial.EnableKeyword("_EMISSION");
+            SetGlowIntensity(0f); // must be first
         }
 
         // Log current phase for debugging
@@ -104,6 +105,14 @@ public class KickerForce : MonoBehaviour
         float buildDuration = Mathf.Max(0.1f, returnDuration - glowBuildTimeOffset);
         Debug.Log($"BeginGlowBuild called. returnDuration: {returnDuration}, buildDuration: {buildDuration}");
 
+        glowCoroutine = StartCoroutine(DelayedGlowBuild(buildDuration));
+    }
+
+    IEnumerator DelayedGlowBuild(float buildDuration)
+    {
+        // Wait for all Start() methods to complete before beginning
+        yield return null;
+        yield return null;
         glowCoroutine = StartCoroutine(GlowBuildRoutine(buildDuration));
     }
 
@@ -136,6 +145,7 @@ public class KickerForce : MonoBehaviour
 
     IEnumerator GlowBuildRoutine(float duration)
     {
+        Debug.Log($"GlowBuildRoutine started with duration: {duration}");
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -146,7 +156,7 @@ public class KickerForce : MonoBehaviour
             yield return null;
         }
 
-        // Hold at max until contact
+        Debug.Log($"GlowBuildRoutine completed. Elapsed: {elapsed}");
         SetGlowIntensity(maxGlowIntensity);
         glowCoroutine = null;
     }
@@ -170,6 +180,8 @@ public class KickerForce : MonoBehaviour
     void SetGlowIntensity(float intensity)
     {
         if (glowMaterial == null) return;
+        if (kickerDebugLogging)
+            Debug.Log($"SetGlowIntensity: {intensity}");
         Color finalColor = glowColor * Mathf.LinearToGammaSpace(intensity);
         glowMaterial.SetColor(EmissionColor, finalColor);
     }
@@ -242,6 +254,7 @@ public class KickerForce : MonoBehaviour
 
         if (kickerDebugLogging)
             Debug.Log($"Kicker FixedUpdate - strength: {Mathf.Max(inputRouter.GetStrength(isLeftKicker, graduatedForce), minStrength)}, state: {currentBallController?.CurrentState}");
+            Debug.Log($"PhaseManager null: {PhaseManager.Instance == null}, Phase: {PhaseManager.Instance?.CurrentPhase}");
 
         float playerStrength = inputRouter.GetStrength(isLeftKicker, graduatedForce);
 

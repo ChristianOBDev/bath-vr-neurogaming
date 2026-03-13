@@ -414,7 +414,7 @@ MonoBehaviour:
   glowEnabled: 1
   glowRenderer: {fileID: 2135507982}
   glowColor: {r: 0, g: 1, b: 1, a: 1}
-  maxGlowIntensity: 3
+  maxGlowIntensity: 1
   glowLerpSpeed: 5
   glowBuildTimeOffset: 1
   glowBuildCurve:
@@ -424,7 +424,7 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 1
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -432,8 +432,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -444,6 +444,7 @@ MonoBehaviour:
   glowFadeOutDuration: 0.5
   swellTargets:
   - {fileID: 183452266}
+  - {fileID: 1087584070}
   swellScale: 1.1
   swellDuration: 0.2
   swellEase: 27
@@ -685,7 +686,7 @@ MonoBehaviour:
   glowEnabled: 1
   glowRenderer: {fileID: 672333752}
   glowColor: {r: 1, g: 0, b: 0.98568726, a: 1}
-  maxGlowIntensity: 3
+  maxGlowIntensity: 1
   glowLerpSpeed: 5
   glowBuildTimeOffset: 1
   glowBuildCurve:
@@ -695,7 +696,7 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 0
-      outSlope: 1
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -703,8 +704,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -715,6 +716,7 @@ MonoBehaviour:
   glowFadeOutDuration: 0.5
   swellTargets:
   - {fileID: 1834929463}
+  - {fileID: 672333751}
   swellScale: 1.1
   swellDuration: 0.2
   swellEase: 27
