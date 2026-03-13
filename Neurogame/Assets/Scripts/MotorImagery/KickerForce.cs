@@ -37,15 +37,6 @@ public class KickerForce : MonoBehaviour
     [Header("Audio")]
     public AudioClip hitSound;
 
-    [Header("Glow Build")]
-    public AnimationCurve glowBuildCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
-
-    [Header("Kick Swell")]
-    public List<Transform> swellTargets = new List<Transform>();
-    public float swellScale = 1.3f;
-    public float swellDuration = 0.2f;
-    public LeanTweenType swellEase = LeanTweenType.easeOutBack;
-
     [Header("Glow")]
     public bool glowEnabled = true;
     public Renderer glowRenderer;
@@ -53,10 +44,16 @@ public class KickerForce : MonoBehaviour
     public float maxGlowIntensity = 3f;
     public float glowLerpSpeed = 5f;
 
-    [Header("Glow Phase 1 Pulse")]
-    public float pulseSpeed = 1.5f;
-    public float pulseMinIntensity = 0f;
-    public float pulseMaxIntensity = 1f;
+    [Header("Glow Phase 1")]
+    public float glowBuildTimeOffset = 1f; // How many seconds before contact glow reaches 100%
+    public AnimationCurve glowBuildCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    public float glowFadeOutDuration = 0.5f;
+
+    [Header("Kick Swell")]
+    public List<Transform> swellTargets = new List<Transform>();
+    public float swellScale = 1.3f;
+    public float swellDuration = 0.2f;
+    public LeanTweenType swellEase = LeanTweenType.easeOutBack;
 
     private Material glowMaterial;
     private float currentGlowIntensity = 0f;
@@ -95,36 +92,30 @@ public class KickerForce : MonoBehaviour
             PhaseManager.Instance.OnPhaseChanged -= HandlePhaseChanged;
     }
 
-    void HandlePhaseChanged(GamePhase phase)
-    {
-        StopAllCoroutines();
-        if (glowMaterial != null)
-            glowMaterial.SetColor(EmissionColor, Color.black);
-        currentGlowIntensity = 0f;
-    }
+    private Coroutine glowCoroutine;
 
-    private Coroutine glowBuildCoroutine;
-
-    public void BeginGlowBuild(float duration)
+    public void BeginGlowBuild(float returnDuration)
     {
         if (!glowEnabled || glowMaterial == null) return;
-        if (glowBuildCoroutine != null) StopCoroutine(glowBuildCoroutine);
-        glowBuildCoroutine = StartCoroutine(GlowBuildRoutine(duration));
+        if (glowCoroutine != null) StopCoroutine(glowCoroutine);
+
+        // Build duration is returnDuration minus the offset
+        // so glow reaches 100% 'glowBuildTimeOffset' seconds before contact
+        float buildDuration = Mathf.Max(0.1f, returnDuration - glowBuildTimeOffset);
+        Debug.Log($"BeginGlowBuild called. returnDuration: {returnDuration}, buildDuration: {buildDuration}");
+
+        glowCoroutine = StartCoroutine(GlowBuildRoutine(buildDuration));
     }
 
-    public void TriggerKickSwell()
+    public void TriggerKickEffect()
     {
-        // Stop any ongoing glow build
-        if (glowBuildCoroutine != null)
+        if (glowCoroutine != null)
         {
-            StopCoroutine(glowBuildCoroutine);
-            glowBuildCoroutine = null;
+            StopCoroutine(glowCoroutine);
+            glowCoroutine = null;
         }
 
-        // Flash glow to max then fade
-        StartCoroutine(GlowFadeOut());
-
-        // Swell each target mesh
+        // Swell meshes
         foreach (Transform target in swellTargets)
         {
             if (target == null) continue;
@@ -138,6 +129,9 @@ public class KickerForce : MonoBehaviour
                         .setEase(LeanTweenType.easeOutQuad);
                 });
         }
+
+        // Fade glow out after contact
+        glowCoroutine = StartCoroutine(GlowFadeRoutine(maxGlowIntensity, 0f, glowFadeOutDuration));
     }
 
     IEnumerator GlowBuildRoutine(float duration)
@@ -147,34 +141,69 @@ public class KickerForce : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float t = glowBuildCurve.Evaluate(elapsed / duration);
-            float intensity = Mathf.Lerp(0f, maxGlowIntensity, t);
-            Color finalColor = glowColor * Mathf.LinearToGammaSpace(intensity);
-            glowMaterial.SetColor(EmissionColor, finalColor);
+            float t = glowBuildCurve.Evaluate(Mathf.Clamp01(elapsed / duration));
+            SetGlowIntensity(Mathf.Lerp(0f, maxGlowIntensity, t));
             yield return null;
         }
 
-        // Ensure we reach full brightness
-        glowMaterial.SetColor(EmissionColor, glowColor * Mathf.LinearToGammaSpace(maxGlowIntensity));
-        glowBuildCoroutine = null;
+        // Hold at max until contact
+        SetGlowIntensity(maxGlowIntensity);
+        glowCoroutine = null;
     }
 
-    IEnumerator GlowFadeOut()
+    IEnumerator GlowFadeRoutine(float fromIntensity, float toIntensity, float duration)
     {
         float elapsed = 0f;
-        float fadeDuration = 0.5f;
 
-        while (elapsed < fadeDuration)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float t = 1f - (elapsed / fadeDuration);
-            float intensity = Mathf.Lerp(0f, maxGlowIntensity, t);
-            Color finalColor = glowColor * Mathf.LinearToGammaSpace(intensity);
-            glowMaterial.SetColor(EmissionColor, finalColor);
+            float t = Mathf.Clamp01(elapsed / duration);
+            SetGlowIntensity(Mathf.Lerp(fromIntensity, toIntensity, t));
             yield return null;
         }
 
-        glowMaterial.SetColor(EmissionColor, Color.black);
+        SetGlowIntensity(toIntensity);
+        glowCoroutine = null;
+    }
+
+    void SetGlowIntensity(float intensity)
+    {
+        if (glowMaterial == null) return;
+        Color finalColor = glowColor * Mathf.LinearToGammaSpace(intensity);
+        glowMaterial.SetColor(EmissionColor, finalColor);
+    }
+
+    void UpdateGlowFromInput()
+    {
+        if (!glowEnabled || glowMaterial == null) return;
+        if (inputRouter == null) return;
+
+        float strength = inputRouter.GetStrength(isLeftKicker, graduatedForce);
+        float targetIntensity = strength * maxGlowIntensity;
+        float currentIntensity = Mathf.Lerp(
+            GetCurrentGlowIntensity(),
+            targetIntensity,
+            Time.deltaTime * glowLerpSpeed
+        );
+        SetGlowIntensity(currentIntensity);
+    }
+
+    float GetCurrentGlowIntensity()
+    {
+        if (glowMaterial == null) return 0f;
+        Color current = glowMaterial.GetColor(EmissionColor);
+        return current.maxColorComponent;
+    }
+
+    void HandlePhaseChanged(GamePhase phase)
+    {
+        if (glowCoroutine != null)
+        {
+            StopCoroutine(glowCoroutine);
+            glowCoroutine = null;
+        }
+        SetGlowIntensity(0f);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -184,7 +213,7 @@ public class KickerForce : MonoBehaviour
         {
             ballController.SetState(BallState.Launching);
             currentBallController = ballController;
-            TriggerKickSwell();
+            TriggerKickEffect();
         }
         if (collision.rigidbody != null)
             currentBalloon = collision.rigidbody;
@@ -227,6 +256,16 @@ public class KickerForce : MonoBehaviour
             return;
         }
 
+        // Input driven glow for Phase 2 and 3
+        if (PhaseManager.Instance != null &&
+            PhaseManager.Instance.CurrentPhase != GamePhase.PhaseOne)
+        {
+            UpdateGlowFromInput();
+        }
+
+        if (currentBalloon == null || inputRouter == null) return;
+
+        //Float strength with minimum threshold
         float strength = Mathf.Max(playerStrength, minStrength);
         if (strength <= 0f) return;
 
