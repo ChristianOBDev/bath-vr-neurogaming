@@ -64,9 +64,19 @@ public static class MVEPGameEvents
   public static Action<Chunk> OnChunkPassed;
 
   /// <summary>
+  /// Fired when a chunk is deactivated (either passed or recycled). Contains the deactivated chunk.
+  /// </summary>  
+  public static Action<Chunk> OnChunkDeactivated;
+
+  /// <summary>
   /// Fired when the game ends.
   /// </summary>
   public static Action OnGameEnded;
+
+  /// <summary>
+  /// Fired when the game is quit.
+  /// </summary>
+  public static Action OnGameQuit;
 
   // ========== Game Phase Events ==========
   /// <summary>

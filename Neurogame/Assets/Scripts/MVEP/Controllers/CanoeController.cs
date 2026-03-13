@@ -91,6 +91,9 @@ public class CanoeController : MonoBehaviour
   /// <param name="laneIndex">The lane to move to.</param>
   public void ChangeLanes(int laneIndex)
   {
+    if (MVEPGameManager.Instance.CurrentState != MVEPGameState.Running)
+      return;
+
     laneIndex = Mathf.Clamp(laneIndex, 0, laneConfig.laneCount - 1);
     PerformLaneChange(laneIndex, laneChangeDuration);
   }
@@ -152,6 +155,9 @@ public class CanoeController : MonoBehaviour
   /// </summary>
   private void RockTheBoat()
   {
+    if (MVEPGameManager.Instance.CurrentState != MVEPGameState.Running)
+      return;
+
     float randomX = Random.Range(-ROCK_OFFSET_RANGE, ROCK_OFFSET_RANGE);
     transform.LeanMoveLocalX(transform.localPosition.x + randomX, ROCK_DURATION)
       .setEaseInOutSine()

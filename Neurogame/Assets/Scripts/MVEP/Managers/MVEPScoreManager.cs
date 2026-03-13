@@ -15,7 +15,9 @@ public class MVEPScoreManager : MonoBehaviour
   // Score Tracking
   private int totalScore;
   private int chunkScore;
+  private int powerUpsCollected = 0;
   private int powerUpScore;
+  private int obstaclesHit = 0;
   private int obstaclePenalty;
 
   /// <summary>
@@ -39,6 +41,7 @@ public class MVEPScoreManager : MonoBehaviour
   /// </summary>
   private void OnEnable()
   {
+    MVEPGameEvents.OnGameStarted += Reset;
     MVEPGameEvents.OnPowerUpCollected += HandlePowerUpCollected;
     MVEPGameEvents.OnObstacleHit += HandleObstacleHit;
     MVEPGameEvents.OnChunkPassed += HandleChunkPassed;
@@ -49,6 +52,7 @@ public class MVEPScoreManager : MonoBehaviour
   /// </summary>
   private void OnDisable()
   {
+    MVEPGameEvents.OnGameStarted -= Reset;
     MVEPGameEvents.OnPowerUpCollected -= HandlePowerUpCollected;
     MVEPGameEvents.OnObstacleHit -= HandleObstacleHit;
     MVEPGameEvents.OnChunkPassed -= HandleChunkPassed;
@@ -74,6 +78,7 @@ public class MVEPScoreManager : MonoBehaviour
   /// </summary>
   private void HandlePowerUpCollected()
   {
+    powerUpsCollected++;
     powerUpScore += scorePerPowerUp;
     RecalculateScore();
   }
@@ -83,6 +88,7 @@ public class MVEPScoreManager : MonoBehaviour
   /// </summary>
   private void HandleObstacleHit()
   {
+    obstaclesHit++;
     obstaclePenalty += scorePenaltyPerObstacle;
     RecalculateScore();
   }
@@ -95,5 +101,21 @@ public class MVEPScoreManager : MonoBehaviour
   {
     totalScore = powerUpScore + chunkScore - obstaclePenalty;
     MVEPGameEvents.OnScoreUpdated?.Invoke(totalScore);
+  }
+
+  public void Reset()
+  {
+    totalScore = 0;
+    chunkScore = 0;
+    powerUpScore = 0;
+    obstaclePenalty = 0;
+    powerUpsCollected = 0;
+    obstaclesHit = 0;
+    MVEPGameEvents.OnScoreUpdated?.Invoke(totalScore);
+  }
+
+  public int[] GetScoreBreakdown()
+  {
+    return new int[] { totalScore, powerUpsCollected, obstaclesHit };
   }
 }
