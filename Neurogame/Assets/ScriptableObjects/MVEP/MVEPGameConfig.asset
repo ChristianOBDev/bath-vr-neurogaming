@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f0a57dfdc023e74b99468f09be32dad, type: 3}
-  m_Name: CanoeScoreConfig
-  m_EditorClassIdentifier: Assembly-CSharp::CanoeScoreConfig
-  scorePerChunk: 10
-  scorePerPowerUp: 40
-  scorePenaltyPerObstacle: 30
+  m_Script: {fileID: 11500000, guid: f8e04b5247178d943b5d1d28ca705783, type: 3}
+  m_Name: MVEPGameConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MVEPGameConfiguration
+  trials: 5
+  scoreMax: 10000
+  warmUpChunks: 1

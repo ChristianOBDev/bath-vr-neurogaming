@@ -6,6 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
 
+[RequireComponent(typeof(XROrigin))]
+[RequireComponent(typeof(PositionConstraint))]
 public class XRRigController : Singleton<XRRigController>
 {
   [Header("Rig")]
@@ -32,6 +34,25 @@ public class XRRigController : Singleton<XRRigController>
 
   [Header("Default Profile")]
   public XRRigProfile defaultProfile;
+
+  private void Start()
+  {
+    if (xrOrigin == null)
+      xrOrigin = GetComponent<XROrigin>();
+
+    if (positionConstraint == null)
+      positionConstraint = GetComponent<PositionConstraint>();
+
+
+    if (defaultProfile != null)
+    {
+      ApplyProfileSettings(defaultProfile);
+    }
+    else
+    {
+      Debug.LogWarning("No default profile assigned to XRRigController. Please assign a default profile to ensure proper rig configuration.");
+    }
+  }
 
   public void ApplyProfileSettings(XRRigProfile profile)
   {

@@ -29,10 +29,10 @@ public class MVEPStimuliController : MonoBehaviour
   /// <summary>
   /// Initializes timing configuration from game settings.
   /// </summary>
-  private void Awake()
+  private void Start()
   {
-    pulseInterval = MVEPGameSettings.Instance.timingConfig.PulseInterval;
-    p300Interval = MVEPGameSettings.Instance.timingConfig.P300Interval;
+    pulseInterval = MVEPGameManager.Instance.timingConfig.PulseInterval;
+    p300Interval = MVEPGameManager.Instance.timingConfig.P300Interval;
 
     ValidateStimuliSetup();
   }

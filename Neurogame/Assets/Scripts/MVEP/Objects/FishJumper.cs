@@ -24,7 +24,7 @@ public class FishJumper : MonoBehaviour
   /// </summary>
   private void Start()
   {
-    laneConfig = MVEPGameSettings.Instance.laneConfig;
+    laneConfig = MVEPGameManager.Instance.laneConfig;
 
     if (fish == null)
     {
@@ -56,7 +56,7 @@ public class FishJumper : MonoBehaviour
   /// <param name="chunk">The newly activated chunk.</param>
   private void HandleChunkActivated(Chunk chunk)
   {
-    if (!IsValidLane(chunk.PowerUpLane))
+    if (!chunk.IsValid())
       return;
 
     MoveFishToLane(chunk.PowerUpLane);
@@ -107,15 +107,5 @@ public class FishJumper : MonoBehaviour
     {
       fish.SetActive(false);
     }
-  }
-
-  /// <summary>
-  /// Validates if a lane index is within the valid range.
-  /// </summary>
-  /// <param name="laneIndex">The lane index to validate.</param>
-  /// <returns>True if the lane is valid, false otherwise.</returns>
-  private bool IsValidLane(int laneIndex)
-  {
-    return laneIndex >= 0 && laneIndex < laneConfig.laneCount;
   }
 }
