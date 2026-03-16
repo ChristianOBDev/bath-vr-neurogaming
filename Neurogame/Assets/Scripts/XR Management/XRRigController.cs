@@ -56,11 +56,11 @@ public class XRRigController : Singleton<XRRigController>
 
   public void ApplyProfileSettings(XRRigProfile profile)
   {
-    ApplyCameraSettings(profile);
+    // ApplyCameraSettings(profile);
     ApplyLocomotion(profile);
-    ApplyInteractors(profile);
+    // ApplyInteractors(profile);
     ApplyVisuals(profile);
-    ApplyInput(profile);
+    // ApplyInput(profile);
   }
 
   public void ApplyCameraSettings(XRRigProfile profile)
