@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e04b5247178d943b5d1d28ca705783, type: 3}
   m_Name: MVEPGameConfig
   m_EditorClassIdentifier: Assembly-CSharp::MVEPGameConfiguration
-  trials: 5
+  trials: 60
   scoreMax: 10000
   warmUpChunks: 1
