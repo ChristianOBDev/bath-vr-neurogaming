@@ -171,6 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
   currentState: 0
+  inactiveLayer: Ball
+  activeLayer: BallActive
   returnDuration: 7
   returnCurve:
     serializedVersion: 2
@@ -202,8 +204,7 @@ MonoBehaviour:
   lateralDriftMax: 0.7
   maxVelocity: 100
   enableCenterGuidance: 1
-  waterfallCenterX: 0
-  waterfallHalfWidth: 2.5
+  waterfallCenter: {fileID: 0}
   centerPullStrength: 2
   maxSideForce: 3
   centerDamping: 2
