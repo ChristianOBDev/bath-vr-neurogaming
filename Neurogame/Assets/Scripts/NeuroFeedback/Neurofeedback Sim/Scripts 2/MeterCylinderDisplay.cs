@@ -83,19 +83,34 @@ public class PillarDualCubeMeter : MonoBehaviour
     public Transform thresholdCube;
     public float thresholdYOffset = 0f;
 
+    [Header("Threshold Range")]
+    [Range(0f, 1f)] public float thresholdMin01 = 0.4f;
+    [Range(0f, 1f)] public float thresholdMax01 = 0.6f;
+
+    [Header("Threshold Colors")]
+    public Color thresholdInsideColor = Color.green;
+    public Color thresholdOutsideColor = Color.red;
+
+    private Renderer thresholdRenderer;
+    private Material thresholdRuntimeMaterial;
+
     private void Awake()
     {
         SetupVerticalMeter(neuroMeter);
         SetupHorizontalMeter(chargeMeter);
+        SetupThresholdCube();
 
         SetNeuroValueImmediate(0f);
         SetChargeValueImmediate(0f);
+        SetThreshold(thresholdMin01, thresholdMax01);
+        UpdateThresholdColor(0f);
     }
 
     private void Update()
     {
         TickVerticalMeter(neuroMeter);
         TickHorizontalMeter(chargeMeter);
+        UpdateThresholdColor(neuroMeter != null ? neuroMeter.currentValue : 0f);
     }
 
     private void SetupVerticalMeter(VerticalMeter meter)
@@ -198,6 +213,20 @@ public class PillarDualCubeMeter : MonoBehaviour
         UpdateChargeColor(meter, 0f);
     }
 
+    private void SetupThresholdCube()
+    {
+        if (thresholdCube == null) return;
+
+        thresholdRenderer = thresholdCube.GetComponent<Renderer>();
+        if (thresholdRenderer == null)
+        {
+            Debug.LogWarning($"[PillarDualCubeMeter] Threshold cube '{thresholdCube.name}' has no Renderer.");
+            return;
+        }
+
+        thresholdRuntimeMaterial = thresholdRenderer.material;
+    }
+
     private void TickVerticalMeter(VerticalMeter meter)
     {
         if (meter == null || meter.fillPivot == null) return;
@@ -293,6 +322,28 @@ public class PillarDualCubeMeter : MonoBehaviour
             meter.runtimeMaterial.SetColor("_EmissionColor", c);
     }
 
+    private void UpdateThresholdColor(float neuroValue01)
+    {
+        if (thresholdRuntimeMaterial == null) return;
+
+        neuroValue01 = Mathf.Clamp01(neuroValue01);
+
+        float min = Mathf.Min(thresholdMin01, thresholdMax01);
+        float max = Mathf.Max(thresholdMin01, thresholdMax01);
+
+        bool inside = neuroValue01 >= min && neuroValue01 <= max;
+        Color c = inside ? thresholdInsideColor : thresholdOutsideColor;
+
+        if (thresholdRuntimeMaterial.HasProperty("_BaseColor"))
+            thresholdRuntimeMaterial.SetColor("_BaseColor", c);
+
+        if (thresholdRuntimeMaterial.HasProperty("_Color"))
+            thresholdRuntimeMaterial.SetColor("_Color", c);
+
+        if (thresholdRuntimeMaterial.HasProperty("_EmissionColor"))
+            thresholdRuntimeMaterial.SetColor("_EmissionColor", c);
+    }
+
     public void SetNeuroValue(float value01)
     {
         if (neuroMeter != null)
@@ -313,6 +364,7 @@ public class PillarDualCubeMeter : MonoBehaviour
         neuroMeter.targetValue = value01;
         neuroMeter.currentValue = value01;
         ApplyVerticalFill(neuroMeter, value01);
+        UpdateThresholdColor(value01);
     }
 
     public void SetChargeValueImmediate(float value01)
@@ -331,7 +383,10 @@ public class PillarDualCubeMeter : MonoBehaviour
         if (thresholdCube == null || neuroMeter == null) return;
         if (neuroMeter.fullHeight <= 0f) return;
 
-        float center01 = (Mathf.Clamp01(min01) + Mathf.Clamp01(max01)) * 0.5f;
+        thresholdMin01 = Mathf.Clamp01(min01);
+        thresholdMax01 = Mathf.Clamp01(max01);
+
+        float center01 = (thresholdMin01 + thresholdMax01) * 0.5f;
         float worldY = neuroMeter.worldBottom + neuroMeter.fullHeight * center01;
 
         Vector3 worldPos = thresholdCube.position;
@@ -342,5 +397,7 @@ public class PillarDualCubeMeter : MonoBehaviour
             thresholdCube.localPosition = parent.InverseTransformPoint(worldPos);
         else
             thresholdCube.position = worldPos;
+
+        UpdateThresholdColor(neuroMeter.currentValue);
     }
 }

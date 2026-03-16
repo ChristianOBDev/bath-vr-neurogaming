@@ -4254,6 +4254,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NeuroInputSignal
   inputKey: 32
+  xriInputActions: {fileID: -944628639613478452, guid: ba5b82de2791e1b4db9586a568f81b66, type: 3}
+  actionMapName: XRI RightHand
+  actionName: Activate
   signal: 0
   increasePerPress: 0.12
   decayPerSecond: 0.4
@@ -4323,7 +4326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 103320cf6cc758d4abbb362b3aaa29f1, type: 3}
       propertyPath: m_Name
-      value: cannonTower_lo_anim
+      value: Cannon
       objectReference: {fileID: 0}
     - target: {fileID: 2063001871730864813, guid: 103320cf6cc758d4abbb362b3aaa29f1, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -8833,8 +8836,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PhaseManager
   CurrentPhase: 0
   autoAdvance: 1
-  phase1Duration: 30
-  phase2Duration: 60
+  phase1Duration: 120
+  phase2Duration: 90
 --- !u!4 &1503967576
 Transform:
   m_ObjectHideFlags: 0
@@ -12415,6 +12418,10 @@ MonoBehaviour:
     runtimeMaterial: {fileID: 0}
   thresholdCube: {fileID: 549137446}
   thresholdYOffset: 0
+  thresholdMin01: 0.4
+  thresholdMax01: 0.6
+  thresholdInsideColor: {r: 0, g: 0.6745098, b: 0, a: 0.6509804}
+  thresholdOutsideColor: {r: 0.6156863, g: 0, b: 0, a: 0.7176471}
 --- !u!114 &2029129749
 MonoBehaviour:
   m_ObjectHideFlags: 0
