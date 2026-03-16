@@ -39,6 +39,10 @@ public class GameManager : MonoBehaviour
     public Transform leftKickerEntry;
     public Transform rightKickerEntry;
 
+    [Header("Kicker References")]
+    public KickerForce leftKickerForce;
+    public KickerForce rightKickerForce;
+
     [Tooltip("True = Right side, False = Left side")]
     public bool[] spawnDirectives = new bool[60];
 
@@ -47,6 +51,7 @@ public class GameManager : MonoBehaviour
     [Header("Ball Settings")]
     public GameObject ballPrefab;
     public float ballRespawnDelay = 2f;
+    public Transform waterfallCenter;
 
     BallController currentBall;
 
@@ -106,8 +111,9 @@ public class GameManager : MonoBehaviour
         {
             if (verboseLogging)
             {
-                Debug.LogWarning("No valid spawners registered!");
-                return;
+                Debug.Log($"OnBumperDestroyed called. List count: {bumperSpawners.Count}");
+                for (int i = 0; i < bumperSpawners.Count; i++)
+                    Debug.Log($"Spawner[{i}]: {(bumperSpawners[i] == null ? "NULL" : bumperSpawners[i].name)}");
             }
         }
 
@@ -177,11 +183,20 @@ public class GameManager : MonoBehaviour
 
         currentBall = ballObj.GetComponent<BallController>();
 
+        // Pass scene reference to spawned ball
+        if (waterfallCenter != null)
+            currentBall.waterfallCenter = waterfallCenter;
+
         Vector3 targetPos = spawnRight
             ? rightKickerEntry.position
             : leftKickerEntry.position;
 
         currentBall.BeginReturnPhase(targetPos);
+
+        // Notify the correct kicker to begin glow build
+        KickerForce targetKicker = spawnRight ? rightKickerForce : leftKickerForce;
+        if (targetKicker != null)
+            targetKicker.BeginGlowBuild(currentBall.returnDuration);
     }
 
     public void HandleBallDeath(BallController ball)

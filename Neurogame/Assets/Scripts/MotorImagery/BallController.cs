@@ -28,6 +28,8 @@ public class BallController : MonoBehaviour
     public float bobAmplitude = 0.15f;
     public float bobFrequency = 2f;
 
+    private Vector3 kickerTargetPos;
+
     [Header("Side Drift")]
     [Tooltip("Minimum sideways drift applied during return")]
     [SerializeField, Min(0f)]
@@ -46,23 +48,10 @@ public class BallController : MonoBehaviour
     private float bobPhaseOffset = 0f;
 
     [Header("Waterfall Guidance")]
-
-    [Tooltip("Enable gentle horizontal correction toward waterfall center")]
     public bool enableCenterGuidance = true;
-
-    [Tooltip("World-space X position of waterfall center")]
-    public float waterfallCenterX = 0f;
-
-    [Tooltip("Half width of the waterfall (for tuning reference only)")]
-    public float waterfallHalfWidth = 4f;
-
-    [Tooltip("How strongly the ball is pulled toward center")]
+    public Transform waterfallCenter;
     public float centerPullStrength = 2f;
-
-    [Tooltip("Maximum sideways force that can be applied")]
     public float maxSideForce = 3f;
-
-    [Tooltip("Damps the center control, somehow")]
     [SerializeField] float centerDamping = 2f;
 
     Vector3 currentFlowDirection;
@@ -77,56 +66,65 @@ public class BallController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // ------------------- WATERFALL STATE -------------------
-        // Ball is on the top/face of the waterfall and is being carried by the flow
-        if (currentState == BallState.OnWaterfall)
+        Vector3 upAxis = SceneOrientation.Instance != null
+            ? SceneOrientation.Instance.Up
+            : Vector3.up;
+
+        // Apply flow forces if in waterfall or falling state
+        if (currentState == BallState.OnWaterfall || currentState == BallState.Falling)
         {
-            Vector3 flowVelocity = currentFlowDirection * currentFlowSpeed;
-
-            if (flowUsesGravity)
-                flowVelocity += Physics.gravity;
-
-            // Apply flow velocity directly; overrides other forces
             rb.AddForce(currentFlowDirection * currentFlowSpeed, ForceMode.Acceleration);
-
-            return; // Skip center guidance or other logic while flowing
+            return;
         }
 
-        // -------- LAUNCH STATE (Center Guidance) --------
+        // LAUNCHING state guidance toward center of waterfall
         if (currentState == BallState.Launching && enableCenterGuidance)
         {
-            float offset = waterfallCenterX - transform.position.x;
+            if (waterfallCenter != null)
+            {
+                // Get the vector from ball to waterfall center
+                Vector3 toCenter = waterfallCenter.position - transform.position;
 
-            // Proportional pull toward center
-            float proportionalForce = offset * centerPullStrength;
+                // Project onto the right axis to get purely sideways offset
+                Vector3 rightAxis = SceneOrientation.Instance != null
+                    ? SceneOrientation.Instance.Right
+                    : Vector3.right;
 
-            // Damping based on current sideways velocity
-            float dampingForce = -rb.linearVelocity.x * centerDamping;
+                float offset = Vector3.Dot(toCenter, rightAxis);
 
-            float totalForce = proportionalForce + dampingForce;
-            totalForce = Mathf.Clamp(totalForce, -maxSideForce, maxSideForce);
+                // Proportional pull toward center
+                float proportionalForce = offset * centerPullStrength;
 
-            rb.AddForce(Vector3.right * totalForce, ForceMode.Force);
+                // Damping based on current sideways velocity
+                float dampingForce = -Vector3.Dot(rb.linearVelocity, rightAxis) * centerDamping;
 
-            Debug.DrawLine(
-                transform.position,
-                transform.position + Vector3.right * totalForce,
-                Color.green
-            );
+                float totalForce = Mathf.Clamp(
+                    proportionalForce + dampingForce,
+                    -maxSideForce,
+                    maxSideForce
+                );
+
+                rb.AddForce(rightAxis * totalForce, ForceMode.Force);
+
+                Debug.DrawLine(
+                    transform.position,
+                    transform.position + rightAxis * totalForce,
+                    Color.green
+                );
+            }
 
             if (rb.linearVelocity.magnitude > maxVelocity)
-            {
                 rb.linearVelocity = rb.linearVelocity.normalized * maxVelocity;
-            }
         }
-
-        // ------------------- FALLING STATE -------------------
-        // Ball has left the waterfall, now physics takes over naturally
-        if (currentState == BallState.Falling)
+        
+        // Push ball towards kicker in in IDLE state.
+        if (currentState == BallState.IdleInPool)
         {
-            // No special movement; physics (gravity, collisions) drives the ball
-            // Optional: can clamp velocity if desired
-            // Example: rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxFallSpeed);
+            if (rb.linearVelocity.magnitude < 0.1f)
+            {
+                Vector3 toKicker = (kickerTargetPos - transform.position).normalized;
+                rb.AddForce(toKicker * 4.9f, ForceMode.Acceleration);
+            }
         }
     }
 
@@ -177,13 +175,16 @@ public class BallController : MonoBehaviour
 
     public void SetState(BallState newState)
     {
-        Debug.Log("Ball State changed to: " + newState);
+        if (GameManager.Instance != null && GameManager.Instance.verboseLogging)
+            Debug.Log("Ball State changed to: " + newState);
         currentState = newState;
         UpdateCollisionLayer();
     }
 
     public void BeginReturnPhase(Vector3 targetPos)
     {
+        kickerTargetPos = targetPos;
+
         SetState(BallState.ReturningToKicker);
 
         rb.linearVelocity = Vector3.zero;
