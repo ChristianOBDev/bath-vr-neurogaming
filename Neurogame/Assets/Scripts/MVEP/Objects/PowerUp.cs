@@ -97,9 +97,6 @@ public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
 
     // Play collection animation
     crystal.LeanScale(Vector3.zero, COLLECTION_SCALE_DURATION).setEaseInBack();
-
-    // Broadcast collection event
-    MVEPGameEvents.OnPowerUpCollected?.Invoke();
   }
 
   /// <summary>

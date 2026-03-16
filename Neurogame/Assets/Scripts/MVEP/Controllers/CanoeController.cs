@@ -10,34 +10,32 @@ public class CanoeController : MonoBehaviour
 
   // References
   private LaneConfiguration laneConfig;
-  private Phase phase;
+  private MVEPGamePhase phase;
 
   // State
   private float laneChangeDuration;
   private int targetLane = CENTER_LANE;
   private int currentLane = CENTER_LANE;
 
-  void Awake()
-  {
-    laneConfig = MVEPGameSettings.Instance.laneConfig;
-    phase = MVEPGameSettings.Instance.CurrentPhase;
-  }
-
   void OnEnable()
   {
     MVEPGameEvents.OnChunkActivated += GetActiveChunk;
     MVEPGameEvents.OnChunkPassed += OnChunkPassed;
+    MVEPGameEvents.OnPhaseChanged += (newPhase) => phase = newPhase;
   }
 
   void OnDisable()
   {
     MVEPGameEvents.OnChunkActivated -= GetActiveChunk;
     MVEPGameEvents.OnChunkPassed -= OnChunkPassed;
+    MVEPGameEvents.OnPhaseChanged -= (newPhase) => phase = newPhase;
   }
 
   void Start()
   {
-    laneChangeDuration = MVEPGameSettings.Instance.timingConfig.LaneChangeDuration;
+    laneConfig = MVEPGameManager.Instance.laneConfig;
+    phase = MVEPGameManager.Instance.CurrentPhase;
+    laneChangeDuration = MVEPGameManager.Instance.timingConfig.LaneChangeDuration;
   }
 
   /// <summary>
@@ -56,18 +54,18 @@ public class CanoeController : MonoBehaviour
   /// <param name="chunk">The activated chunk.</param>
   public void GetActiveChunk(Chunk chunk)
   {
-    if (chunk.ObstacleLane < 0 || chunk.ObstacleLane >= laneConfig.laneCount || chunk.PowerUpLane < 0 || chunk.PowerUpLane >= laneConfig.laneCount)
+    if (!chunk.IsValid())
     {
       return;
     }
 
     switch (phase)
     {
-      case Phase.NoControl:
-      case Phase.HalfControl:
+      case MVEPGamePhase.NoControl:
+      case MVEPGamePhase.HalfControl:
         SetTargetLane(chunk.PowerUpLane);
         break;
-      case Phase.FullControl:
+      case MVEPGamePhase.FullControl:
         int randomLane;
         do
         {
@@ -93,6 +91,9 @@ public class CanoeController : MonoBehaviour
   /// <param name="laneIndex">The lane to move to.</param>
   public void ChangeLanes(int laneIndex)
   {
+    if (MVEPGameManager.Instance.CurrentState != MVEPGameState.Running)
+      return;
+
     laneIndex = Mathf.Clamp(laneIndex, 0, laneConfig.laneCount - 1);
     PerformLaneChange(laneIndex, laneChangeDuration);
   }
@@ -115,7 +116,7 @@ public class CanoeController : MonoBehaviour
   /// </summary>
   public void BackToCenter()
   {
-    PerformLaneChange(CENTER_LANE, MVEPGameSettings.Instance.timingConfig.LaneResetDuration, () =>
+    PerformLaneChange(CENTER_LANE, MVEPGameManager.Instance.timingConfig.LaneResetDuration, () =>
     {
       currentLane = targetLane;
       MVEPGameEvents.OnCanoeCentered?.Invoke();
@@ -154,8 +155,11 @@ public class CanoeController : MonoBehaviour
   /// </summary>
   private void RockTheBoat()
   {
+    if (MVEPGameManager.Instance.CurrentState != MVEPGameState.Running)
+      return;
+
     float randomX = Random.Range(-ROCK_OFFSET_RANGE, ROCK_OFFSET_RANGE);
-    transform.LeanMoveLocalX(transform.position.x + randomX, ROCK_DURATION)
+    transform.LeanMoveLocalX(transform.localPosition.x + randomX, ROCK_DURATION)
       .setEaseInOutSine()
       .setLoopPingPong(2);
     transform.LeanRotateZ(ROCK_ANGLE, ROCK_DURATION)

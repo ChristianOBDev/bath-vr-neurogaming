@@ -564,7 +564,6 @@ GameObject:
   - component: {fileID: 2108767419856366857}
   - component: {fileID: 784910500806768733}
   - component: {fileID: 2200499586498184330}
-  - component: {fileID: 751217675405244140}
   - component: {fileID: 1522795640213595906}
   - component: {fileID: 3090331989732042128}
   m_Layer: 5
@@ -615,7 +614,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 1010306913
+  m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &784910500806768733
@@ -640,7 +639,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2200499586498184330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,7 +647,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8161201839137632920}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -658,26 +657,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1818360608 &751217675405244140
-PositionConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8161201839137632920}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_TranslationAtRest: {x: 0, y: 0, z: 0}
-  m_TranslationOffset: {x: 0, y: 0, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
-  m_AffectTranslationZ: 1
-  m_Active: 0
-  m_IsLocked: 0
-  m_Sources:
-  - sourceTransform: {fileID: 0}
-    weight: 1
 --- !u!114 &1522795640213595906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,6 +702,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 418367317599924696}
     m_Modifications:
+    - target: {fileID: 2455987091693157474, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
+      propertyPath: stimulusIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5111784049299541572, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
       propertyPath: m_Name
       value: Lane 2 Stimulus
@@ -965,6 +948,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 418367317599924696}
     m_Modifications:
+    - target: {fileID: 2455987091693157474, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
+      propertyPath: stimulusIndex
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5111784049299541572, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
       propertyPath: m_Name
       value: Lane 4 Stimulus
@@ -1086,6 +1073,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 418367317599924696}
     m_Modifications:
+    - target: {fileID: 2455987091693157474, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
+      propertyPath: stimulusIndex
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5111784049299541572, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
       propertyPath: m_Name
       value: Lane 5 Stimulus
@@ -1207,6 +1198,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 418367317599924696}
     m_Modifications:
+    - target: {fileID: 2455987091693157474, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
+      propertyPath: stimulusIndex
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5111784049299541572, guid: 647a1a2624d70b547938add4c31fa628, type: 3}
       propertyPath: m_Name
       value: Lane 3 Stimulus
