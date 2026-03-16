@@ -12,6 +12,9 @@ public class NeuroPowerProjectile : MonoBehaviour
     [Header("Hit VFX (optional)")]
     public GameObject hitVfxPrefab;
 
+    [Header("Hit Audio (optional)")]
+    public AudioClip hitSound;
+
     [Header("Spawn Safety")]
     public float armingDelay = 0.08f;
 
@@ -26,9 +29,6 @@ public class NeuroPowerProjectile : MonoBehaviour
         var rb = GetComponent<Rigidbody>();
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        // IMPORTANT for triggers:
-        // Projectile collider should NOT be trigger.
-        // Ships are trigger, projectile is not.
         var col = GetComponent<Collider>();
         col.isTrigger = false;
     }
@@ -40,7 +40,6 @@ public class NeuroPowerProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision col)
     {
-        // If you also have non-trigger ship colliders, this still works
         TryHitShip(col.collider, col.contactCount > 0 ? col.contacts[0].point : transform.position);
     }
 
@@ -49,7 +48,6 @@ public class NeuroPowerProjectile : MonoBehaviour
         if (Time.time - spawnTime < armingDelay) return;
         if (consumed) return;
 
-        // Only react to ships that have NeuroTargetHealth somewhere in parent chain
         var th = hit.GetComponentInParent<NeuroTargetHealth>();
         if (th == null || !th.IsAlive) return;
 
@@ -57,6 +55,10 @@ public class NeuroPowerProjectile : MonoBehaviour
 
         if (hitVfxPrefab != null)
             Instantiate(hitVfxPrefab, hitPoint, Quaternion.identity);
+
+        // PLAY HIT SOUND
+        if (hitSound != null)
+            AudioSource.PlayClipAtPoint(hitSound, hitPoint);
 
         th.ApplyDamage(damage);
         PhaseGatedContinuousScore.Instance?.AddHit();

@@ -1,0 +1,65 @@
+# exported by https://3dviewer.net
+newmtl Anchor
+Kd 1 1 1
+d 1
+map_Kd Binary_0.png
+newmtl HullFull
+Kd 1 1 1
+d 1
+map_Kd Binary_3.png
+newmtl Planks2
+Kd 1 1 1
+d 1
+map_Kd Binary_6.png
+newmtl Woodbits1
+Kd 1 1 1
+d 1
+map_Kd Binary_9.png
+newmtl Wooden_Plank
+Kd 1 1 1
+d 1
+map_Kd Binary_12.png
+newmtl MetalBits
+Kd 1 1 1
+d 1
+map_Kd Binary_14.png
+newmtl Planks1
+Kd 1 1 1
+d 1
+map_Kd Binary_17.png
+newmtl WoodBits2
+Kd 1 1 1
+d 1
+map_Kd Binary_20.png
+newmtl Cannon
+Kd 1 1 1
+d 1
+map_Kd Binary_23.png
+newmtl Masts
+Kd 1 1 1
+d 1
+map_Kd Binary_26.png
+newmtl Keel
+Kd 1 1 1
+d 1
+map_Kd Binary_28.png
+newmtl Windows
+Kd 1 1 1
+d 0.6140971096292864
+map_Kd Binary_31.png
+newmtl Paddle
+Kd 1 1 1
+d 1
+map_Kd Binary_34.png
+newmtl Sails
+Kd 1 1 1
+d 1
+map_Kd Binary_37.png
+newmtl Rope
+Kd 1 1 1
+d 1
+map_Kd Binary_40.png
+newmtl Steering_Wheel
+Kd 1 1 1
+d 1
+map_Kd Binary_42.png
