@@ -179,7 +179,7 @@ public class XRRigController : Singleton<XRRigController>
     if (positionConstraint != null)
     {
       positionConstraint.constraintActive = false;
-      positionConstraint.RemoveSource(0);
+      if (positionConstraint.sourceCount > 0) positionConstraint.RemoveSource(0);
       positionConstraint.enabled = false;
     }
 
