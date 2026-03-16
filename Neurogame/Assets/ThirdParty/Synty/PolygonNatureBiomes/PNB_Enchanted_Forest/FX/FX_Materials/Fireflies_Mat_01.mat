@@ -25,7 +25,9 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ALPHAPREMULTIPLY_ON
   - _RECEIVE_SHADOWS_OFF
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _EMISSION
   - _ENVIRONMENTREFLECTIONS_OFF
@@ -34,12 +36,13 @@ Material:
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: Opaque
+    RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
   - MOTIONVECTORS
+  - DepthOnly
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -72,7 +75,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Alpha_Clip_Threshold: 0.5
+    - _Alpha_Clip_Threshold: 0.504
     - _BUILTIN_AlphaClip: 0
     - _BUILTIN_Blend: 0
     - _BUILTIN_CullMode: 2
@@ -84,7 +87,7 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 0
-    - _Blend: 0
+    - _Blend: 2
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
     - _CastShadows: 0
@@ -94,8 +97,8 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
-    - _DstBlendAlpha: 0
+    - _DstBlend: 1
+    - _DstBlendAlpha: 1
     - _Enable_Emission: 1
     - _EnvironmentReflections: 0
     - _GlossMapScale: 1
@@ -114,11 +117,11 @@ Material:
     - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
-    - _Surface: 0
+    - _Surface: 1
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZTest: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 0.837899, g: 0.30588228, b: 1, a: 1}

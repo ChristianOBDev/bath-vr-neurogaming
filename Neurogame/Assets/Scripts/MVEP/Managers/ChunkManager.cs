@@ -13,8 +13,7 @@ public class ChunkManager : MonoBehaviour
   private const int DEFAULT_CHUNK_POOL_SIZE = 6;
   private const int DEFAULT_OBSTACLE_POOL_SIZE = 10;
   private const int DEFAULT_POWERUP_POOL_SIZE = 10;
-  private const int DEFAULT_STARTING_CHUNKS = 2;
-  private const int DEFAULT_CHUNKS_AHEAD = 6;
+  private const int DEFAULT_CHUNKS_AHEAD = 3;
   private const float DEFAULT_RECYCLE_THRESHOLD = 34f;
   private const int INVALID_LANE = -1;
 
@@ -24,6 +23,7 @@ public class ChunkManager : MonoBehaviour
   private int startingChunks;
   private int chunksAhead;
   private float recycleThreshold;
+  private int chunkLimit;
 
   // Component References
   private ChunkDesigner chunkDesigner;
@@ -36,28 +36,34 @@ public class ChunkManager : MonoBehaviour
   // Runtime State
   private readonly List<Chunk> activeChunks = new();
   private float chunkSpeed;
+  private bool gameOn = false;
+  private int chunksSpawned = 0;
 
-  /// <summary>
-  /// Initializes the chunk manager, loads configuration, and creates object pools.
-  /// </summary>
   private void Awake()
   {
-    chunkConfig = MVEPGameSettings.Instance.chunkConfig;
-    chunkLength = MVEPGameSettings.Instance.timingConfig.ChunkLength;
-    startingChunks = DEFAULT_STARTING_CHUNKS;
     chunksAhead = DEFAULT_CHUNKS_AHEAD;
     recycleThreshold = DEFAULT_RECYCLE_THRESHOLD;
 
-    chunkSpeed = chunkLength / MVEPGameSettings.Instance.timingConfig.TotalTime;
-    MVEPGameEvents.OnSpeedChanged?.Invoke(chunkSpeed);
-
     chunkDesigner = GetComponent<ChunkDesigner>();
+  }
 
-    if (chunkDesigner == null)
-    {
-      Debug.LogError("ChunkManager: ChunkDesigner component not found!");
-      return;
-    }
+  private void OnEnable()
+  {
+    MVEPGameEvents.OnGameStarted += StartGame;
+    MVEPGameEvents.OnGamePaused += () => { gameOn = false; };
+    MVEPGameEvents.OnGameResumed += () => { gameOn = true; };
+    MVEPGameEvents.OnGameEnded += EndGame;
+  }
+
+  private void Start()
+  {
+    startingChunks = MVEPGameManager.Instance.gameConfig.WarmUpChunks;
+    chunkConfig = MVEPGameManager.Instance.chunkConfig;
+    chunkLength = MVEPGameManager.Instance.timingConfig.ChunkLength;
+    chunkLimit = MVEPGameManager.Instance.gameConfig.Trials;
+
+    chunkSpeed = chunkLength / MVEPGameManager.Instance.timingConfig.TotalTime;
+    MVEPGameEvents.OnSpeedChanged?.Invoke(chunkSpeed);
 
     chunkPool = new ObjectPool<Chunk>(chunkConfig.chunkPrefab, DEFAULT_CHUNK_POOL_SIZE, transform);
     obstaclePool = new ObjectPool<Obstacle>(chunkConfig.obstaclePrefab, DEFAULT_OBSTACLE_POOL_SIZE, transform);
@@ -67,7 +73,7 @@ public class ChunkManager : MonoBehaviour
   /// <summary>
   /// Initializes the chunk queue with starting blank chunks and designed chunks.
   /// </summary>
-  private void Start()
+  public void SpawnInitialChunks()
   {
     // Spawn initial blank chunks (no obstacles/power-ups)
     for (int i = 0; i < startingChunks; i++)
@@ -82,11 +88,18 @@ public class ChunkManager : MonoBehaviour
     }
   }
 
+  public void StartGame()
+  {
+    SpawnInitialChunks();
+    gameOn = true;
+  }
+
   /// <summary>
   /// Updates all active chunks and recycles old ones.
   /// </summary>
   private void Update()
   {
+    if (!gameOn) return;
     UpdateActiveChunks(Time.deltaTime);
     RecycleChunksIfNeeded();
   }
@@ -98,6 +111,9 @@ public class ChunkManager : MonoBehaviour
   /// <param name="designChunk">If true, populates the chunk with obstacles/power-ups.</param>
   private void SpawnChunk(int index, bool designChunk)
   {
+    if (chunksSpawned >= chunkLimit)
+      return;
+
     Chunk chunk = chunkPool.Get();
     Vector3 position = GetChunkPosition(index);
 
@@ -106,6 +122,7 @@ public class ChunkManager : MonoBehaviour
     if (designChunk)
     {
       chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
+      chunksSpawned++;
     }
     else
     {
@@ -161,13 +178,20 @@ public class ChunkManager : MonoBehaviour
   private void RecycleChunk(Chunk chunk)
   {
     activeChunks.Remove(chunk);
-    chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
+    chunk.gameObject.SetActive(false);
+    chunk.Reset();
+    MVEPGameEvents.OnChunkDeactivated?.Invoke(chunk);
+
+    if (chunksSpawned >= chunkLimit)
+      return;
 
     float newZ = activeChunks[^1].transform.localPosition.z + chunkLength;
     chunk.transform.localPosition = new Vector3(0, 0, newZ);
+    chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
     chunk.SetSpeed(chunkSpeed);
-    chunk.Reset();
+    chunk.gameObject.SetActive(true);
 
+    chunksSpawned++;
     activeChunks.Add(chunk);
   }
 
@@ -189,5 +213,20 @@ public class ChunkManager : MonoBehaviour
     {
       chunk.SetSpeed(speed);
     }
+  }
+
+  public void ClearChunks()
+  {
+    foreach (var chunk in activeChunks)
+    {
+      chunkPool.Return(chunk);
+    }
+    activeChunks.Clear();
+  }
+
+  public void EndGame()
+  {
+    ClearChunks();
+    gameOn = false;
   }
 }

@@ -8,6 +8,7 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
 {
   // Constants
+  private const float CRYSTAL_INITIAL_SCALE = 1.4f;
   private const float COLLECTION_SCALE_DURATION = 0.25f;
 
   // Configuration - Animation
@@ -23,7 +24,6 @@ public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
 
   // State - Position
   private Vector3 initialPosition;
-  private Vector3 initialScale;
 
   // References
   private ObjectPool<PowerUp> pool;
@@ -40,7 +40,6 @@ public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
     }
 
     initialPosition = crystal.transform.position;
-    initialScale = crystal.transform.localScale;
   }
 
   /// <summary>
@@ -71,7 +70,7 @@ public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
 
     if (crystal != null)
     {
-      crystal.transform.localScale = initialScale;
+      crystal.transform.localScale = Vector3.one * CRYSTAL_INITIAL_SCALE;
     }
   }
 
@@ -98,9 +97,6 @@ public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
 
     // Play collection animation
     crystal.LeanScale(Vector3.zero, COLLECTION_SCALE_DURATION).setEaseInBack();
-
-    // Broadcast collection event
-    MVEPGameEvents.OnPowerUpCollected?.Invoke();
   }
 
   /// <summary>

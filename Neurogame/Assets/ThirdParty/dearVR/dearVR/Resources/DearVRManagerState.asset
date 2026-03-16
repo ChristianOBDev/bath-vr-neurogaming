@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a440692872815a42b6be9d98e14b3ad, type: 3}
+  m_Name: DearVRManagerState
+  m_EditorClassIdentifier: Assembly-CSharp::DearVRManagerState
+  setRoomGeo: 0
+  roomAnalyzer: 1
+  debugRoomAnalyzer: 1
+  roomUpdateFreq: 3
+  upDownGeo: {x: -1, y: 0.05704724}
+  frontBackGeo: {x: 10.0278845, y: -1}
+  leftRightGeo: {x: 7.6658626, y: -1}
+  bypass3DAudio: 0
+  roomMask:
+    serializedVersion: 2
+    m_Bits: 55

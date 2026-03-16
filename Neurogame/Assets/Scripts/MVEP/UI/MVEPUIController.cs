@@ -41,7 +41,7 @@ public class MVEPUIController : MonoBehaviour
   /// <param name="chunk">The newly activated chunk.</param>
   private void HandleChunkActivated(Chunk chunk)
   {
-    if (!IsValidLaneIndex(chunk.PowerUpLane, arrows.Length))
+    if (!chunk.IsValid())
     {
       HideAllArrows();
       return;
@@ -62,7 +62,7 @@ public class MVEPUIController : MonoBehaviour
       return;
     }
 
-    float arrowPreactivationDuration = MVEPGameSettings.Instance.timingConfig.ArrowPreactivationDuration;
+    float arrowPreactivationDuration = MVEPGameManager.Instance.timingConfig.ArrowPreactivationDuration;
     stimuliController.Pulse(arrowPreactivationDuration);
   }
 
@@ -101,16 +101,5 @@ public class MVEPUIController : MonoBehaviour
         arrow.SetActive(false);
       }
     }
-  }
-
-  /// <summary>
-  /// Validates if a lane index is within the valid range.
-  /// </summary>
-  /// <param name="laneIndex">The lane index to validate.</param>
-  /// <param name="arrayLength">The length of the arrow array.</param>
-  /// <returns>True if the lane index is valid, false otherwise.</returns>
-  private bool IsValidLaneIndex(int laneIndex, int arrayLength)
-  {
-    return laneIndex >= 0 && laneIndex < arrayLength;
   }
 }

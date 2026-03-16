@@ -36,14 +36,9 @@ public class MVEPStimulus : MonoBehaviour
   /// <summary>
   /// Initializes stimulus configuration from game settings.
   /// </summary>
-  private void Awake()
+  private void Start()
   {
-    pulseDuration = MVEPGameSettings.Instance.timingConfig.PulseDuration;
-
-    if (line == null)
-    {
-      Debug.LogError("MVEPStimulus: Line RectTransform not assigned!");
-    }
+    pulseDuration = MVEPGameManager.Instance.timingConfig.PulseDuration;
   }
 
   /// <summary>
@@ -52,12 +47,6 @@ public class MVEPStimulus : MonoBehaviour
   /// </summary>
   public void Pulse()
   {
-    if (line == null)
-    {
-      Debug.LogError("MVEPStimulus: Cannot pulse - line reference is null!");
-      return;
-    }
-
     // Reset to start position and show
     line.anchoredPosition = startPos;
     line.gameObject.SetActive(true);

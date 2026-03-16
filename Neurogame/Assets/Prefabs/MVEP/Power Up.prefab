@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3cb78b1a1c77e942b3b37e51ee38fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerUp
-  crystal: {fileID: 2272711436232031987}
   bobbingAmplitude: 0.5
   bobbingFrequency: 1
   rotationSpeed: 30
+  crystal: {fileID: 2272711436232031987}
+  initialScale: {x: 1.4, y: 1.4, z: 1.4}
 --- !u!65 &9112688354901052384
 BoxCollider:
   m_ObjectHideFlags: 0
