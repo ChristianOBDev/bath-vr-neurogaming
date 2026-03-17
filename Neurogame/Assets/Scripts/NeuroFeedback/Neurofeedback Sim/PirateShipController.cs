@@ -8,9 +8,6 @@ public class NeuroPirateShipController : MonoBehaviour
     public Transform reachPoint;
     public float moveSpeed = 1.2f;
 
-    [Header("Respawn")]
-    public float respawnDelay = 4f;
-
     [Header("Death VFX (optional)")]
     public GameObject deathVfxPrefab;
 
@@ -44,8 +41,6 @@ public class NeuroPirateShipController : MonoBehaviour
         if (dir.sqrMagnitude < 0.01f) return;
 
         transform.position += dir.normalized * moveSpeed * Time.deltaTime;
-
-        // Keep orientation exactly as placed in scene (no auto-rotation)
     }
 
     private void HandleKilled(NeuroTargetHealth th)
@@ -54,24 +49,24 @@ public class NeuroPirateShipController : MonoBehaviour
             Instantiate(deathVfxPrefab, transform.position, Quaternion.identity);
 
         SetVisible(false);
-        StopAllCoroutines();
-        StartCoroutine(RespawnRoutine());
     }
 
-    private IEnumerator RespawnRoutine()
+    public void ResetShipImmediate()
     {
-        yield return new WaitForSeconds(respawnDelay);
-
         transform.position = startPos;
         transform.rotation = startRot;
 
         health.ResetHealth();
         SetVisible(true);
+        gameObject.SetActive(true);
     }
 
     private void SetVisible(bool on)
     {
-        foreach (var c in colliders) c.enabled = on;
-        foreach (var r in renderers) r.enabled = on;
+        foreach (var c in colliders)
+            if (c != null) c.enabled = on;
+
+        foreach (var r in renderers)
+            if (r != null) r.enabled = on;
     }
 }

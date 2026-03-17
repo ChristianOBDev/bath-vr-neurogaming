@@ -156,4 +156,5 @@ MonoBehaviour:
   damage: 100
   maxLife: 10
   hitVfxPrefab: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 8ec8be16f66acc449a5a7a5a34b722be, type: 3}
   armingDelay: 0.08

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MVEPTimingConfig
   m_EditorClassIdentifier: Assembly-CSharp::MVEPTimingConfiguration
   chunkLength: 30
-  traversalDuration: 2.5
-  laneChangeDuration: 1
-  laneResetDuration: 1
+  traversalDuration: 3
+  laneChangeDuration: 2.2
+  laneResetDuration: 2
   numStimuli: 5
   arrowPreactivationDuration: 1.2
   pulseDuration: 0.14
