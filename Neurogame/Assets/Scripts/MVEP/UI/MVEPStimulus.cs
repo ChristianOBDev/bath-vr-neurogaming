@@ -54,6 +54,9 @@ public class MVEPStimulus : MonoBehaviour
     // Animate across the screen
     line.LeanMoveLocalX(endPos.x, pulseDuration)
       .setOnComplete(OnPulseComplete);
+
+    //Send UDP signal
+    UDPManager.Instance.Send(stimulusIndex);
   }
 
   /// <summary>
