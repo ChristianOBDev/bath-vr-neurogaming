@@ -19,9 +19,9 @@ public class XRRigProfileTrigger : MonoBehaviour
   {
     rigController = XRRigController.Instance;
 
-    if (profile.inputActions != null)
-      profile.inputActions.Disable();
-  }
+        if (profile.inputActions != null)
+            profile.inputActions.Disable();
+    }
 
   void OnTriggerEnter(Collider other)
   {
@@ -52,10 +52,10 @@ public class XRRigProfileTrigger : MonoBehaviour
     {
       rigController.ResetRig(resetPoint);
 
-      if (profile.inputActions != null)
-        profile.inputActions.Disable();
+            if (profile.inputActions != null)
+                profile.inputActions.Disable();
 
-      onRigReset?.Invoke();
+            onRigReset?.Invoke();
     }
   }
 }
