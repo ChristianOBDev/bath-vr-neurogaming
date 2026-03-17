@@ -31,11 +31,16 @@ public class MVEPResponseController : MonoBehaviour
   private bool changedLanesThisChunk;
   private int targetLane = CENTER_LANE;
 
+  // State
+  private bool pulsing = false;
+
+
   void OnEnable()
   {
     MVEPInputManager.OnLaneInput += HandleLaneInput;
     MVEPGameEvents.OnChunkActivated += GetActiveChunk;
     MVEPStimulus.OnStimulusPulsed += HandleStimulusPulse;
+    MVEPStimuliController.PulseStarted += () => pulsing = true;
     MVEPStimuliController.PulseComplete += HandlePulseComplete;
     MVEPGameEvents.OnPhaseChanged += (newPhase) => phase = newPhase;
   }
@@ -89,7 +94,8 @@ public class MVEPResponseController : MonoBehaviour
   /// </summary>
   void HandleLaneInput(int laneIndex)
   {
-    if (!IsValidLaneIndex(laneIndex, STIMULUS_COUNT) || changedLanesThisChunk) return;
+    if (!IsValidLaneIndex(laneIndex, STIMULUS_COUNT) || changedLanesThisChunk)
+      return;
 
     laneInputReceived[laneIndex] = true;
 
@@ -127,7 +133,6 @@ public class MVEPResponseController : MonoBehaviour
   {
     if (IsTimerValid(laneIndex))
     {
-
       canoeController.SetTargetLane(laneIndex);
       canoeController.ChangeLanes();
       changedLanesThisChunk = true;
@@ -161,6 +166,8 @@ public class MVEPResponseController : MonoBehaviour
   /// </summary>
   void HandlePulseComplete()
   {
+    pulsing = false;
+
     if (changedLanesThisChunk)
       return;
 
@@ -186,6 +193,7 @@ public class MVEPResponseController : MonoBehaviour
   /// </summary>
   void Update()
   {
+    if (!pulsing) return;
     UpdateP300Timers();
   }
 

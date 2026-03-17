@@ -13,64 +13,30 @@ public class MVEPInputManager : MonoBehaviour
 
   public static Action<int> OnLaneInput;
 
-  // Test inputs
-  [SerializeField] private InputActionReference startGame;
-  [SerializeField] private InputActionReference pauseGame;
-  [SerializeField] private InputActionReference resumeGame;
-  [SerializeField] private InputActionReference quitGame;
-
-  [SerializeField] private InputActionAsset inputActions;
-
   void OnEnable()
   {
-    inputActions.Enable();
+    UDPManager.Instance.OnIntReceived += HandleInput;
 
     lane1.action.performed += (ctx) => OnLaneInput?.Invoke(0);
     lane2.action.performed += (ctx) => OnLaneInput?.Invoke(1);
     lane3.action.performed += (ctx) => OnLaneInput?.Invoke(2);
     lane4.action.performed += (ctx) => OnLaneInput?.Invoke(3);
     lane5.action.performed += (ctx) => OnLaneInput?.Invoke(4);
-
-    startGame.action.performed += StartGame;
-    pauseGame.action.performed += PauseGame;
-    resumeGame.action.performed += ResumeGame;
-    quitGame.action.performed += QuitGame;
   }
 
   void OnDisable()
   {
-    inputActions.Disable();
+    UDPManager.Instance.OnIntReceived -= HandleInput;
 
     lane1.action.performed -= (ctx) => OnLaneInput?.Invoke(0);
     lane2.action.performed -= (ctx) => OnLaneInput?.Invoke(1);
     lane3.action.performed -= (ctx) => OnLaneInput?.Invoke(2);
     lane4.action.performed -= (ctx) => OnLaneInput?.Invoke(3);
     lane5.action.performed -= (ctx) => OnLaneInput?.Invoke(4);
-
-    startGame.action.performed -= StartGame;
-    pauseGame.action.performed -= PauseGame;
-    resumeGame.action.performed -= ResumeGame;
-    quitGame.action.performed -= QuitGame;
   }
 
-  void StartGame(InputAction.CallbackContext context)
+  private void HandleInput(int laneIndex)
   {
-    MVEPGameManager.Instance.StartGame();
+    OnLaneInput?.Invoke(laneIndex - 1); // Convert to 0-based index
   }
-
-  void PauseGame(InputAction.CallbackContext context)
-  {
-    MVEPGameManager.Instance.PauseGame();
-  }
-
-  void ResumeGame(InputAction.CallbackContext context)
-  {
-    MVEPGameManager.Instance.ResumeGame();
-  }
-
-  void QuitGame(InputAction.CallbackContext context)
-  {
-    MVEPGameManager.Instance.QuitGame();
-  }
-
 }
