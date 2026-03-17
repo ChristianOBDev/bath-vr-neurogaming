@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CanoeScoreConfig
   m_EditorClassIdentifier: Assembly-CSharp::CanoeScoreConfig
   scorePerChunk: 10
-  scorePerPowerUp: 50
+  scorePerPowerUp: 40
   scorePenaltyPerObstacle: 30

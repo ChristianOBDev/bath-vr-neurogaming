@@ -1,122 +1,232 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages the lifecycle of chunks in the game world.
+/// Handles chunk spawning, recycling, speed management, and object pooling.
+/// Uses an infinite generation pattern to create chunks in sequence.
+/// </summary>
 [RequireComponent(typeof(ChunkDesigner))]
 public class ChunkManager : MonoBehaviour
 {
-  [Header("Component References")]
+  // Constants
+  private const int DEFAULT_CHUNK_POOL_SIZE = 6;
+  private const int DEFAULT_OBSTACLE_POOL_SIZE = 10;
+  private const int DEFAULT_POWERUP_POOL_SIZE = 10;
+  private const int DEFAULT_CHUNKS_AHEAD = 3;
+  private const float DEFAULT_RECYCLE_THRESHOLD = 34f;
+  private const int INVALID_LANE = -1;
+
+  // Configuration
+  private ChunkConfiguration chunkConfig;
+  private float chunkLength;
+  private int startingChunks;
+  private int chunksAhead;
+  private float recycleThreshold;
+  private int chunkLimit;
+
+  // Component References
   private ChunkDesigner chunkDesigner;
 
-  [Header("Settings")]
-  private ChunkConfiguration chunkConfig;
-  [SerializeField] private int startingChunks = 2;
-  [SerializeField] private int chunksAhead = 6;
-  private float chunkLength;
-  private float chunkSpeed;
-  private readonly int initialChunkPoolSize = 10;
-  private readonly int initialObstaclePoolSize = 20;
-  private readonly int initialPowerUpPoolSize = 20;
-
-  [Header("Pools")]
+  // Object Pools
   private ObjectPool<Chunk> chunkPool;
   private ObjectPool<Obstacle> obstaclePool;
   private ObjectPool<PowerUp> powerUpPool;
 
-  [Header("Runtime")]
+  // Runtime State
   private readonly List<Chunk> activeChunks = new();
+  private float chunkSpeed;
+  private bool gameOn = false;
+  private int chunksSpawned = 0;
 
   private void Awake()
   {
-    chunkConfig = MVEPGameSettings.Instance.chunkConfig;
-    chunkLength = chunkConfig.chunkLength;
-    chunkSpeed = chunkLength / chunkConfig.chunkTraversalTime;
-    MVEPGameEvents.OnSpeedChanged?.Invoke(chunkSpeed);
+    chunksAhead = DEFAULT_CHUNKS_AHEAD;
+    recycleThreshold = DEFAULT_RECYCLE_THRESHOLD;
 
     chunkDesigner = GetComponent<ChunkDesigner>();
+  }
 
-    chunkPool = new ObjectPool<Chunk>(chunkConfig.chunkPrefab, initialChunkPoolSize, transform);
-    obstaclePool = new ObjectPool<Obstacle>(chunkConfig.obstaclePrefab, initialObstaclePoolSize, transform);
-    powerUpPool = new ObjectPool<PowerUp>(chunkConfig.powerUpPrefab, initialPowerUpPoolSize, transform);
+  private void OnEnable()
+  {
+    MVEPGameEvents.OnGameStarted += StartGame;
+    MVEPGameEvents.OnGamePaused += () => { gameOn = false; };
+    MVEPGameEvents.OnGameResumed += () => { gameOn = true; };
+    MVEPGameEvents.OnGameEnded += EndGame;
   }
 
   private void Start()
   {
+    startingChunks = MVEPGameManager.Instance.gameConfig.WarmUpChunks;
+    chunkConfig = MVEPGameManager.Instance.chunkConfig;
+    chunkLength = MVEPGameManager.Instance.timingConfig.ChunkLength;
+    chunkLimit = MVEPGameManager.Instance.gameConfig.Trials;
+
+    chunkSpeed = chunkLength / MVEPGameManager.Instance.timingConfig.TotalTime;
+    MVEPGameEvents.OnSpeedChanged?.Invoke(chunkSpeed);
+
+    chunkPool = new ObjectPool<Chunk>(chunkConfig.chunkPrefab, DEFAULT_CHUNK_POOL_SIZE, transform);
+    obstaclePool = new ObjectPool<Obstacle>(chunkConfig.obstaclePrefab, DEFAULT_OBSTACLE_POOL_SIZE, transform);
+    powerUpPool = new ObjectPool<PowerUp>(chunkConfig.powerUpPrefab, DEFAULT_POWERUP_POOL_SIZE, transform);
+  }
+
+  /// <summary>
+  /// Initializes the chunk queue with starting blank chunks and designed chunks.
+  /// </summary>
+  public void SpawnInitialChunks()
+  {
+    // Spawn initial blank chunks (no obstacles/power-ups)
     for (int i = 0; i < startingChunks; i++)
     {
-      SpawnBlankChunk(i);
+      SpawnChunk(i, designChunk: false);
     }
 
+    // Spawn designed chunks ahead
     for (int i = startingChunks; i < chunksAhead; i++)
     {
-      SpawnInitialChunk(i);
+      SpawnChunk(i, designChunk: true);
     }
   }
 
+  public void StartGame()
+  {
+    SpawnInitialChunks();
+    gameOn = true;
+  }
+
+  /// <summary>
+  /// Updates all active chunks and recycles old ones.
+  /// </summary>
   private void Update()
   {
-    TickChunks(Time.deltaTime);
+    if (!gameOn) return;
+    UpdateActiveChunks(Time.deltaTime);
+    RecycleChunksIfNeeded();
   }
 
-  private void SpawnBlankChunk(int index)
+  /// <summary>
+  /// Spawns a chunk at the given index position, optionally with obstacles and power-ups.
+  /// </summary>
+  /// <param name="index">The chunk index in the sequence.</param>
+  /// <param name="designChunk">If true, populates the chunk with obstacles/power-ups.</param>
+  private void SpawnChunk(int index, bool designChunk)
   {
-    Chunk chunk = chunkPool.Get();
-    Vector3 pos = chunkLength * index * Vector3.forward;
+    if (chunksSpawned >= chunkLimit)
+      return;
 
-    chunk.Initialize(chunkSpeed, pos, chunkLength);
-    chunk.SetLanes(-1, -1);
+    Chunk chunk = chunkPool.Get();
+    Vector3 position = GetChunkPosition(index);
+
+    chunk.Initialize(chunkSpeed, position, chunkLength);
+
+    if (designChunk)
+    {
+      chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
+      chunksSpawned++;
+    }
+    else
+    {
+      chunk.SetLanes(INVALID_LANE, INVALID_LANE);
+    }
+
     activeChunks.Add(chunk);
   }
 
-  private void SpawnInitialChunk(int index)
+  /// <summary>
+  /// Calculates the world position of a chunk by its index.
+  /// </summary>
+  /// <param name="index">The chunk index.</param>
+  /// <returns>World position for the chunk.</returns>
+  private Vector3 GetChunkPosition(int index)
   {
-    Chunk chunk = chunkPool.Get();
-    Vector3 pos = chunkLength * index * Vector3.forward;
-
-    chunk.Initialize(chunkSpeed, pos, chunkLength);
-
-    chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
-
-    activeChunks.Add(chunk);
+    return transform.localPosition + chunkLength * index * Vector3.forward;
   }
 
-  private void TickChunks(float deltaTime)
+  /// <summary>
+  /// Updates all active chunks by one tick.
+  /// </summary>
+  /// <param name="deltaTime">Delta time since last frame.</param>
+  private void UpdateActiveChunks(float deltaTime)
   {
     for (int i = 0; i < activeChunks.Count; i++)
     {
       activeChunks[i].Tick(deltaTime);
     }
+  }
 
-    Chunk first = activeChunks[0];
+  /// <summary>
+  /// Checks and recycles the first chunk if it has passed the recycle threshold.
+  /// </summary>
+  private void RecycleChunksIfNeeded()
+  {
+    if (activeChunks.Count == 0)
+      return;
 
-    if (first.transform.position.z <= -chunkLength * 1.5f)
+    Chunk firstChunk = activeChunks[0];
+
+    if (firstChunk.transform.localPosition.z <= -recycleThreshold)
     {
-      RecycleChunk(first);
+      RecycleChunk(firstChunk);
     }
   }
 
+  /// <summary>
+  /// Recycles a chunk by removing it from active list, redesigning it,
+  /// and placing it at the end of the chunk sequence.
+  /// </summary>
+  /// <param name="chunk">The chunk to recycle.</param>
   private void RecycleChunk(Chunk chunk)
   {
     activeChunks.Remove(chunk);
-
-    chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
-
-    float newZ = activeChunks[^1].transform.position.z + chunkLength;
-
-    chunk.transform.position = new Vector3(0, 0, newZ);
-    chunk.SetSpeed(chunkSpeed);
-
+    chunk.gameObject.SetActive(false);
     chunk.Reset();
+    MVEPGameEvents.OnChunkDeactivated?.Invoke(chunk);
 
+    if (chunksSpawned >= chunkLimit)
+      return;
+
+    float newZ = activeChunks[^1].transform.localPosition.z + chunkLength;
+    chunk.transform.localPosition = new Vector3(0, 0, newZ);
+    chunkDesigner.DesignChunk(chunk, obstaclePool, powerUpPool);
+    chunk.SetSpeed(chunkSpeed);
+    chunk.gameObject.SetActive(true);
+
+    chunksSpawned++;
     activeChunks.Add(chunk);
   }
 
+  /// <summary>
+  /// Updates the speed of all chunks. Called when game speed changes.
+  /// </summary>
+  /// <param name="speed">The new chunk speed.</param>
   public void SetSpeed(float speed)
   {
+    if (speed <= 0)
+    {
+      Debug.LogWarning("ChunkManager: Speed must be positive");
+      return;
+    }
+
     chunkSpeed = speed;
 
     foreach (var chunk in activeChunks)
     {
       chunk.SetSpeed(speed);
     }
+  }
+
+  public void ClearChunks()
+  {
+    foreach (var chunk in activeChunks)
+    {
+      chunkPool.Return(chunk);
+    }
+    activeChunks.Clear();
+  }
+
+  public void EndGame()
+  {
+    ClearChunks();
+    gameOn = false;
   }
 }

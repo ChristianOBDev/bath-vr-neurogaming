@@ -8,4 +8,6 @@
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.Hands.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.InteractionSimulator.Editor.csproj" />
+  <Project Path="Cycling74.RNBOTypes.csproj" />
+  <Project Path="Cycling74.RNBOMusicEngineHelper.cs.csproj" />
 </Solution>

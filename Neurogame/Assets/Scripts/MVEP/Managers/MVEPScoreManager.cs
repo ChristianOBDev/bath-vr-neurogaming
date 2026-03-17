@@ -1,62 +1,121 @@
 using UnityEngine;
 
+/// <summary>
+/// Manages player score throughout the game.
+/// Tracks scores from chunk completion, power-ups collected, and obstacle penalties.
+/// Calculates and broadcasts the total score to all listeners.
+/// </summary>
 public class MVEPScoreManager : MonoBehaviour
 {
-  public int TotalScore => totalScore;
-  [SerializeField] private int totalScore;
+  // Configuration
+  private int scorePerChunk;
+  private int scorePerPowerUp;
+  private int scorePenaltyPerObstacle;
+
+  // Score Tracking
+  private int totalScore;
   private int chunkScore;
+  private int powerUpsCollected = 0;
   private int powerUpScore;
+  private int obstaclesHit = 0;
   private int obstaclePenalty;
 
-  private int scorePerChunk = 10;
-  private int scorePerPowerUp = 50;
-  private int scorePenaltyPerObstacle = 30;
+  /// <summary>
+  /// Gets the current total score.
+  /// </summary>
+  public int TotalScore => totalScore;
 
-  void Start()
+  /// <summary>
+  /// Initializes score configuration from game settings.
+  /// </summary>
+  private void Start()
   {
-    var settings = MVEPGameSettings.Instance;
+    var settings = MVEPGameManager.Instance;
     scorePerChunk = settings.scoreConfig.scorePerChunk;
     scorePerPowerUp = settings.scoreConfig.scorePerPowerUp;
     scorePenaltyPerObstacle = settings.scoreConfig.scorePenaltyPerObstacle;
   }
 
-  void OnEnable()
+  /// <summary>
+  /// Subscribes to game events that affect scoring.
+  /// </summary>
+  private void OnEnable()
   {
-    MVEPGameEvents.OnPowerUpCollected += AddPowerUpPoints;
-    MVEPGameEvents.OnObstacleHit += SubtractObstaclePoints;
-    Chunk.OnChunkPassed += OnChunkPassed;
+    MVEPGameEvents.OnGameStarted += Reset;
+    MVEPGameEvents.OnPowerUpCollected += HandlePowerUpCollected;
+    MVEPGameEvents.OnObstacleHit += HandleObstacleHit;
+    MVEPGameEvents.OnChunkPassed += HandleChunkPassed;
   }
 
-  void OnDisable()
+  /// <summary>
+  /// Unsubscribes from game events.
+  /// </summary>
+  private void OnDisable()
   {
-    MVEPGameEvents.OnPowerUpCollected -= AddPowerUpPoints;
-    MVEPGameEvents.OnObstacleHit -= SubtractObstaclePoints;
-    Chunk.OnChunkPassed -= OnChunkPassed;
+    MVEPGameEvents.OnGameStarted -= Reset;
+    MVEPGameEvents.OnPowerUpCollected -= HandlePowerUpCollected;
+    MVEPGameEvents.OnObstacleHit -= HandleObstacleHit;
+    MVEPGameEvents.OnChunkPassed -= HandleChunkPassed;
   }
 
-  private void OnChunkPassed(Chunk chunk)
+  /// <summary>
+  /// Handles chunk passed event, awarding points for safe passage.
+  /// Only awards points if the chunk contained an obstacle (had valid ObstacleLane).
+  /// </summary>
+  /// <param name="chunk">The chunk that was passed.</param>
+  private void HandleChunkPassed(Chunk chunk)
   {
-    if (chunk.ObstacleLane < 0) return;
-
-    chunkScore += scorePerChunk;
-    RecalculateScore();
+    // Only award chunk points if chunk had an obstacle (ObstacleLane >= 0)
+    if (chunk.IsValid())
+    {
+      chunkScore += scorePerChunk;
+      RecalculateScore();
+    }
   }
 
-  public void AddPowerUpPoints()
+  /// <summary>
+  /// Adds points when the player collects a power-up.
+  /// </summary>
+  private void HandlePowerUpCollected()
   {
+    powerUpsCollected++;
     powerUpScore += scorePerPowerUp;
     RecalculateScore();
   }
 
-  public void SubtractObstaclePoints()
+  /// <summary>
+  /// Subtracts points when the player hits an obstacle.
+  /// </summary>
+  private void HandleObstacleHit()
   {
+    obstaclesHit++;
     obstaclePenalty += scorePenaltyPerObstacle;
     RecalculateScore();
   }
 
+  /// <summary>
+  /// Recalculates total score and broadcasts the update.
+  /// Total = powerUpScore + chunkScore - obstaclePenalty
+  /// </summary>
   private void RecalculateScore()
   {
     totalScore = powerUpScore + chunkScore - obstaclePenalty;
     MVEPGameEvents.OnScoreUpdated?.Invoke(totalScore);
+  }
+
+  public void Reset()
+  {
+    totalScore = 0;
+    chunkScore = 0;
+    powerUpScore = 0;
+    obstaclePenalty = 0;
+    powerUpsCollected = 0;
+    obstaclesHit = 0;
+    MVEPGameEvents.OnScoreUpdated?.Invoke(totalScore);
+  }
+
+  public int[] GetScoreBreakdown()
+  {
+    return new int[] { totalScore, powerUpsCollected, obstaclesHit };
   }
 }
