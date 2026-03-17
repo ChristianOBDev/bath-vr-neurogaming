@@ -9,7 +9,7 @@ public enum ControllerVisuals
   NeuroFeedback
 }
 
-[CreateAssetMenu(menuName = "XR/Rig Profile")]
+[CreateAssetMenu(menuName = "ScriptableObjects/Rig Profile")]
 public class XRRigProfile : ScriptableObject
 {
 
