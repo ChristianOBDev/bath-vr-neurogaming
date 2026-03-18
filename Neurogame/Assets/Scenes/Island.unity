@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 78151f5e58fb9f749bd5225f789faa27, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5773,7 +5773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5312741001786462339, guid: ec546d033fbe13f42a0a7efb164718a7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5961175717370474838, guid: ec546d033fbe13f42a0a7efb164718a7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -67291,7 +67291,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -68226,7 +68226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.48800582
+      value: 0.3583171
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalRotation.x
@@ -68234,7 +68234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.8728404
+      value: 0.9336
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalRotation.z
@@ -68246,7 +68246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 121.581
+      value: 138.006
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
