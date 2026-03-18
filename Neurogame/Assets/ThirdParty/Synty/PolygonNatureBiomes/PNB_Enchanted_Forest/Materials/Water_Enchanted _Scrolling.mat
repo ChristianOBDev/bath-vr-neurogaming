@@ -114,7 +114,7 @@ Material:
     - _Enable_Fresnel_Fade: 0
     - _Enable_Fresnel_glancing_angle_fix: 1
     - _Enable_Global_Foam: 0
-    - _Enable_Normals: 1
+    - _Enable_Normals: 0
     - _Enable_Ocean_Wave: 0
     - _Enable_Shore_Animation: 1
     - _Enable_Shore_Foam: 0

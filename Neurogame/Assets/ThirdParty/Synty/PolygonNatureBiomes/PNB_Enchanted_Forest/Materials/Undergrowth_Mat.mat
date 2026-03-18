@@ -139,7 +139,7 @@ Material:
     - _Enable_Breeze: 1
     - _Enable_Emission: 0
     - _Enable_Frosting: 0
-    - _Enable_Leaf_Normal: 1
+    - _Enable_Leaf_Normal: 0
     - _Enable_Light_Wind: 1
     - _Enable_Pulse: 0
     - _Enable_Strong_Wind: 1
@@ -219,6 +219,7 @@ Material:
     - _WindDirection: 0
     - _Wind_Twist_Strength: 0.15
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _Y_multiplier: 0.2
     - _ZTest: 4
     - _ZWrite: 1

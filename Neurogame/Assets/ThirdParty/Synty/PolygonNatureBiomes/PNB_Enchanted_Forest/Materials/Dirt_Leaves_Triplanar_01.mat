@@ -25,6 +25,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ALPHATEST_ON
   - _OVERLAY_UV_CHANNEL_UV0
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -59,6 +60,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Overlay_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Triplanar_Emission_Texture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -101,7 +106,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _AO_Intensity: 1
+    - _AlphaClip: 1
     - _AlphaCutoff: 0.5
+    - _AlphaToMask: 1
     - _Alpha_Clip_Threshold: 0.5
     - _Alpha_Transparency: 1
     - _Ambient_Occlusion: 1
@@ -116,12 +123,17 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 0
     - _Bottom_Metallic: 0
     - _Bottom_Smoothness: 0
     - _BumpScale: 1
+    - _CastShadows: 1
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _Enable_Alpha_Texture: 0
     - _Enable_Ambient_Occlusion: 0
     - _Enable_Base_Texture: 1
@@ -172,13 +184,18 @@ Material:
     - _Snow_Transition_Threshold: 1
     - _Snow_Transition_Threshold_Step_Count: 4
     - _Snow_Transition_Threshold_Steps: 0
+    - _Snow_Use_World_Up: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
+    - _Surface: 0
     - _Tiling: 0.5
     - _Top_Metallic: 0
     - _Top_Smoothness: 0
+    - _Triplanar_Emission_Blend: 1
     - _Triplanar_Emission_Fade: 1
     - _Triplanar_Emission_Intensity: 1
+    - _Triplanar_Emission_Tiling: 0.25
     - _Triplanar_Emission_Top_To_Side_Difference: 0
     - _Triplanar_Fade: 1
     - _Triplanar_Intensity: 1
@@ -192,7 +209,11 @@ Material:
     - _Wave_Object_Offset: 0
     - _Wave_Scale: 0.153
     - _Wave_Speed: 1
+    - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     - __dirty: 0
     m_Colors:
     - _AO_Offset: {r: 0, g: 0, b: 0, a: 0}
