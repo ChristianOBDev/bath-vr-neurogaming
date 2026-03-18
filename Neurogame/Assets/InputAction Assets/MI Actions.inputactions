@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "MI Actions",
+    "maps": [
+        {
+            "name": "Kicker Controls Indy",
+            "id": "065c855e-95b3-4a09-8f9f-02f8c10f8e4c",
+            "actions": [
+                {
+                    "name": "KickerAxis",
+                    "type": "Value",
+                    "id": "d8446ff8-1763-48ce-a6ac-af9d9ac02ed3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PhaseMenu",
+                    "type": "Button",
+                    "id": "605e10f4-233c-41da-bebe-bc8d9a217190",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "03f132a3-e7fa-47f5-b94d-8ba8cd5f944e",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KickerAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "87fffffe-80cc-4d6a-8676-1f024bccf913",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PhaseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
