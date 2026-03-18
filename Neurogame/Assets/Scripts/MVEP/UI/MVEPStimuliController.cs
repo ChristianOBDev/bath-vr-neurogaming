@@ -21,6 +21,12 @@ public class MVEPStimuliController : MonoBehaviour
 
   // Events
   /// <summary>
+  /// Fired at the start of a pulse sequence, before any stimuli are presented.
+  /// Can be used to trigger pre-pulse behaviors or signals.
+  /// </summary>
+  public static Action PulseStarted;
+
+  /// <summary>
   /// Fired when a complete pulse sequence and P300 interval has finished.
   /// Signals that the player has had their response window.
   /// </summary>
@@ -72,6 +78,8 @@ public class MVEPStimuliController : MonoBehaviour
   /// <returns>Coroutine enumerator.</returns>
   private IEnumerator ExecutePulseSequence(float delay)
   {
+    PulseStarted?.Invoke();
+
     // Wait for initial delay if specified
     if (delay > 0f)
     {
