@@ -1,10 +1,9 @@
 using UnityEngine;
-using NeuroCONCISE;
 
 /// <summary>
 /// Bridges UDPManager EEG data to KickerInputRouter.
 /// Replaces or blends with thumbstick input depending on mode.
-/// Awaiting confirmation of EEG data format before full implementation.
+/// Data format confirmed: Single float, bipolar (-1 = left, +1 = right)
 /// </summary>
 public class EEGKickerInput : MonoBehaviour
 {
@@ -14,12 +13,6 @@ public class EEGKickerInput : MonoBehaviour
     [Header("EEG Settings")]
     [Tooltip("Enable to use EEG input instead of thumbstick")]
     public bool eegEnabled = false;
-
-    [Tooltip("Index of left motor imagery value in float array (if applicable)")]
-    public int leftChannelIndex = 0;
-
-    [Tooltip("Index of right motor imagery value in float array (if applicable)")]
-    public int rightChannelIndex = 1;
 
     [Tooltip("Normalise incoming values to 0-1 range")]
     public bool normaliseInput = true;
@@ -42,15 +35,13 @@ public class EEGKickerInput : MonoBehaviour
     private float leftSignal = 0f;
     private float rightSignal = 0f;
 
-    // TODO: Confirm data format with EEG middleware team
-    // Expected format options:
-    // A) Single float: bipolar value (-1 = left, +1 = right)
-    // B) Float array: [leftValue, rightValue, ...otherChannels]
-    // C) Int: discrete class label (e.g. 1 = left, 2 = right, 0 = rest)
-
     void OnEnable()
     {
-        if (UDPManager.Instance == null) return;
+        if (UDPManager.Instance == null)
+        {
+            Debug.LogWarning("EEGKickerInput: UDPManager.Instance is null on OnEnable.");
+            return;
+        }
         UDPManager.Instance.OnFloatReceived += HandleFloat;
     }
 
@@ -60,9 +51,6 @@ public class EEGKickerInput : MonoBehaviour
         UDPManager.Instance.OnFloatReceived -= HandleFloat;
     }
 
-    // ---- Option A: Single float handler ----
-    // Use if EEG sends a single bipolar float (-1 to 1)
-    // Negative = left motor imagery, Positive = right motor imagery
     void HandleFloat(float value)
     {
         float normalised = normaliseInput ? value / rawSignalMax : value;

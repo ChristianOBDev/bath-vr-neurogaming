@@ -15021,6 +15021,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1315633575}
   - {fileID: 1151672539}
   - {fileID: 626324227}
   - {fileID: 2085130435}
@@ -15037,7 +15038,6 @@ Transform:
   - {fileID: 1008459419}
   - {fileID: 1299534964}
   - {fileID: 1283275983}
-  - {fileID: 1315633575}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 93, z: 0}
 --- !u!114 &1177395053
@@ -16828,6 +16828,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1315633575}
+  - component: {fileID: 1315633577}
+  - component: {fileID: 1315633576}
   m_Layer: 0
   m_Name: UDP_System
   m_TagString: Untagged
@@ -16850,6 +16852,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1177395052}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1315633576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315633574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a03be699bc32b45ad11e3973ecb662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UDPAutoStart
+  remoteIp: 127.0.0.1
+  sendPort: 3010
+  receivePort: 3002
+  autoStartOnAwake: 1
+  showSettingsCanvasOnStart: 0
+  udpSettingsCanvasObject: {fileID: 0}
+--- !u!114 &1315633577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315633574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cde3319db696514499a3ad3fa641532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UDPManager
+  enableDebugLogging: 0
 --- !u!1 &1326031627
 GameObject:
   m_ObjectHideFlags: 0
@@ -19766,6 +19799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1553480280}
   - component: {fileID: 1553480281}
+  - component: {fileID: 1553480282}
   m_Layer: 0
   m_Name: KickerInput
   m_TagString: Untagged
@@ -19815,6 +19849,25 @@ MonoBehaviour:
     m_Reference: {fileID: 1367795503}
   deadZone: 0.1
   controlValue: 0
+--- !u!114 &1553480282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553480278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655ce1fa692d3724babd2771c4982be0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EEGKickerInput
+  inputRouter: {fileID: 1553480281}
+  eegEnabled: 0
+  normaliseInput: 1
+  rawSignalMax: 1
+  signalDeadzone: 0.1
+  eegBlendWeight: 1
+  eegDebugLogging: 0
 --- !u!1 &1555512242
 GameObject:
   m_ObjectHideFlags: 0
