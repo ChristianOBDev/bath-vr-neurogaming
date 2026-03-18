@@ -16867,7 +16867,7 @@ MonoBehaviour:
   remoteIp: 127.0.0.1
   sendPort: 3010
   receivePort: 3002
-  autoStartOnAwake: 1
+  autoStartOnAwake: 0
   showSettingsCanvasOnStart: 0
   udpSettingsCanvasObject: {fileID: 0}
 --- !u!114 &1315633577
@@ -16879,7 +16879,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1315633574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cde3319db696514499a3ad3fa641532, type: 3}
+  m_Script: {fileID: 11500000, guid: 19c90138c6718fb4c866d79945cacca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UDPManager
   enableDebugLogging: 0
