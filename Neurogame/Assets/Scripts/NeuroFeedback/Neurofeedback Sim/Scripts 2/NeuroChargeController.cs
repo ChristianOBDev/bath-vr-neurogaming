@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using NeuroFeedback;
 
@@ -15,8 +15,8 @@ public class NeuroChargeController : MonoBehaviour
     public CannonBarrelFeedback barrelFeedback;
 
     [Header("3D Bar Refs")]
-    public NeuroBar3D neuroBar3D; // Reference to the 3D bar
-    public bool syncWithUI = true; // Whether to sync 3D bar with UI values
+    public NeuroBar3D neuroBar3D;
+    public bool syncWithUI = true;
 
     [Header("Phase Manager")]
     public PhaseManager phaseManager;
@@ -26,6 +26,10 @@ public class NeuroChargeController : MonoBehaviour
 
     [Header("Timer (3D TextMeshPro)")]
     public TextMeshPro shotTimerText;
+
+    [Header("Particle Timer Controller")]
+    [Tooltip("Reference the GameObject that has the ParticleArrayDisintegrate script.")]
+    public ParticleArrayDisintegrate particleDisintegrateTimer;
 
     [Header("Threshold Band")]
     [Range(0.02f, 0.5f)] public float bandSize = 0.18f;
@@ -41,6 +45,7 @@ public class NeuroChargeController : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private float thresholdMin;
     [SerializeField] private float thresholdMax;
+    [SerializeField] private float normalizedTimerRemaining;
 
     private ISignalProvider userSignal;
     private IResettableSignal userReset;
@@ -60,7 +65,6 @@ public class NeuroChargeController : MonoBehaviour
         phase1Gimmick?.ResetSignal();
         userReset?.ResetSignal();
 
-        // Reset UI elements
         if (ui != null)
         {
             ui.SetNeuroValue(0f);
@@ -76,21 +80,25 @@ public class NeuroChargeController : MonoBehaviour
         if (barrelFeedback != null)
             barrelFeedback.SetChargeImmediate(0f);
 
-        // Reset 3D bar
         if (neuroBar3D != null)
         {
             neuroBar3D.SetNeuroValue(0f);
             neuroBar3D.SetChargeValue(0f);
-            neuroBar3D.SetValueImmediate(0f, true); // Immediate neuro reset
-            neuroBar3D.SetValueImmediate(0f, false); // Immediate charge reset
+            neuroBar3D.SetValueImmediate(0f, true);
+            neuroBar3D.SetValueImmediate(0f, false);
         }
 
+        RestartParticleTimer();
+
         UpdateTimerUI();
+        UpdateNormalizedTimerDebug();
     }
 
     private void Start()
     {
         RandomizeThreshold();
+        UpdateTimerUI();
+        UpdateNormalizedTimerDebug();
     }
 
     private void Update()
@@ -121,13 +129,11 @@ public class NeuroChargeController : MonoBehaviour
 
         signal = Mathf.Clamp01(signal);
 
-        // Update charge based on threshold
         if (signal >= thresholdMin && signal <= thresholdMax)
             charge += chargeRate * Time.deltaTime;
 
         charge = Mathf.Clamp01(charge);
 
-        // Update UI elements
         if (ui != null)
         {
             ui.SetNeuroValue(signal);
@@ -143,22 +149,20 @@ public class NeuroChargeController : MonoBehaviour
         if (barrelFeedback != null)
             barrelFeedback.SetChargeValue(charge);
 
-        // Update 3D bar
         if (neuroBar3D != null)
         {
             neuroBar3D.SetNeuroValue(signal);
             neuroBar3D.SetChargeValue(charge);
-            
-            // Optionally sync which value is displayed
+
             if (syncWithUI)
             {
-                // You can control which value the 3D bar shows based on phase
                 bool showNeuro = phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline;
                 neuroBar3D.SetShowNeuroFill(showNeuro);
             }
         }
 
         UpdateTimerUI();
+        UpdateNormalizedTimerDebug();
 
         if (timer >= sessionDuration)
         {
@@ -167,7 +171,6 @@ public class NeuroChargeController : MonoBehaviour
             timer = 0f;
             charge = 0f;
 
-            // Reset UI elements
             if (ui != null)
                 ui.SetChargeValue(0f);
 
@@ -177,18 +180,27 @@ public class NeuroChargeController : MonoBehaviour
             if (barrelFeedback != null)
                 barrelFeedback.SetChargeImmediate(0f);
 
-            // Reset 3D bar
             if (neuroBar3D != null)
             {
                 neuroBar3D.SetChargeValue(0f);
-                neuroBar3D.SetValueImmediate(0f, false); // Immediate charge reset
+                neuroBar3D.SetValueImmediate(0f, false);
             }
 
             if (phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline)
                 phase1Gimmick?.ResetSignal();
 
             RandomizeThreshold();
+            RestartParticleTimer();
         }
+    }
+
+    private void RestartParticleTimer()
+    {
+        if (particleDisintegrateTimer == null)
+            return;
+
+        particleDisintegrateTimer.duration = sessionDuration;
+        particleDisintegrateTimer.StartTimer();
     }
 
     private void UpdateTimerUI()
@@ -199,20 +211,30 @@ public class NeuroChargeController : MonoBehaviour
         shotTimerText.text = remaining.ToString("F1") + "s";
     }
 
+    private void UpdateNormalizedTimerDebug()
+    {
+        if (sessionDuration <= 0f)
+        {
+            normalizedTimerRemaining = 0f;
+            return;
+        }
+
+        normalizedTimerRemaining = 1f - (timer / sessionDuration);
+        normalizedTimerRemaining = Mathf.Clamp01(normalizedTimerRemaining);
+    }
+
     private void RandomizeThreshold()
     {
         float center = Random.Range(bandCenterRange.x, bandCenterRange.y);
         thresholdMin = Mathf.Clamp01(center - bandSize * 0.5f);
         thresholdMax = Mathf.Clamp01(center + bandSize * 0.5f);
 
-        // Update UI thresholds
         if (ui != null)
             ui.SetThreshold(thresholdMin, thresholdMax);
 
         if (pillarMeter3D != null)
             pillarMeter3D.SetThreshold(thresholdMin, thresholdMax);
 
-        // Update 3D bar threshold
         if (neuroBar3D != null)
             neuroBar3D.SetThreshold(thresholdMin, thresholdMax);
     }
@@ -226,7 +248,6 @@ public class NeuroChargeController : MonoBehaviour
             cannon.Fire(charge);
     }
 
-    // Public methods to get current values (useful for debugging)
     public float GetCurrentNeuroValue()
     {
         if (phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline)
@@ -245,26 +266,24 @@ public class NeuroChargeController : MonoBehaviour
         return new Vector2(thresholdMin, thresholdMax);
     }
 
-    // Method to manually trigger threshold randomization
     public void ManualRandomizeThreshold()
     {
         RandomizeThreshold();
     }
 
-    // Method to manually reset charge
     public void ResetCharge()
     {
         charge = 0f;
-        
+
         if (ui != null)
             ui.SetChargeValue(0f);
-            
+
         if (pillarMeter3D != null)
             pillarMeter3D.SetChargeValueImmediate(0f);
-            
+
         if (barrelFeedback != null)
             barrelFeedback.SetChargeImmediate(0f);
-            
+
         if (neuroBar3D != null)
         {
             neuroBar3D.SetChargeValue(0f);
