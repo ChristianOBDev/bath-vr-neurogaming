@@ -56,6 +56,7 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
   public CountdownTimer countdownTimer;
   public AudioSource riverSFXSource;
   public AudioSource musicSource;
+  public AudioSource sfxSource;
 
   #endregion
 
@@ -111,6 +112,7 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
 
   public void EndGame()
   {
+    if (sfxSource != null && gameConfig.gameEndClip != null) sfxSource.PlayOneShot(gameConfig.gameEndClip);
     currentState = MVEPGameState.Ended;
     int[] scoreBreakdown = scoreManager.GetScoreBreakdown();
     infoPanel.ShowEndScreen(scoreBreakdown[0], scoreBreakdown[1], scoreBreakdown[2]);
