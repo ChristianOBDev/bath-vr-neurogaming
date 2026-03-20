@@ -18,6 +18,7 @@ public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
 
   // Configuration - References
   [SerializeField] private GameObject crystal;
+  [SerializeField] private AudioSource collectionSound;
 
   // State - Lifecycle
   private bool bobbing = true;
@@ -84,6 +85,10 @@ public class PowerUp : MonoBehaviour, IPoolable<PowerUp>
     {
       bobbing = false;
       HandleCollection();
+      if (collectionSound != null)
+      {
+        collectionSound.Play();
+      }
     }
   }
 

@@ -10,6 +10,8 @@ public class Obstacle : MonoBehaviour, IPoolable<Obstacle>
   // References
   private ObjectPool<Obstacle> pool;
 
+  [SerializeField] private AudioSource collisionSound;
+
   /// <summary>
   /// Sets the object pool that manages this obstacle's lifecycle.
   /// Called automatically by the ObjectPool when this obstacle is created.
@@ -34,6 +36,17 @@ public class Obstacle : MonoBehaviour, IPoolable<Obstacle>
     {
       Debug.LogWarning("Obstacle: Attempted to return to pool, but pool reference is null. Destroying instead.");
       Destroy(gameObject);
+    }
+  }
+
+  private void OnTriggerEnter(Collider other)
+  {
+    if (other.CompareTag("Canoe"))
+    {
+      if (collisionSound != null)
+      {
+        collisionSound.Play();
+      }
     }
   }
 }

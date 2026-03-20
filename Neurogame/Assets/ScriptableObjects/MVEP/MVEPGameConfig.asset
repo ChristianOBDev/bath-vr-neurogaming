@@ -15,3 +15,4 @@ MonoBehaviour:
   trials: 60
   scoreMax: 10000
   warmUpChunks: 1
+  gameEndClip: {fileID: 8300000, guid: 0153264afb5e806459e6be4535bb0e77, type: 3}

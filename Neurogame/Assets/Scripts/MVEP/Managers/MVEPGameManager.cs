@@ -54,6 +54,9 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
   public MVEPInfoPanel infoPanel;
   public XRRigProfileTrigger rigProfileTrigger;
   public CountdownTimer countdownTimer;
+  public AudioSource riverSFXSource;
+  public AudioSource musicSource;
+  public AudioSource sfxSource;
 
   #endregion
 
@@ -77,6 +80,8 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
   public void OnRigApplied()
   {
     infoPanel.ShowStartScreen();
+    if (musicSource != null) musicSource.Play();
+    if (riverSFXSource != null) riverSFXSource.Play();
   }
 
   public void StartGame()
@@ -107,6 +112,7 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
 
   public void EndGame()
   {
+    if (sfxSource != null && gameConfig.gameEndClip != null) sfxSource.PlayOneShot(gameConfig.gameEndClip);
     currentState = MVEPGameState.Ended;
     int[] scoreBreakdown = scoreManager.GetScoreBreakdown();
     infoPanel.ShowEndScreen(scoreBreakdown[0], scoreBreakdown[1], scoreBreakdown[2]);
@@ -118,6 +124,8 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
     if (rigProfileTrigger != null) rigProfileTrigger.Reset();
     currentState = MVEPGameState.Quit;
     MVEPGameEvents.OnGameEnded?.Invoke();
+    if (musicSource != null) musicSource.Stop();
+    if (riverSFXSource != null) riverSFXSource.Stop();
   }
 
   /// <summary>
