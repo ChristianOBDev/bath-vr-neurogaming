@@ -2698,6 +2698,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399739656}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &406157598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 406157600}
+  - component: {fileID: 406157599}
+  m_Layer: 0
+  m_Name: UDP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &406157599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406157598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19c90138c6718fb4c866d79945cacca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UDPManager
+  enableDebugLogging: 0
+--- !u!4 &406157600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406157598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 416.05685, y: 30, z: 305.83652}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &406823236
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8456,6 +8501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1553480280}
   - component: {fileID: 1553480281}
+  - component: {fileID: 1553480282}
   m_Layer: 0
   m_Name: KickerInput
   m_TagString: Untagged
@@ -8505,6 +8551,26 @@ MonoBehaviour:
     m_Reference: {fileID: 1359174268}
   deadZone: 0.1
   controlValue: 0
+--- !u!114 &1553480282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553480278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655ce1fa692d3724babd2771c4982be0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EEGKickerInput
+  inputRouter: {fileID: 1553480281}
+  eegEnabled: 1
+  normaliseInput: 1
+  rawSignalMax: 1
+  signalDeadzone: 0.1
+  eegBlendWeight: 1
+  eegDebugLogging: 1
+  testInputValue: 0
 --- !u!1 &1555603479
 GameObject:
   m_ObjectHideFlags: 0
@@ -9722,7 +9788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhaseManager
   showDebugUI: 0
-  currentPhase: 0
+  currentPhase: 2
   leftKicker: {fileID: 33290684}
   rightKicker: {fileID: 41013357}
   inputRouter: {fileID: 1553480281}
@@ -11698,3 +11764,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1177395052}
   - {fileID: 1155454061}
+  - {fileID: 406157600}
