@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c7390ddc0aa494fad55271e6c9e518, type: 3}
+  m_Name: MI Rig Profile
+  m_EditorClassIdentifier: Assembly-CSharp::XRRigProfile
+  cameraOffset: {x: 0, y: 0, z: 0}
+  enableContinuousMove: 0
+  enableTeleport: 0
+  enableSnapTurn: 0
+  enablePokeInteractor: 0
+  enableNearFarInteractor: 0
+  controllerVisuals: 0
+  inputActions: {fileID: -944628639613478452, guid: e6fa82213720ba3428588849b2ad9cf7, type: 3}
