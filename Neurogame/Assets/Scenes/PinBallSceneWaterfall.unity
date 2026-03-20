@@ -2518,6 +2518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   rigProfileTrigger: {fileID: 1902858814}
+  gameMenu: {fileID: 0}
   bumperSpawners:
   - {fileID: 1957902646}
   chooseRandomSpawner: 1
@@ -2535,7 +2536,7 @@ MonoBehaviour:
   rightKickerEntry: {fileID: 1107834733}
   leftKickerForce: {fileID: 33290684}
   rightKickerForce: {fileID: 41013357}
-  spawnDirectives: 0001
+  spawnDirectives: 000101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
   spawnIndex: 0
   ballPrefab: {fileID: 1522060980294568364, guid: 8a6e6626c0f4b664ba1eff9686ae93d4, type: 3}
   ballRespawnDelay: 1
@@ -4820,8 +4821,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1520732930}
-        m_TargetAssemblyTypeName: MIGameMenu, Assembly-CSharp
+      - m_Target: {fileID: 373142230}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: EndGame
         m_Mode: 1
         m_Arguments:
@@ -10705,6 +10706,7 @@ MonoBehaviour:
   spawnerDebugLogging: 0
   bumperPrefab: {fileID: 2536162264590164513, guid: 3785e115fe3df334da8654db3d79e9f2, type: 3}
   respawnDelay: 1
+  bumperParent: {fileID: 374808847}
   bumpersPerBurst: 1
   minDistanceFromOtherObjects: 1
   collisionMask:
