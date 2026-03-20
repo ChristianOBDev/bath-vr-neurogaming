@@ -47,23 +47,28 @@ public class NeuroChargeController : MonoBehaviour
     public bool autoStartSessionOnEnable = false;
 
     [Header("Debug")]
+    public bool enableDebugLogs = true;
     [SerializeField] private float thresholdMin;
     [SerializeField] private float thresholdMax;
     [SerializeField] private float normalizedTimerRemaining;
     [SerializeField] private bool sessionRunning;
+    [SerializeField] private float debugCurrentSignal;
+    [SerializeField] private string debugSignalSource;
 
     private ISignalProvider userSignal;
     private IResettableSignal userReset;
     private float timer;
+    private float debugLogTimer;
 
     private void Awake()
     {
-        userSignal = userSignalProviderBehaviour as ISignalProvider;
-        userReset = userSignalProviderBehaviour as IResettableSignal;
+        CacheSignalInterfaces();
     }
 
     private void OnEnable()
     {
+        CacheSignalInterfaces();
+
         ResetSessionStateImmediate();
         RandomizeThreshold();
         UpdateTimerUI();
@@ -77,6 +82,13 @@ public class NeuroChargeController : MonoBehaviour
     {
         UpdateTimerUI();
         UpdateNormalizedTimerDebug();
+
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[NeuroChargeController] Start | userSignalProviderBehaviour = {(userSignalProviderBehaviour != null ? userSignalProviderBehaviour.GetType().Name : "NULL")}");
+            Debug.Log($"[NeuroChargeController] Start | userSignal cast success = {userSignal != null}");
+            Debug.Log($"[NeuroChargeController] Start | userReset cast success = {userReset != null}");
+        }
     }
 
     private void Update()
@@ -93,6 +105,8 @@ public class NeuroChargeController : MonoBehaviour
 
         if (phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline)
         {
+            debugSignalSource = "Phase1_Gimmick";
+
             bool shouldRise = Random.value < phase1SuccessBias;
 
             if (phase1Gimmick != null && phase1Gimmick.signal > thresholdMin + 0.15f)
@@ -106,10 +120,12 @@ public class NeuroChargeController : MonoBehaviour
         }
         else
         {
+            debugSignalSource = "UserSignalProvider";
             signal = (userSignal != null) ? userSignal.GetSignal01() : 0f;
         }
 
         signal = Mathf.Clamp01(signal);
+        debugCurrentSignal = signal;
 
         if (signal >= thresholdMin && signal <= thresholdMax)
             charge += chargeRate * Time.deltaTime;
@@ -140,6 +156,20 @@ public class NeuroChargeController : MonoBehaviour
             {
                 bool showNeuro = phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline;
                 neuroBar3D.SetShowNeuroFill(showNeuro);
+            }
+        }
+
+        if (enableDebugLogs)
+        {
+            debugLogTimer += Time.deltaTime;
+
+            if (debugLogTimer >= 0.5f)
+            {
+                debugLogTimer = 0f;
+
+                Debug.Log(
+                    $"[NeuroChargeController] Phase: {phaseManager.CurrentPhase} | Source: {debugSignalSource} | Signal: {signal:F3} | Charge: {charge:F3} | SessionRunning: {sessionRunning}"
+                );
             }
         }
 
@@ -174,6 +204,12 @@ public class NeuroChargeController : MonoBehaviour
             RandomizeThreshold();
             RestartParticleTimer();
         }
+    }
+
+    private void CacheSignalInterfaces()
+    {
+        userSignal = userSignalProviderBehaviour as ISignalProvider;
+        userReset = userSignalProviderBehaviour as IResettableSignal;
     }
 
     public void BeginSession()
@@ -212,6 +248,9 @@ public class NeuroChargeController : MonoBehaviour
         RestartParticleTimer();
         UpdateTimerUI();
         UpdateNormalizedTimerDebug();
+
+        if (enableDebugLogs)
+            Debug.Log("[NeuroChargeController] BeginSession called");
     }
 
     public void StopSession()

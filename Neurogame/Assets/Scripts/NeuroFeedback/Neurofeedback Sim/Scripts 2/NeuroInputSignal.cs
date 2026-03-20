@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSignal
@@ -11,28 +11,36 @@ public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSigna
     public string actionMapName = "XRI RightHand";
     public string actionName = "Activate";
 
-    [Header("Signal")]
-    [Range(0f, 1f)] public float signal;
-
-    public float increasePerPress = 0.12f;
-    public float decayPerSecond = 0.4f;
-
     [Header("UDP Input")]
     public bool useUdp = true;
 
-    [Tooltip("Map incoming UDP values to 0-1")]
-    public float udpMin = 0f;
+    [Tooltip("Incoming UDP minimum raw value.")]
+    public float udpMin = -1f;
+
+    [Tooltip("Incoming UDP maximum raw value.")]
     public float udpMax = 1f;
 
-    private float udpValue = 0f;
+    [Tooltip("Invert after mapping if needed.")]
+    public bool invertUdp = false;
+
+    [Header("Signal")]
+    [Range(0f, 1f)] public float signal = 0f;
+    public float increasePerPress = 0.12f;
+    public float udpRiseSpeed = 1.2f;
+    public float decayPerSecond = 0.25f;
+
+    [Header("Debug")]
+    public bool enableDebugLogs = true;
+    [Range(0f, 1f)] public float udpSignal = 0f;
+    public float lastReceivedUdpValue = 0f;
+
     private InputAction xrAction;
+    private float debugLogTimer;
 
     private void Awake()
     {
         if (xriInputActions != null)
-        {
             xrAction = xriInputActions.FindActionMap(actionMapName)?.FindAction(actionName);
-        }
     }
 
     private void OnEnable()
@@ -41,7 +49,11 @@ public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSigna
 
         if (useUdp && UDPManager.Instance != null)
         {
+            UDPManager.Instance.OnFloatReceived -= HandleUdpFloat;
             UDPManager.Instance.OnFloatReceived += HandleUdpFloat;
+
+            if (enableDebugLogs)
+                Debug.Log("[NeuroInputSignal] Subscribed to UDPManager.OnFloatReceived");
         }
 
         ResetSignal();
@@ -54,10 +66,13 @@ public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSigna
         if (UDPManager.Instance != null)
         {
             UDPManager.Instance.OnFloatReceived -= HandleUdpFloat;
+
+            if (enableDebugLogs)
+                Debug.Log("[NeuroInputSignal] Unsubscribed from UDPManager");
         }
     }
 
-    void Update()
+    private void Update()
     {
         bool pressed = false;
 
@@ -68,21 +83,44 @@ public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSigna
             pressed = true;
 
         if (pressed)
+        {
             signal += increasePerPress;
 
-        // decay
+            if (enableDebugLogs)
+                Debug.Log($"[NeuroInputSignal] Input press -> +{increasePerPress:F3}");
+        }
+
+        if (useUdp)
+            signal += udpSignal * udpRiseSpeed * Time.deltaTime;
+
         signal -= decayPerSecond * Time.deltaTime;
-
-        // add UDP influence
-        signal += udpValue * Time.deltaTime;
-
         signal = Mathf.Clamp01(signal);
+
+        if (enableDebugLogs)
+        {
+            debugLogTimer += Time.deltaTime;
+
+            if (debugLogTimer >= 0.5f)
+            {
+                debugLogTimer = 0f;
+                Debug.Log($"[NeuroInputSignal] FINAL SIGNAL: {signal:F3} | UDP: {udpSignal:F3} | Raw UDP: {lastReceivedUdpValue:F3}");
+            }
+        }
     }
 
     private void HandleUdpFloat(float value)
     {
-        float normalized = Mathf.InverseLerp(udpMin, udpMax, value);
-        udpValue = Mathf.Clamp01(normalized);
+        lastReceivedUdpValue = value;
+
+        float mapped = Mathf.InverseLerp(udpMin, udpMax, value);
+
+        if (invertUdp)
+            mapped = 1f - mapped;
+
+        udpSignal = Mathf.Clamp01(mapped);
+
+        if (enableDebugLogs)
+            Debug.Log($"[NeuroInputSignal] UDP RECEIVED -> raw: {value:F3} | mapped: {udpSignal:F3} | range: [{udpMin:F3}, {udpMax:F3}]");
     }
 
     public float GetSignal01()
@@ -93,6 +131,10 @@ public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSigna
     public void ResetSignal()
     {
         signal = 0f;
-        udpValue = 0f;
+        udpSignal = 0f;
+        lastReceivedUdpValue = 0f;
+
+        if (enableDebugLogs)
+            Debug.Log("[NeuroInputSignal] Signal Reset");
     }
 }
