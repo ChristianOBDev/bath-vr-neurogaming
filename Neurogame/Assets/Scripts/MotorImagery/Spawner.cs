@@ -51,7 +51,7 @@ public class Spawner : MonoBehaviour
     int spawned = 0;
     int safety = 0;
 
-    Debug.Log($"SpawnRoutine started. bumpersPerBurst: {bumpersPerBurst}, bumperPrefab: {(bumperPrefab == null ? "NULL" : bumperPrefab.name)}");
+    // Debug.Log($"SpawnRoutine started. bumpersPerBurst: {bumpersPerBurst}, bumperPrefab: {(bumperPrefab == null ? "NULL" : bumperPrefab.name)}");
 
     while (spawned < bumpersPerBurst && safety < 50)
     {
@@ -60,7 +60,7 @@ public class Spawner : MonoBehaviour
 
       if (IsPositionClear(candidatePosition))
       {
-        Debug.Log($"Position clear at {candidatePosition}, attempting instantiate...");
+        // Debug.Log($"Position clear at {candidatePosition}, attempting instantiate...");
         GameObject prefabToSpawn = bumperPrefab;
         if (specialBumperPrefab != null && Random.value < specialSpawnChance)
           prefabToSpawn = specialBumperPrefab;
@@ -72,8 +72,8 @@ public class Spawner : MonoBehaviour
       yield return null;
     }
 
-    if (spawned < bumpersPerBurst)
-      Debug.LogWarning($"SpawnRoutine only spawned {spawned}/{bumpersPerBurst} bumpers after {safety} attempts.");
+    // if (spawned < bumpersPerBurst)
+    // Debug.LogWarning($"SpawnRoutine only spawned {spawned}/{bumpersPerBurst} bumpers after {safety} attempts.");
   }
 
   Vector3 GetRandomPointInVolume()
@@ -99,8 +99,8 @@ public class Spawner : MonoBehaviour
 
     if (spawnerDebugLogging)
     {
-      foreach (var hit in hits)
-        Debug.Log($"Position blocked by: {hit.gameObject.name} on layer: {hit.gameObject.layer}");
+      // foreach (var hit in hits)
+      // Debug.Log($"Position blocked by: {hit.gameObject.name} on layer: {hit.gameObject.layer}");
     }
 
     return hits.Length == 0;
