@@ -184,6 +184,8 @@ public class GameManager : Singleton<GameManager>
         ? rightKickerEntry.position
         : leftKickerEntry.position;
 
+    UDPManager.Instance.Send(spawnRight ? 1 : 0); // Send spawn side info to EEG system
+
     currentBall.BeginReturnPhase(targetPos);
 
     // Notify the correct kicker to begin glow build
@@ -228,8 +230,6 @@ public class GameManager : Singleton<GameManager>
 
     bool spawnRight = GetNextSpawnSide();
     SpawnBall(spawnRight);
-
-    Debug.Log("Spawn index reset and ball respawned.");
   }
 
   public void StartGame()
