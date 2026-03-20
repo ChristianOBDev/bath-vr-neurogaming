@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
   public XRRigProfileTrigger rigProfileTrigger;
+  public MIGameMenu gameMenu;
 
   [Header("Bumper Spawner Control")]
   public List<Spawner> bumperSpawners = new List<Spawner>();
@@ -216,6 +217,7 @@ public class GameManager : Singleton<GameManager>
       respawnCoroutine = null;
     }
 
+    ResetGame();
     spawnIndex = 0;
 
     if (currentBall != null)
@@ -244,6 +246,12 @@ public class GameManager : Singleton<GameManager>
   public void ResumeGame()
   {
     gameRunning = true;
+  }
+
+  public void EndGame()
+  {
+    gameRunning = false;
+    gameMenu.EndGame();
   }
 
   public void ResetGame()

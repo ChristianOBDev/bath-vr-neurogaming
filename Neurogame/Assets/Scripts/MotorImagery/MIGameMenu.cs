@@ -84,7 +84,6 @@ public class MIGameMenu : MonoBehaviour
   public void EndGame()
   {
     gameRunning = false;
-    GameManager.Instance.ResetGame();
     StartGameButton.SetActive(true);
     PauseGameButton.SetActive(false);
     ResumeGameButton.SetActive(false);
