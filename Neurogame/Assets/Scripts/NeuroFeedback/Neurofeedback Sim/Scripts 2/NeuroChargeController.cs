@@ -42,10 +42,15 @@ public class NeuroChargeController : MonoBehaviour
     [Header("Phase 1 Guidance")]
     [Range(0.1f, 1f)] public float phase1SuccessBias = 0.75f;
 
+    [Header("Startup")]
+    [Tooltip("If true, the session starts automatically when this object is enabled.")]
+    public bool autoStartSessionOnEnable = false;
+
     [Header("Debug")]
     [SerializeField] private float thresholdMin;
     [SerializeField] private float thresholdMax;
     [SerializeField] private float normalizedTimerRemaining;
+    [SerializeField] private bool sessionRunning;
 
     private ISignalProvider userSignal;
     private IResettableSignal userReset;
@@ -59,51 +64,28 @@ public class NeuroChargeController : MonoBehaviour
 
     private void OnEnable()
     {
-        timer = 0f;
-        charge = 0f;
-
-        phase1Gimmick?.ResetSignal();
-        userReset?.ResetSignal();
-
-        if (ui != null)
-        {
-            ui.SetNeuroValue(0f);
-            ui.SetChargeValue(0f);
-        }
-
-        if (pillarMeter3D != null)
-        {
-            pillarMeter3D.SetNeuroValueImmediate(0f);
-            pillarMeter3D.SetChargeValueImmediate(0f);
-        }
-
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeImmediate(0f);
-
-        if (neuroBar3D != null)
-        {
-            neuroBar3D.SetNeuroValue(0f);
-            neuroBar3D.SetChargeValue(0f);
-            neuroBar3D.SetValueImmediate(0f, true);
-            neuroBar3D.SetValueImmediate(0f, false);
-        }
-
-        RestartParticleTimer();
-
+        ResetSessionStateImmediate();
+        RandomizeThreshold();
         UpdateTimerUI();
         UpdateNormalizedTimerDebug();
+
+        if (autoStartSessionOnEnable)
+            BeginSession();
     }
 
     private void Start()
     {
-        RandomizeThreshold();
         UpdateTimerUI();
         UpdateNormalizedTimerDebug();
     }
 
     private void Update()
     {
-        if (phaseManager == null) return;
+        if (!sessionRunning)
+            return;
+
+        if (phaseManager == null)
+            return;
 
         timer += Time.deltaTime;
 
@@ -194,6 +176,92 @@ public class NeuroChargeController : MonoBehaviour
         }
     }
 
+    public void BeginSession()
+    {
+        timer = 0f;
+        charge = 0f;
+        sessionRunning = true;
+
+        phase1Gimmick?.ResetSignal();
+        userReset?.ResetSignal();
+
+        if (ui != null)
+        {
+            ui.SetNeuroValue(0f);
+            ui.SetChargeValue(0f);
+        }
+
+        if (pillarMeter3D != null)
+        {
+            pillarMeter3D.SetNeuroValueImmediate(0f);
+            pillarMeter3D.SetChargeValueImmediate(0f);
+        }
+
+        if (barrelFeedback != null)
+            barrelFeedback.SetChargeImmediate(0f);
+
+        if (neuroBar3D != null)
+        {
+            neuroBar3D.SetNeuroValue(0f);
+            neuroBar3D.SetChargeValue(0f);
+            neuroBar3D.SetValueImmediate(0f, true);
+            neuroBar3D.SetValueImmediate(0f, false);
+        }
+
+        RandomizeThreshold();
+        RestartParticleTimer();
+        UpdateTimerUI();
+        UpdateNormalizedTimerDebug();
+    }
+
+    public void StopSession()
+    {
+        sessionRunning = false;
+    }
+
+    public void PauseSession()
+    {
+        sessionRunning = false;
+    }
+
+    public void ResumeSession()
+    {
+        sessionRunning = true;
+    }
+
+    private void ResetSessionStateImmediate()
+    {
+        sessionRunning = false;
+        timer = 0f;
+        charge = 0f;
+
+        phase1Gimmick?.ResetSignal();
+        userReset?.ResetSignal();
+
+        if (ui != null)
+        {
+            ui.SetNeuroValue(0f);
+            ui.SetChargeValue(0f);
+        }
+
+        if (pillarMeter3D != null)
+        {
+            pillarMeter3D.SetNeuroValueImmediate(0f);
+            pillarMeter3D.SetChargeValueImmediate(0f);
+        }
+
+        if (barrelFeedback != null)
+            barrelFeedback.SetChargeImmediate(0f);
+
+        if (neuroBar3D != null)
+        {
+            neuroBar3D.SetNeuroValue(0f);
+            neuroBar3D.SetChargeValue(0f);
+            neuroBar3D.SetValueImmediate(0f, true);
+            neuroBar3D.SetValueImmediate(0f, false);
+        }
+    }
+
     private void RestartParticleTimer()
     {
         if (particleDisintegrateTimer == null)
@@ -205,7 +273,8 @@ public class NeuroChargeController : MonoBehaviour
 
     private void UpdateTimerUI()
     {
-        if (shotTimerText == null) return;
+        if (shotTimerText == null)
+            return;
 
         float remaining = Mathf.Clamp(sessionDuration - timer, 0f, sessionDuration);
         shotTimerText.text = remaining.ToString("F1") + "s";
@@ -250,10 +319,10 @@ public class NeuroChargeController : MonoBehaviour
 
     public float GetCurrentNeuroValue()
     {
-        if (phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline)
+        if (phaseManager != null && phaseManager.CurrentPhase == PhaseManager.Phase.Phase1_Baseline)
             return phase1Gimmick?.GetSignal01() ?? 0f;
-        else
-            return userSignal?.GetSignal01() ?? 0f;
+
+        return userSignal?.GetSignal01() ?? 0f;
     }
 
     public float GetCurrentCharge()
