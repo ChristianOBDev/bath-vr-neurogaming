@@ -54,6 +54,8 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
   public MVEPInfoPanel infoPanel;
   public XRRigProfileTrigger rigProfileTrigger;
   public CountdownTimer countdownTimer;
+  public AudioSource riverSFXSource;
+  public AudioSource musicSource;
 
   #endregion
 
@@ -77,6 +79,8 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
   public void OnRigApplied()
   {
     infoPanel.ShowStartScreen();
+    if (musicSource != null) musicSource.Play();
+    if (riverSFXSource != null) riverSFXSource.Play();
   }
 
   public void StartGame()
@@ -118,6 +122,8 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
     if (rigProfileTrigger != null) rigProfileTrigger.Reset();
     currentState = MVEPGameState.Quit;
     MVEPGameEvents.OnGameEnded?.Invoke();
+    if (musicSource != null) musicSource.Stop();
+    if (riverSFXSource != null) riverSFXSource.Stop();
   }
 
   /// <summary>
