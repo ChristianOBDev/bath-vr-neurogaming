@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MotorImagery;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -60,8 +61,11 @@ public class GameManager : Singleton<GameManager>
 
   private bool gameRunning = false;
   public bool GameRunning => gameRunning;
+    
+  private int pausedSpawnIndex = 0;
+  private bool pausedDuringReturn = false;
 
-  void Start()
+    void Start()
   {
     // bool spawnRight = GetNextSpawnSide();
     // SpawnBall(spawnRight);
@@ -72,8 +76,8 @@ public class GameManager : Singleton<GameManager>
     bumperCheckTimer += Time.deltaTime;
     if (bumperCheckTimer >= bumperCheckInterval)
     {
-      bumperCheckTimer = 0f;
-      CheckBumperPopulation();
+        bumperCheckTimer = 0f;
+        CheckBumperPopulation();
     }
   }
 
@@ -196,10 +200,12 @@ public class GameManager : Singleton<GameManager>
 
   public void HandleBallDeath(BallController ball)
   {
+    if (!gameRunning) return;
+
     Destroy(ball.gameObject);
     currentBall = null;
     if (respawnCoroutine != null)
-      StopCoroutine(respawnCoroutine);
+        StopCoroutine(respawnCoroutine);
     respawnCoroutine = StartCoroutine(RespawnBallAfterDelay());
   }
 
@@ -234,6 +240,8 @@ public class GameManager : Singleton<GameManager>
 
   public void StartGame()
   {
+    spawnIndex = 0;
+    PhaseManager.Instance?.SetPhase(GamePhase.PhaseOne);
     ResetAndRespawn();
     gameRunning = true;
   }
@@ -241,16 +249,68 @@ public class GameManager : Singleton<GameManager>
   public void PauseGame()
   {
     gameRunning = false;
+
+    // Remember whether ball was still returning when paused
+    if (currentBall != null)
+    {
+        pausedDuringReturn = currentBall.CurrentState == BallState.ReturningToKicker;
+
+        // Remember the spawn index of the current ball
+        // spawnIndex has already advanced, so step back one
+        pausedSpawnIndex = (spawnIndex - 1 + spawnDirectives.Length) % spawnDirectives.Length;
+    }
+    else
+    {
+        pausedDuringReturn = false;
+        pausedSpawnIndex = spawnIndex;
+    }
+
+    // Destroy the current ball
+    if (respawnCoroutine != null)
+    {
+        StopCoroutine(respawnCoroutine);
+        respawnCoroutine = null;
+    }
+
+    if (currentBall != null)
+    {
+        Destroy(currentBall.gameObject);
+        currentBall = null;
+    }
   }
 
   public void ResumeGame()
   {
     gameRunning = true;
+
+    if (pausedDuringReturn)
+    {
+        // Ball hadn't reached kicker yet — replay the same spawn
+        spawnIndex = pausedSpawnIndex;
+    }
+    // else spawnIndex stays where it is — continue to next ball
+
+    bool spawnRight = GetNextSpawnSide();
+    SpawnBall(spawnRight);
   }
 
   public void EndGame()
   {
     gameRunning = false;
+    spawnIndex = 0;
+
+    if (respawnCoroutine != null)
+    {
+        StopCoroutine(respawnCoroutine);
+        respawnCoroutine = null;
+    }
+
+    if (currentBall != null)
+    {
+        Destroy(currentBall.gameObject);
+        currentBall = null;
+    }
+
     gameMenu.EndGame();
   }
 
@@ -265,6 +325,15 @@ public class GameManager : Singleton<GameManager>
 
   public void QuitGame()
   {
+    gameRunning = false;
+    spawnIndex = 0;
+
+    if (currentBall != null)
+    {
+        Destroy(currentBall.gameObject);
+        currentBall = null;
+    }
+
     Debug.Log("QuitGame called. Implement platform-specific quit logic here.");
     rigProfileTrigger.Reset();
   }
