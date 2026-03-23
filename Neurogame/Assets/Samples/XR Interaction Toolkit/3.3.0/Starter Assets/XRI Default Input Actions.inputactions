@@ -3398,54 +3398,6 @@
                     "isPartOfComposite": true
                 }
             ]
-        },
-        {
-            "name": "Kicker Controls",
-            "id": "36e5fc0f-4172-41b4-9258-5ef3db2ee1d9",
-            "actions": [
-                {
-                    "name": "KickerAxis",
-                    "type": "Value",
-                    "id": "dfe5c534-1bff-4cf4-864f-193463c5a418",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "PhaseMenu",
-                    "type": "Button",
-                    "id": "17ceb58a-c350-4633-a2ca-eeb866f514f6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "35ade947-4ee0-4619-9d7a-e21e6891f0e2",
-                    "path": "<XRController>{RightHand}/primary2DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KickerAxis",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8b820b87-fa35-441f-88b7-e5441a5cf70d",
-                    "path": "<XRController>{LeftHand}/primaryButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PhaseMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
         }
     ],
     "controlSchemes": []
