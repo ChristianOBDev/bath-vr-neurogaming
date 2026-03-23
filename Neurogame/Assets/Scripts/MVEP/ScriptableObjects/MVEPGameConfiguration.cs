@@ -11,4 +11,6 @@ public class MVEPGameConfiguration : ScriptableObject
 
   [SerializeField] private int warmUpChunks;
   public int WarmUpChunks => warmUpChunks;
+
+  public AudioClip gameEndClip;
 }
