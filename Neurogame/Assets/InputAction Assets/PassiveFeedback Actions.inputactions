@@ -1,0 +1,135 @@
+{
+    "version": 1,
+    "name": "PassiveFeedback Actions",
+    "maps": [
+        {
+            "name": "BCI State Control",
+            "id": "d8d0fb02-d6fa-40db-afbd-09aa058a9327",
+            "actions": [
+                {
+                    "name": "RelaxedCSV",
+                    "type": "Button",
+                    "id": "3c3ed779-c776-4507-8d52-7385b736adb4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FocusedCSV",
+                    "type": "Button",
+                    "id": "33cc857e-6aea-4e6c-8f4f-cecc7507fcb2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MixedCSV",
+                    "type": "Button",
+                    "id": "8f88b393-4d10-4e5e-9482-18ad73a12a4f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RelaxedManual",
+                    "type": "Button",
+                    "id": "d796feeb-1c7f-4a5f-903f-1e98128fac54",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FocusedManual",
+                    "type": "Button",
+                    "id": "9f3b3b32-0e4c-4332-81c9-8ce48aba6c4c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BackToCSV",
+                    "type": "Button",
+                    "id": "d78c5fef-55cf-4468-aed8-1630f2cda765",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "33ca091a-3daa-4013-920f-b1e666970aec",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RelaxedCSV",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5353dd6-8013-42e1-8c88-79db22125f2e",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FocusedCSV",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "975bf66e-6809-41ad-b404-b9e6b85dc22b",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MixedCSV",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98629179-2e77-4c96-a395-fd51e50f0936",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RelaxedManual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f8542b7-a4df-4665-b0be-43e19adc6588",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FocusedManual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "732ad993-8889-46e0-b89f-a3fd1a8e3b0c",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackToCSV",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
