@@ -12,5 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb670e75ff8ae94584bf73d60d275d8, type: 3}
   m_Name: NFSceneStreamingConfig
   m_EditorClassIdentifier: Assembly-CSharp::SceneStreamingConfig
-  scenesToLoad: []
-  scenesToUnload: []
+  scenesToLoad:
+  - m_AssetGUID: f2cdc3d2dbd31c147a4636cb2f4797cd
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
+  scenesToUnload:
+  - m_AssetGUID: d50cda24a7fb8e9439c1e1eb70d6b0ce
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
+  - m_AssetGUID: 34e90134b66ea594fb438f2813f42941
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 1
