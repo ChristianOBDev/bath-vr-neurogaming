@@ -3757,6 +3757,8 @@ MonoBehaviour:
   - {fileID: 1048086577}
   - {fileID: 805900535}
   - {fileID: 404501053}
+  - {fileID: 404501053}
+  - {fileID: 1219719301}
   duration: 30
   playOnStart: 1
   destroyWhenFinished: 0
@@ -10174,6 +10176,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2770204192643039936, guid: 3c0de2607c58f0d4ebfd659a38b10aa7, type: 3}
   m_PrefabInstance: {fileID: 969180761}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &1219719301 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9039603796345631822, guid: 3c0de2607c58f0d4ebfd659a38b10aa7, type: 3}
+  m_PrefabInstance: {fileID: 969180761}
+  m_PrefabAsset: {fileID: 0}
 --- !u!198 &1251189354 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19800000, guid: ede8520cf1c531c41abd875548404c2c, type: 3}
@@ -11752,7 +11759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474cf97bd8cab3a4bbe385c75ab8c3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NeuroTargetHealth
-  maxHealth: 100
+  maxHealth: 500
   currentHealth: 0
   healthFill: {fileID: 0}
 --- !u!1001 &1463547960
@@ -17924,11 +17931,17 @@ MonoBehaviour:
   scoreText: {fileID: 990790231}
   showMessageBeforeStart: 1
   waitingMessage: Get Ready
+  bossFightMessage: Boss Fight!
+  bossMessageDuration: 2
   phaseManager: {fileID: 1503967575}
   startScoringPhase: 1
-  pointsPerHit: 20
+  pointsPerHit: 40
   pointsPerKill: 120
   baseShotBonus: 80
+  shipsBeforeBoss: 3
+  bossHitsToDestroy: 5
+  pointsPerBossHit: 50
+  pointsPerBossKill: 1000
   displayLerpSpeed: 12
   feedback: {fileID: 28620559}
   meter: {fileID: 0}
