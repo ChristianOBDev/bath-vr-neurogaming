@@ -12,7 +12,7 @@ public class NeuroChargeController : MonoBehaviour
     public NeuroMeterUI ui;
     public PillarDualCubeMeter pillarMeter3D;
     public NeuroCannonController cannon;
-    public CannonBarrelFeedback barrelFeedback;
+    public CannonChargeVisualFeedback chargeVisualFeedback;
 
     [Header("3D Bar Refs")]
     public NeuroBar3D neuroBar3D;
@@ -144,8 +144,13 @@ public class NeuroChargeController : MonoBehaviour
             pillarMeter3D.SetChargeValue(charge);
         }
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeValue(charge);
+        if (chargeVisualFeedback != null)
+        {
+            chargeVisualFeedback.SetChargeValue(charge);
+
+            float remaining = Mathf.Clamp(sessionDuration - timer, 0f, sessionDuration);
+            chargeVisualFeedback.UpdateSparkByTimer(remaining, sessionDuration);
+        }
 
         if (neuroBar3D != null)
         {
@@ -189,8 +194,8 @@ public class NeuroChargeController : MonoBehaviour
             if (pillarMeter3D != null)
                 pillarMeter3D.SetChargeValueImmediate(0f);
 
-            if (barrelFeedback != null)
-                barrelFeedback.SetChargeImmediate(0f);
+            if (chargeVisualFeedback != null)
+                chargeVisualFeedback.ResetAllSmooth();
 
             if (neuroBar3D != null)
             {
@@ -233,8 +238,8 @@ public class NeuroChargeController : MonoBehaviour
             pillarMeter3D.SetChargeValueImmediate(0f);
         }
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeImmediate(0f);
+        if (chargeVisualFeedback != null)
+            chargeVisualFeedback.ResetAllImmediate();
 
         if (neuroBar3D != null)
         {
@@ -289,8 +294,8 @@ public class NeuroChargeController : MonoBehaviour
             pillarMeter3D.SetChargeValueImmediate(0f);
         }
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeImmediate(0f);
+        if (chargeVisualFeedback != null)
+            chargeVisualFeedback.ResetAllImmediate();
 
         if (neuroBar3D != null)
         {
@@ -389,8 +394,8 @@ public class NeuroChargeController : MonoBehaviour
         if (pillarMeter3D != null)
             pillarMeter3D.SetChargeValueImmediate(0f);
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeImmediate(0f);
+        if (chargeVisualFeedback != null)
+            chargeVisualFeedback.ResetAllSmooth();
 
         if (neuroBar3D != null)
         {
