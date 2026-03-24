@@ -12,7 +12,7 @@ public class NeuroChargeController : MonoBehaviour
     public NeuroMeterUI ui;
     public PillarDualCubeMeter pillarMeter3D;
     public NeuroCannonController cannon;
-    public CannonBarrelFeedback barrelFeedback;
+    public CannonChargeVisualFeedback chargeVisualFeedback;
 
     [Header("3D Bar Refs")]
     public NeuroBar3D neuroBar3D;
@@ -144,8 +144,8 @@ public class NeuroChargeController : MonoBehaviour
             pillarMeter3D.SetChargeValue(charge);
         }
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeValue(charge);
+        if (chargeVisualFeedback != null)
+            chargeVisualFeedback.SetChargeValue(charge);
 
         if (neuroBar3D != null)
         {
@@ -189,8 +189,8 @@ public class NeuroChargeController : MonoBehaviour
             if (pillarMeter3D != null)
                 pillarMeter3D.SetChargeValueImmediate(0f);
 
-            if (barrelFeedback != null)
-                barrelFeedback.SetChargeImmediate(0f);
+            if (chargeVisualFeedback != null)
+                chargeVisualFeedback.SetChargeImmediate(0f);
 
             if (neuroBar3D != null)
             {
@@ -233,8 +233,8 @@ public class NeuroChargeController : MonoBehaviour
             pillarMeter3D.SetChargeValueImmediate(0f);
         }
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeImmediate(0f);
+        if (chargeVisualFeedback != null)
+            chargeVisualFeedback.SetChargeImmediate(0f);
 
         if (neuroBar3D != null)
         {
@@ -289,8 +289,8 @@ public class NeuroChargeController : MonoBehaviour
             pillarMeter3D.SetChargeValueImmediate(0f);
         }
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeImmediate(0f);
+        if (chargeVisualFeedback != null)
+            chargeVisualFeedback.SetChargeImmediate(0f);
 
         if (neuroBar3D != null)
         {
@@ -389,8 +389,8 @@ public class NeuroChargeController : MonoBehaviour
         if (pillarMeter3D != null)
             pillarMeter3D.SetChargeValueImmediate(0f);
 
-        if (barrelFeedback != null)
-            barrelFeedback.SetChargeImmediate(0f);
+        if (chargeVisualFeedback != null)
+            chargeVisualFeedback.SetChargeImmediate(0f);
 
         if (neuroBar3D != null)
         {

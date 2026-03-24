@@ -19,46 +19,46 @@ public class CannonBarrelFeedback : MonoBehaviour
 
     [Header("Direction")]
     [Tooltip("Enable this if the barrel moves the wrong way.")]
-    public bool invertDirection = true;
+    public bool invertDirection = false;
 
     [Header("Smoothing")]
     public float rotationLerpSpeed = 8f;
 
-    private Quaternion _initialLocalRotation;
-    private float _targetCharge;
-    private float _currentAngle;
+    private Quaternion initialLocalRotation;
+    private float targetCharge;
+    private float currentAngle;
 
     private void Awake()
     {
         if (barrelPivot == null)
             barrelPivot = transform;
 
-        _initialLocalRotation = barrelPivot.localRotation;
-        _targetCharge = 0f;
-        _currentAngle = GetMappedAngle(0f);
-        ApplyAngle(_currentAngle);
+        initialLocalRotation = barrelPivot.localRotation;
+        targetCharge = 0f;
+        currentAngle = GetMappedAngle(0f);
+        ApplyAngle(currentAngle);
     }
 
     private void Update()
     {
-        float targetAngle = GetMappedAngle(_targetCharge);
+        float targetAngle = GetMappedAngle(targetCharge);
 
-        float k = 1f - Mathf.Exp(-rotationLerpSpeed * Time.deltaTime);
-        _currentAngle = Mathf.Lerp(_currentAngle, targetAngle, k);
+        float k = 1f - Mathf.Exp(-Mathf.Max(0.01f, rotationLerpSpeed) * Time.deltaTime);
+        currentAngle = Mathf.Lerp(currentAngle, targetAngle, k);
 
-        ApplyAngle(_currentAngle);
+        ApplyAngle(currentAngle);
     }
 
     public void SetChargeValue(float charge01)
     {
-        _targetCharge = Mathf.Clamp01(charge01);
+        targetCharge = Mathf.Clamp01(charge01);
     }
 
     public void SetChargeImmediate(float charge01)
     {
-        _targetCharge = Mathf.Clamp01(charge01);
-        _currentAngle = GetMappedAngle(_targetCharge);
-        ApplyAngle(_currentAngle);
+        targetCharge = Mathf.Clamp01(charge01);
+        currentAngle = GetMappedAngle(targetCharge);
+        ApplyAngle(currentAngle);
     }
 
     private float GetMappedAngle(float charge01)
@@ -73,8 +73,11 @@ public class CannonBarrelFeedback : MonoBehaviour
 
     private void ApplyAngle(float angle)
     {
+        if (barrelPivot == null)
+            return;
+
         barrelPivot.localRotation =
-            _initialLocalRotation *
+            initialLocalRotation *
             Quaternion.AngleAxis(angle, localRotationAxis.normalized);
     }
 }
