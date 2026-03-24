@@ -145,7 +145,12 @@ public class NeuroChargeController : MonoBehaviour
         }
 
         if (chargeVisualFeedback != null)
+        {
             chargeVisualFeedback.SetChargeValue(charge);
+
+            float remaining = Mathf.Clamp(sessionDuration - timer, 0f, sessionDuration);
+            chargeVisualFeedback.UpdateSparkByTimer(remaining, sessionDuration);
+        }
 
         if (neuroBar3D != null)
         {
@@ -190,7 +195,7 @@ public class NeuroChargeController : MonoBehaviour
                 pillarMeter3D.SetChargeValueImmediate(0f);
 
             if (chargeVisualFeedback != null)
-                chargeVisualFeedback.SetChargeImmediate(0f);
+                chargeVisualFeedback.ResetAllSmooth();
 
             if (neuroBar3D != null)
             {
@@ -234,7 +239,7 @@ public class NeuroChargeController : MonoBehaviour
         }
 
         if (chargeVisualFeedback != null)
-            chargeVisualFeedback.SetChargeImmediate(0f);
+            chargeVisualFeedback.ResetAllImmediate();
 
         if (neuroBar3D != null)
         {
@@ -290,7 +295,7 @@ public class NeuroChargeController : MonoBehaviour
         }
 
         if (chargeVisualFeedback != null)
-            chargeVisualFeedback.SetChargeImmediate(0f);
+            chargeVisualFeedback.ResetAllImmediate();
 
         if (neuroBar3D != null)
         {
@@ -390,7 +395,7 @@ public class NeuroChargeController : MonoBehaviour
             pillarMeter3D.SetChargeValueImmediate(0f);
 
         if (chargeVisualFeedback != null)
-            chargeVisualFeedback.SetChargeImmediate(0f);
+            chargeVisualFeedback.ResetAllSmooth();
 
         if (neuroBar3D != null)
         {

@@ -8502,6 +8502,16 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902405123}
   m_Mesh: {fileID: -8803937527578110353, guid: 006985c34a606c840bbb5c51adff3c39, type: 3}
+--- !u!198 &923312432 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1260262680682125493, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+  m_PrefabInstance: {fileID: 1011104648}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &923312434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+  m_PrefabInstance: {fileID: 1011104648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &953138190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9348,6 +9358,75 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a7807950894d41429dc2c1d999e3e94, type: 3}
+--- !u!1001 &1011104648
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1819256069}
+    m_Modifications:
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0044308337
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0044303043
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.00086840166
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0001032396
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0011097629
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.011669863
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.2968747
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0008007363
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.95491266
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.002575599
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0.255
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 214.541
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212285832888557706, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.175
+      objectReference: {fileID: 0}
+    - target: {fileID: 8400424712307853490, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
+      propertyPath: m_Name
+      value: vfx_Flamethrower_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 366377810aaf4fc4ab2be725a54c5712, type: 3}
 --- !u!4 &1027764099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8982965694058008589, guid: 9113fc6d6a4069a4085e364483b3dfd7, type: 3}
@@ -11749,15 +11828,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4223186867483548, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6934468
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4223186867483548, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6934468
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4223186867483548, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6934468
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4223186867483548, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11799,11 +11878,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4223186867483548, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 198061837104859340, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198399926889636638, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198409505784446586, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
       propertyPath: scalingMode
       value: 0
       objectReference: {fileID: 0}
@@ -12108,10 +12195,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 816ba3dc408511a4ea250cb0fb8f862b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CannonFireScaleFeedback
-  fireVisual: {fileID: 1465512101}
+  fireRoot: {fileID: 1465512101}
   barrelPivot: {fileID: 66322749}
-  minFireScale: {x: 0.2, y: 0.2, z: 0.2}
-  maxFireScale: {x: 0.5, y: 0.5, z: 0.5}
+  rearSpark: {fileID: 923312432}
+  shrinkFrontFireBeforeShot: 1
+  frontFireReturnToMinLastSeconds: 6
+  sparkActiveLastSeconds: 7
+  sparkMinEmission: 5
+  sparkMaxEmission: 40
+  sparkMinSize: 0.03
+  sparkMaxSize: 0.08
+  minFireScale: {x: 0.1, y: 0.1, z: 0.1}
+  maxFireScale: {x: 0.4, y: 0.4, z: 0.4}
   barrelLocalRotationAxis: {x: 1, y: 0, z: 0}
   minBarrelAngle: 4
   maxBarrelAngle: -13
@@ -12120,6 +12215,9 @@ MonoBehaviour:
   enableDebugLogs: 0
   targetCharge: 0
   currentCharge: 0
+  forceFrontFireToMinimum: 0
+  displayedFireCharge: 0
+  debugAppliedFireScale: {x: 0, y: 0, z: 0}
 --- !u!4 &1465512101 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4223186867483548, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
@@ -15897,6 +15995,7 @@ Transform:
   - {fileID: 42639743}
   - {fileID: 1303282649}
   - {fileID: 701772094}
+  - {fileID: 923312434}
   m_Father: {fileID: 66322749}
   m_LocalEulerAnglesHint: {x: 6.662, y: 0, z: 0}
 --- !u!23 &1819256070

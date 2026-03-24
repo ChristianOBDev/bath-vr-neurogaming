@@ -2,31 +2,42 @@ using UnityEngine;
 
 public class CannonChargeVisualFeedback : MonoBehaviour
 {
-    [Header("Charge Source Visuals")]
-    [Tooltip("The transform for the fire visual that grows with charge.")]
-    public Transform fireVisual;
+    [Header("Fire Visual")]
+    [Tooltip("Root of the entire fire prefab.")]
+    public Transform fireRoot;
 
-    [Tooltip("The transform for the cannon barrel that tilts with charge.")]
+    [Header("Barrel Visual")]
     public Transform barrelPivot;
 
-    [Header("Fire Scale")]
-    [Tooltip("Scale when charge is 0.")]
-    public Vector3 minFireScale = new Vector3(0.2f, 0.2f, 0.2f);
+    [Header("Spark Visual")]
+    [Tooltip("Rear spark particle system.")]
+    public ParticleSystem rearSpark;
 
-    [Tooltip("Scale when charge is 1.")]
+    [Header("Front Fire Timing")]
+    [Tooltip("Enable this if the front fire should return to minimum before the cannon fires.")]
+    public bool shrinkFrontFireBeforeShot = true;
+
+    [Tooltip("When remaining time is less than or equal to this, the front fire starts returning to minimum.")]
+    public float frontFireReturnToMinLastSeconds = 10f;
+
+    [Header("Spark Timing")]
+    [Tooltip("Only enable the rear spark during the last N seconds before firing.")]
+    public float sparkActiveLastSeconds = 10f;
+
+    [Header("Spark Intensity")]
+    public float sparkMinEmission = 5f;
+    public float sparkMaxEmission = 40f;
+    public float sparkMinSize = 0.03f;
+    public float sparkMaxSize = 0.12f;
+
+    [Header("Fire Scale")]
+    public Vector3 minFireScale = new Vector3(0.2f, 0.2f, 0.2f);
     public Vector3 maxFireScale = new Vector3(1.2f, 1.2f, 1.2f);
 
     [Header("Barrel Rotation")]
-    [Tooltip("Usually X for cannon elevation.")]
     public Vector3 barrelLocalRotationAxis = Vector3.right;
-
-    [Tooltip("Barrel angle when charge is 0.")]
     public float minBarrelAngle = -10f;
-
-    [Tooltip("Barrel angle when charge is 1.")]
     public float maxBarrelAngle = 25f;
-
-    [Tooltip("Enable this if the barrel moves the wrong way.")]
     public bool invertBarrelDirection = false;
 
     [Header("Smoothing")]
@@ -38,30 +49,43 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     [Range(0f, 1f)] public float targetCharge;
     [Range(0f, 1f)] public float currentCharge;
 
+    [SerializeField] private bool forceFrontFireToMinimum;
+    [SerializeField] private float displayedFireCharge;
+    [SerializeField] private Vector3 debugAppliedFireScale;
+
     private Quaternion initialBarrelLocalRotation;
     private float debugLogTimer;
 
     private void Awake()
     {
-        if (fireVisual == null)
-            fireVisual = transform;
+        if (fireRoot == null)
+            fireRoot = transform;
 
         if (barrelPivot != null)
             initialBarrelLocalRotation = barrelPivot.localRotation;
 
         targetCharge = 0f;
         currentCharge = 0f;
+        displayedFireCharge = 0f;
+        forceFrontFireToMinimum = false;
 
-        ApplyVisualsImmediate(0f);
+        ApplyFireScale(0f);
+        ApplyBarrelRotation(0f);
+        SetSparkActive(false);
     }
 
     private void Update()
     {
         float k = 1f - Mathf.Exp(-Mathf.Max(0.01f, feedbackLerpSpeed) * Time.deltaTime);
+
         currentCharge = Mathf.Lerp(currentCharge, targetCharge, k);
         currentCharge = Mathf.Clamp01(currentCharge);
 
-        ApplyFireScale(currentCharge);
+        float targetFireCharge = forceFrontFireToMinimum ? 0f : currentCharge;
+        displayedFireCharge = Mathf.Lerp(displayedFireCharge, targetFireCharge, k);
+        displayedFireCharge = Mathf.Clamp01(displayedFireCharge);
+
+        ApplyFireScale(displayedFireCharge);
         ApplyBarrelRotation(currentCharge);
 
         if (enableDebugLogs)
@@ -71,7 +95,9 @@ public class CannonChargeVisualFeedback : MonoBehaviour
             if (debugLogTimer >= 0.5f)
             {
                 debugLogTimer = 0f;
-                Debug.Log($"[CannonChargeVisualFeedback] Charge: {currentCharge:F3} | BarrelAngle: {GetMappedBarrelAngle(currentCharge):F3}");
+                Debug.Log(
+                    $"[CannonChargeVisualFeedback] currentCharge={currentCharge:F3} | displayedFireCharge={displayedFireCharge:F3} | forceFrontFireToMinimum={forceFrontFireToMinimum} | fireScale={debugAppliedFireScale}"
+                );
             }
         }
     }
@@ -85,21 +111,66 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     {
         targetCharge = Mathf.Clamp01(charge01);
         currentCharge = targetCharge;
-        ApplyVisualsImmediate(currentCharge);
+
+        if (!forceFrontFireToMinimum)
+            displayedFireCharge = currentCharge;
+
+        ApplyFireScale(forceFrontFireToMinimum ? 0f : displayedFireCharge);
+        ApplyBarrelRotation(currentCharge);
     }
 
-    private void ApplyVisualsImmediate(float charge01)
+    public void UpdateSparkByTimer(float timeRemaining, float totalDuration)
     {
-        ApplyFireScale(charge01);
-        ApplyBarrelRotation(charge01);
+        if (fireRoot == null && rearSpark == null)
+            return;
+
+        forceFrontFireToMinimum =
+            shrinkFrontFireBeforeShot &&
+            timeRemaining <= frontFireReturnToMinLastSeconds &&
+            timeRemaining > 0f;
+
+        bool shouldBeActive = timeRemaining <= sparkActiveLastSeconds && timeRemaining > 0f;
+        SetSparkActive(shouldBeActive);
+
+        if (!shouldBeActive || rearSpark == null)
+            return;
+
+        float charge01 = Mathf.Clamp01(currentCharge);
+
+        var emission = rearSpark.emission;
+        emission.rateOverTime = Mathf.Lerp(sparkMinEmission, sparkMaxEmission, charge01);
+
+        var main = rearSpark.main;
+        main.startSize = Mathf.Lerp(sparkMinSize, sparkMaxSize, charge01);
+    }
+
+    public void ResetAllSmooth()
+    {
+        forceFrontFireToMinimum = false;
+        SetChargeValue(0f);
+        SetSparkActive(false);
+    }
+
+    public void ResetAllImmediate()
+    {
+        forceFrontFireToMinimum = false;
+        targetCharge = 0f;
+        currentCharge = 0f;
+        displayedFireCharge = 0f;
+
+        ApplyFireScale(0f);
+        ApplyBarrelRotation(0f);
+        SetSparkActive(false);
     }
 
     private void ApplyFireScale(float charge01)
     {
-        if (fireVisual == null)
+        if (fireRoot == null)
             return;
 
-        fireVisual.localScale = Vector3.Lerp(minFireScale, maxFireScale, Mathf.Clamp01(charge01));
+        Vector3 scale = Vector3.Lerp(minFireScale, maxFireScale, Mathf.Clamp01(charge01));
+        fireRoot.localScale = scale;
+        debugAppliedFireScale = scale;
     }
 
     private void ApplyBarrelRotation(float charge01)
@@ -122,5 +193,22 @@ public class CannonChargeVisualFeedback : MonoBehaviour
             charge01 = 1f - charge01;
 
         return Mathf.Lerp(minBarrelAngle, maxBarrelAngle, charge01);
+    }
+
+    private void SetSparkActive(bool active)
+    {
+        if (rearSpark == null)
+            return;
+
+        if (active)
+        {
+            if (!rearSpark.isPlaying)
+                rearSpark.Play();
+        }
+        else
+        {
+            if (rearSpark.isPlaying)
+                rearSpark.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
     }
 }
