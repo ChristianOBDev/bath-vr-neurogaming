@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSignal
 {
     [Header("Keyboard Input")]
-    public KeyCode inputKey = KeyCode.Space;
+    public Key inputKey = Key.Space;
 
     [Header("XRI Input")]
     public InputActionAsset xriInputActions;
@@ -76,7 +76,7 @@ public class NeuroInputSignal : MonoBehaviour, ISignalProvider, IResettableSigna
     {
         bool pressed = false;
 
-        if (Input.GetKeyDown(inputKey))
+        if (Keyboard.current != null && Keyboard.current[inputKey].wasPressedThisFrame)
             pressed = true;
 
         if (xrAction != null && xrAction.WasPressedThisFrame())
