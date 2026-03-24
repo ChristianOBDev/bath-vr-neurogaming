@@ -27,6 +27,7 @@ public class BallController : MonoBehaviour
     public AnimationCurve returnCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public float bobAmplitude = 0.15f;
     public float bobFrequency = 2f;
+    public bool enableBob = true;
 
     private Vector3 kickerTargetPos;
 
@@ -38,6 +39,8 @@ public class BallController : MonoBehaviour
     [Tooltip("Maximum sideways drift applied during return")]
     [SerializeField, Min(0f)]
     private float lateralDriftMax = 0.7f;
+
+    public bool enableLateralDrift = true;
 
     [Header("Clamp Velocity")]
     [SerializeField] private float maxVelocity = 20f;
@@ -138,29 +141,37 @@ public class BallController : MonoBehaviour
     IEnumerator ReturnToKicker(Vector3 targetPos)
     {
         float elapsed = 0f;
-
         Vector3 startPos = transform.position;
+
+        Vector3 upAxis = SceneOrientation.Instance != null
+            ? SceneOrientation.Instance.Up
+            : Vector3.up;
+
+        Vector3 rightAxis = SceneOrientation.Instance != null
+            ? SceneOrientation.Instance.Right
+            : Vector3.right;
 
         while (elapsed < returnDuration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / returnDuration;
-
             float curvedT = returnCurve.Evaluate(t);
 
             Vector3 pos = Vector3.Lerp(startPos, targetPos, curvedT);
 
-            // Add side to side drift with independent phase
-            float sideDrift = Mathf.Sin(Time.time * bobFrequency * 0.5f + bobPhaseOffset) * lateralOffset;
-            pos += Vector3.right * sideDrift;
+            if (enableLateralDrift)
+            {
+                float sideDrift = Mathf.Sin(Time.time * bobFrequency * 0.5f + bobPhaseOffset) * lateralOffset;
+                pos += rightAxis * sideDrift;
+            }
 
-
-            // Add bobbing motion
-            float bob = Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
-            pos += Vector3.up * bob;
+            if (enableBob)
+            {
+                float bob = Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
+                pos += upAxis * bob;
+            }
 
             transform.position = pos;
-
             yield return null;
         }
 
