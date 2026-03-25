@@ -1228,7 +1228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3464820309339952880, guid: f3459bb4d1acc584ab4cf2863bd22ad7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 42.16
+      value: 66.7
       objectReference: {fileID: 0}
     - target: {fileID: 3464820309339952880, guid: f3459bb4d1acc584ab4cf2863bd22ad7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4524,7 +4524,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508830350}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5104,7 +5104,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549137440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5688,7 +5688,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 574949518}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6454,9 +6454,17 @@ PrefabInstance:
       value: Cannon
       objectReference: {fileID: 0}
     - target: {fileID: 2063001871730864813, guid: 103320cf6cc758d4abbb362b3aaa29f1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2063001871730864813, guid: 103320cf6cc758d4abbb362b3aaa29f1, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 61ecb94cf0e94cc4d9ded05cc6b8ed7e, type: 2}
+    - target: {fileID: 8615698256938593303, guid: 103320cf6cc758d4abbb362b3aaa29f1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8615698256938593303, guid: 103320cf6cc758d4abbb362b3aaa29f1, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -7369,7 +7377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3464820309339952880, guid: f3459bb4d1acc584ab4cf2863bd22ad7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 42.16
+      value: 87
       objectReference: {fileID: 0}
     - target: {fileID: 3464820309339952880, guid: f3459bb4d1acc584ab4cf2863bd22ad7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11791,10 +11799,12 @@ MonoBehaviour:
   - {fileID: 1358862814}
   - {fileID: 1039256049}
   bossShipObject: {fileID: 1452646133}
+  bossSpawnPoint: {fileID: 0}
   bossSpawnDelay: 4
   baseRespawnDelay: 8
   normalPirateAudioSource: {fileID: 1784986273}
   bossPirateAudioSource: {fileID: 1352962169}
+  enableDebugLogs: 1
 --- !u!224 &1393359076
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12218,6 +12228,7 @@ MonoBehaviour:
   forceFrontFireToMinimum: 0
   displayedFireCharge: 0
   debugAppliedFireScale: {x: 0, y: 0, z: 0}
+  debugBarrelAngle: 0
 --- !u!4 &1465512101 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4223186867483548, guid: 4dd6c2b5539220947a0c5938f0a39d20, type: 3}
@@ -14861,7 +14872,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1757909634}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -15939,10 +15950,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Phase1NeuroSimSignalProvider
   signal: 0
-  risePerSecond: 6
+  risePerSecond: 10
   fallPerSecond: 12
   smoothing: 2.34
-  guidedTargetLevel: 0.55
+  guidedTargetLevel: 0.938
   guidedDriftStrength: 0.2
 --- !u!4 &1811623655
 Transform:
@@ -17157,7 +17168,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920563114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -18368,13 +18379,13 @@ MonoBehaviour:
   bossFightMessage: Boss Fight!
   bossMessageDuration: 2
   phaseManager: {fileID: 1503967575}
-  startScoringPhase: 1
-  pointsPerHit: 40
-  pointsPerKill: 120
-  baseShotBonus: 80
+  startScoringPhase: 0
+  pointsPerHit: 200
+  pointsPerKill: 50
+  baseShotBonus: 60
   shipsBeforeBoss: 3
   bossHitsToDestroy: 5
-  pointsPerBossHit: 50
+  pointsPerBossHit: 250
   pointsPerBossKill: 1000
   displayLerpSpeed: 12
   feedback: {fileID: 28620559}
