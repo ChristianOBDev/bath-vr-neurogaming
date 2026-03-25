@@ -198,10 +198,12 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  bobAmplitude: 0.15
+  bobAmplitude: 0.1
   bobFrequency: 2
+  enableBob: 1
   lateralDriftMin: 0.1
   lateralDriftMax: 0.7
+  enableLateralDrift: 0
   maxVelocity: 100
   enableCenterGuidance: 1
   waterfallCenter: {fileID: 0}

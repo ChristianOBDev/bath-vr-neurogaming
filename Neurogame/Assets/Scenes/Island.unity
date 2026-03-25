@@ -68491,15 +68491,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 276.92548
+      value: 276.99
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.205446
+      value: 24.19687
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 350.10922
+      value: 349.68576
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004669, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -73912,6 +73912,10 @@ PrefabInstance:
       value: Fences
       objectReference: {fileID: 0}
     - target: {fileID: 6714976279471455417, guid: 7aa5fcb7de5acd540841d3472377ed74, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6714976279471455417, guid: 7aa5fcb7de5acd540841d3472377ed74, type: 3}
       propertyPath: m_TagString
       value: EditorOnly
       objectReference: {fileID: 0}
@@ -74036,6 +74040,10 @@ PrefabInstance:
     - target: {fileID: 5504166067613303649, guid: 1b246ca6c086b6e4f9a7890dc38d72da, type: 3}
       propertyPath: m_Name
       value: VFXmanagerPos
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504166067613303649, guid: 1b246ca6c086b6e4f9a7890dc38d72da, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7092843727477044467, guid: 1b246ca6c086b6e4f9a7890dc38d72da, type: 3}
       propertyPath: CollisionModule.type
