@@ -7,6 +7,7 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     public Transform fireRoot;
 
     [Header("Barrel Visual")]
+    [Tooltip("Assign the transform that should tilt up/down.")]
     public Transform barrelPivot;
 
     [Header("Spark Visual")]
@@ -35,6 +36,7 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     public Vector3 maxFireScale = new Vector3(1.2f, 1.2f, 1.2f);
 
     [Header("Barrel Rotation")]
+    [Tooltip("Usually X for cannon elevation.")]
     public Vector3 barrelLocalRotationAxis = Vector3.right;
     public float minBarrelAngle = -10f;
     public float maxBarrelAngle = 25f;
@@ -52,6 +54,7 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     [SerializeField] private bool forceFrontFireToMinimum;
     [SerializeField] private float displayedFireCharge;
     [SerializeField] private Vector3 debugAppliedFireScale;
+    [SerializeField] private float debugBarrelAngle;
 
     private Quaternion initialBarrelLocalRotation;
     private float debugLogTimer;
@@ -72,6 +75,13 @@ public class CannonChargeVisualFeedback : MonoBehaviour
         ApplyFireScale(0f);
         ApplyBarrelRotation(0f);
         SetSparkActive(false);
+
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[CannonChargeVisualFeedback] Awake | barrelPivot={(barrelPivot != null ? barrelPivot.name : "NULL")}");
+            if (barrelPivot != null)
+                Debug.Log($"[CannonChargeVisualFeedback] Awake | initial local rotation={barrelPivot.localEulerAngles}");
+        }
     }
 
     private void Update()
@@ -96,7 +106,7 @@ public class CannonChargeVisualFeedback : MonoBehaviour
             {
                 debugLogTimer = 0f;
                 Debug.Log(
-                    $"[CannonChargeVisualFeedback] currentCharge={currentCharge:F3} | displayedFireCharge={displayedFireCharge:F3} | forceFrontFireToMinimum={forceFrontFireToMinimum} | fireScale={debugAppliedFireScale}"
+                    $"[CannonChargeVisualFeedback] currentCharge={currentCharge:F3} | displayedFireCharge={displayedFireCharge:F3} | barrelAngle={debugBarrelAngle:F3} | barrelLocalEuler={(barrelPivot != null ? barrelPivot.localEulerAngles.ToString() : "NULL")}"
                 );
             }
         }
@@ -179,10 +189,10 @@ public class CannonChargeVisualFeedback : MonoBehaviour
             return;
 
         float angle = GetMappedBarrelAngle(charge01);
+        debugBarrelAngle = angle;
 
-        barrelPivot.localRotation =
-            initialBarrelLocalRotation *
-            Quaternion.AngleAxis(angle, barrelLocalRotationAxis.normalized);
+        Quaternion offset = Quaternion.AngleAxis(angle, barrelLocalRotationAxis.normalized);
+        barrelPivot.localRotation = initialBarrelLocalRotation * offset;
     }
 
     private float GetMappedBarrelAngle(float charge01)
