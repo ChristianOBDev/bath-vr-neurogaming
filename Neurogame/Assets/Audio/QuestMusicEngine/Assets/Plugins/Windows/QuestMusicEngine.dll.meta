@@ -1,4 +1,5 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Neurogame/Assets/Audio/QuestMusicEngine/Assets/Plugins/Windows/QuestMusicEngine.dll.meta
 guid: 55aeef4804740874ebbefa0692109def
 PluginImporter:
   externalObjects: {}
@@ -68,3 +69,6 @@ PluginImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+========
+guid: f6591fec8bc959beba1c1f8bf1e35bea
+>>>>>>>> dev:Neurogame/Assets/Audio/RNBOMusicEngine/Assets/Plugins/Windows/RNBOMusicEngine.dll.meta
