@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!243 &-1294988925779376848
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FocusState
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: c309c727b5a558d4eba804b5f939b920
+  m_Children: []
+  m_Volume: 91fb5373396220b4cbf5871a9f383797
+  m_Pitch: 4b278ce29bbd294449891314e0582fe3
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 2229261858322287327}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!241 &24100000
 AudioMixerController:
   m_ObjectHideFlags: 0
@@ -16,21 +35,14 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters:
-  - guid: cd3ac73ffc193934faadae54a64e9abd
-    name: MyExposedParam
-  - guid: de2dbb988244f5f4e9f09dbad0b36170
-    name: MyExposedParam 1
-  - guid: 021a0f3a65bfb8d4a9bd746d843c8bb2
-    name: MyExposedParam 2
-  - guid: 7c35fcc6f0e45454e92b59552908ec77
-    name: MyExposedParam 3
+  m_ExposedParameters: []
   m_AudioMixerGroupViews:
   - guids:
     - 9a52f5312480448f6b566c66003c95b9
     - e5b50b02c29cd44d7803d7a8c80f3e04
     - 612806a51b3cfb243baf0c212c1d64ee
     - 3b9f84cb74a59574ea40e4af34bbddd8
+    - c309c727b5a558d4eba804b5f939b920
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24591078}
@@ -47,6 +59,7 @@ AudioMixerGroupController:
   - {fileID: 24364226}
   - {fileID: 24360416}
   - {fileID: 3937304443579915683}
+  - {fileID: -1294988925779376848}
   m_Volume: 2728777b2e13c419996e0107ac239b0f
   m_Pitch: c8f32a51dce3a45a99383106a07381c5
   m_Send: 00000000000000000000000000000000
@@ -689,6 +702,7 @@ AudioMixerSnapshotController:
     b14b56ba7d77b4a22bc443d1c1cef4ad: 24
     a1d21acaacd4640dba9c5e1b45716cfd: 0
     3da633ea7a419480f9d1d045c9bdcc21: 2
+    a750ebeabbc92a54382a3650c6bbbe9d: 0
     193ebcfa2d2ea4c0a8d8e3956019f2ec: 0
     c5c5aa0b10eef43e783311ea2578791f: 6
     7f41851ba3267d94ebd692fd267b6c85: 0
@@ -782,37 +796,53 @@ AudioMixerSnapshotController:
     e47467df30f72486084d67e85001bf7e: 0
     6b89d8dfc9e8145e3a1d25ee300c1e33: 0
   m_TransitionOverrides: {}
---- !u!244 &2557251581777185664
+--- !u!244 &2229261858322287327
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_EffectID: 43b7212c17eda6044a021ec936bd266e
-  m_EffectName: RNBO_MusicEngine
-  m_MixLevel: f03d6a19ad8132049b5ec42863d52294
+  m_EffectID: eb3f26bfeae8f15408ae16a4575f94ff
+  m_EffectName: Attenuation
+  m_MixLevel: a57e93a33a2f3164e81f3d39c9e33d38
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &2298220526917213609
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 792bb87a411511b41bb298c91cf06c22
+  m_EffectName: QuestMusicEngine
+  m_MixLevel: 1ce6b9eda6267d247a391ce0d4cc562a
   m_Parameters:
   - m_ParameterName: 'Instance Index '
-    m_GUID: 3b5e15a07ac5ae845b8599a991143438
+    m_GUID: 5e865ee70f7f6e4429629989a28248c8
   - m_ParameterName: modalVol
-    m_GUID: c30e3e02baeb41b479e40d3990e0dcff
+    m_GUID: 1319548c143502f43b914fc66e23d2e5
   - m_ParameterName: startMusic
-    m_GUID: 6bd9e77c012821e479858c6517f927f0
+    m_GUID: 9e4cc18d9d1c9764cb193600c0048915
+  - m_ParameterName: sliderState
+    m_GUID: a750ebeabbc92a54382a3650c6bbbe9d
   - m_ParameterName: FMVol
-    m_GUID: a824ea37434783f4ebbc6c35de6fdb22
+    m_GUID: 270c104a6f4b2774983fb8036ffef02a
   - m_ParameterName: dronesVol
-    m_GUID: eaa0be3f5969d694281d676e131afbec
+    m_GUID: c2655cfa101d9a04dbc5ee2e88e581ff
   - m_ParameterName: FrontalA
-    m_GUID: cd3ac73ffc193934faadae54a64e9abd
+    m_GUID: fef20a0387aa0004e8bbff433beafd63
   - m_ParameterName: padsVol
-    m_GUID: 5ca0fc8c200b5dc40bc044695f5ce370
+    m_GUID: d5856a841167a9a46a5e0ce320ffff19
   - m_ParameterName: FrontalB
-    m_GUID: de2dbb988244f5f4e9f09dbad0b36170
+    m_GUID: 4a5d399fee7a34345bdabe9b602c237b
   - m_ParameterName: ParietalA
-    m_GUID: 021a0f3a65bfb8d4a9bd746d843c8bb2
+    m_GUID: 234f7c343a1673040bf73b5ae137ea26
   - m_ParameterName: FrontalMidT
-    m_GUID: 7c35fcc6f0e45454e92b59552908ec77
+    m_GUID: 649c90659ce8d6343b2d31e68b1ec4f8
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
@@ -822,7 +852,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RNBOrelaxed
+  m_Name: MusicEngine
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 3b9f84cb74a59574ea40e4af34bbddd8
   m_Children: []
@@ -831,7 +861,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 7298533926177781228}
-  - {fileID: 2557251581777185664}
+  - {fileID: 2298220526917213609}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
