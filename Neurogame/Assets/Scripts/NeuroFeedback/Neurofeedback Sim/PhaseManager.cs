@@ -4,34 +4,52 @@ namespace NeuroFeedback
 {
     public class PhaseManager : MonoBehaviour
     {
-        public enum Phase { Phase1_Baseline, Phase2_Assisted, Phase3_Full }
-        public Phase CurrentPhase = Phase.Phase1_Baseline;
-
-        [Header("Auto Advance (optional)")]
-        public bool autoAdvance = false;
-        public float phase1Duration = 30f;
-        public float phase2Duration = 60f;
-
-        private float t;
-
-        void Update()
+        public enum Phase
         {
-            if (!autoAdvance) return;
+            Phase1_Baseline,
+            Phase2_Assisted,
+            Phase3
+        }
 
-            t += Time.deltaTime;
+        [Header("Current Phase")]
+        [SerializeField] private Phase currentPhase = Phase.Phase1_Baseline;
 
-            if (CurrentPhase == Phase.Phase1_Baseline && t >= phase1Duration)
-            {
-                CurrentPhase = Phase.Phase2_Assisted;
-                t = 0f;
-                Debug.Log("[PHASE] -> Phase 2 Assisted");
-            }
-            else if (CurrentPhase == Phase.Phase2_Assisted && t >= phase2Duration)
-            {
-                CurrentPhase = Phase.Phase3_Full;
-                t = 0f;
-                Debug.Log("[PHASE] -> Phase 3 Full");
-            }
+        [Header("Mode")]
+        [Tooltip("When true, the phase is controlled by the UI buttons.")]
+        public bool useManualPhaseSelection = true;
+
+        public Phase CurrentPhase => currentPhase;
+
+        public void SetManualPhase(Phase newPhase)
+        {
+            if (!useManualPhaseSelection)
+                return;
+
+            currentPhase = newPhase;
+        }
+
+        public void SetPhase1()
+        {
+            if (!useManualPhaseSelection)
+                return;
+
+            currentPhase = Phase.Phase1_Baseline;
+        }
+
+        public void SetPhase2()
+        {
+            if (!useManualPhaseSelection)
+                return;
+
+            currentPhase = Phase.Phase2_Assisted;
+        }
+
+        public void SetPhase3()
+        {
+            if (!useManualPhaseSelection)
+                return;
+
+            currentPhase = Phase.Phase3;
         }
     }
 }
