@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!244 &-1446673004714081265
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: c3d0b706892db9446a5d4e27a418bb9b
+  m_EffectName: QuestMusicEngine
+  m_MixLevel: 575c786d13aee6a4c88e97aeacbbae03
+  m_Parameters:
+  - m_ParameterName: 'Instance Index '
+    m_GUID: 8f2313b5f85279149961da6009526ace
+  - m_ParameterName: modalVol
+    m_GUID: cbb32a7de142f414c843fcce57d6e1eb
+  - m_ParameterName: startMusic
+    m_GUID: 0f9eda62ac68a6d449057f10b18f848a
+  - m_ParameterName: sliderState
+    m_GUID: 85cf577a24b580e4483d00717942faed
+  - m_ParameterName: FMVol
+    m_GUID: 7ba9a05f14c812f4389767c7fcd68253
+  - m_ParameterName: dronesVol
+    m_GUID: c3df3e428730e1d45a1653231f511a39
+  - m_ParameterName: FrontalA
+    m_GUID: 214849f6ab43f8e41a592478546331cf
+  - m_ParameterName: padsVol
+    m_GUID: 95b7792e5a4d93c43ac9f907143e910f
+  - m_ParameterName: FrontalB
+    m_GUID: 7f20388d9cd3dcc44ace5f639d005d2c
+  - m_ParameterName: ParietalA
+    m_GUID: c259c8fe2490a0f4fa0b748db29dbf52
+  - m_ParameterName: FrontalMidT
+    m_GUID: 3916a12d954dd0348ad486b1a2265446
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &-1294988925779376848
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -810,42 +846,6 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
---- !u!244 &2298220526917213609
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 792bb87a411511b41bb298c91cf06c22
-  m_EffectName: QuestMusicEngine
-  m_MixLevel: 1ce6b9eda6267d247a391ce0d4cc562a
-  m_Parameters:
-  - m_ParameterName: 'Instance Index '
-    m_GUID: 5e865ee70f7f6e4429629989a28248c8
-  - m_ParameterName: modalVol
-    m_GUID: 1319548c143502f43b914fc66e23d2e5
-  - m_ParameterName: startMusic
-    m_GUID: 9e4cc18d9d1c9764cb193600c0048915
-  - m_ParameterName: sliderState
-    m_GUID: a750ebeabbc92a54382a3650c6bbbe9d
-  - m_ParameterName: FMVol
-    m_GUID: 270c104a6f4b2774983fb8036ffef02a
-  - m_ParameterName: dronesVol
-    m_GUID: c2655cfa101d9a04dbc5ee2e88e581ff
-  - m_ParameterName: FrontalA
-    m_GUID: fef20a0387aa0004e8bbff433beafd63
-  - m_ParameterName: padsVol
-    m_GUID: d5856a841167a9a46a5e0ce320ffff19
-  - m_ParameterName: FrontalB
-    m_GUID: 4a5d399fee7a34345bdabe9b602c237b
-  - m_ParameterName: ParietalA
-    m_GUID: 234f7c343a1673040bf73b5ae137ea26
-  - m_ParameterName: FrontalMidT
-    m_GUID: 649c90659ce8d6343b2d31e68b1ec4f8
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!243 &3937304443579915683
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -861,7 +861,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 7298533926177781228}
-  - {fileID: 2298220526917213609}
+  - {fileID: -1446673004714081265}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
