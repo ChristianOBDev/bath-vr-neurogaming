@@ -41,8 +41,10 @@ public class KickerForce : MonoBehaviour
     public bool glowEnabled = true;
     public Renderer glowRenderer;
     public Color glowColor = Color.cyan;
-    public float maxGlowIntensity = 3f;
+    public float maxGlowIntensity = 1f;
     public float glowLerpSpeed = 5f;
+    public float glowThreshold = 0.75f;
+    public float glowLowMax = 0.1f;
 
     [Header("Glow Phase 1")]
     public float glowBuildTimeOffset = 1f; // How many seconds before contact glow reaches 100%
@@ -61,6 +63,7 @@ public class KickerForce : MonoBehaviour
 
     private Rigidbody currentBalloon;
     private BallController currentBallController;
+    private float currentInputGlowIntensity = 0f;
 
     void Start()
     {
@@ -186,23 +189,33 @@ public class KickerForce : MonoBehaviour
         glowMaterial.SetColor(EmissionColor, finalColor);
     }
 
+    float MapStrengthToIntensity(float strength)
+    {
+        if (strength <= glowThreshold)
+        {
+            return (strength / glowThreshold) * glowLowMax;
+        }
+        else
+        {
+            float t = (strength - glowThreshold) / (1f - glowThreshold);
+            return Mathf.Lerp(glowLowMax, maxGlowIntensity, t);
+        }
+    }
+
     void UpdateGlowFromInput()
     {
         if (!glowEnabled || glowMaterial == null) return;
         if (inputRouter == null) return;
 
         float strength = inputRouter.GetStrength(isLeftKicker, graduatedForce);
+        float targetIntensity = MapStrengthToIntensity(strength);
 
-        if (kickerDebugLogging)
-            Debug.Log($"UpdateGlowFromInput — strength: {strength}, controlValue: {inputRouter.controlValue}, isLeft: {isLeftKicker}");
-
-        float targetIntensity = strength * maxGlowIntensity;
-        float currentIntensity = Mathf.Lerp(
-            GetCurrentGlowIntensity(),
+        currentInputGlowIntensity = Mathf.Lerp(
+            currentInputGlowIntensity,
             targetIntensity,
             Time.deltaTime * glowLerpSpeed
         );
-        SetGlowIntensity(currentIntensity);
+        SetGlowIntensity(currentInputGlowIntensity);
     }
 
     float GetCurrentGlowIntensity()
