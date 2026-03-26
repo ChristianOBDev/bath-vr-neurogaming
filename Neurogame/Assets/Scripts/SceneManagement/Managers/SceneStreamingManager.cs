@@ -29,6 +29,14 @@ public class SceneStreamingManager : PersistentSingleton<SceneStreamingManager>
     }
   }
 
+  public void RequestUnloadOnExit(SceneStreamingConfig config)
+  {
+    foreach (var sceneRef in config.scenesToLoad)
+    {
+      TryUnloadScene(sceneRef);
+    }
+  }
+
   // -------- PRIVATE METHODS --------
   private void TryLoadScene(AssetReference sceneRef)
   {

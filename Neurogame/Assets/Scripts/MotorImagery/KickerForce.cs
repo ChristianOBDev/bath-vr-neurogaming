@@ -56,7 +56,7 @@ public class KickerForce : MonoBehaviour
     public LeanTweenType swellEase = LeanTweenType.easeOutBack;
 
     private Material glowMaterial;
-    private float currentGlowIntensity = 0f;
+    /*private float currentGlowIntensity = 0f;*/
     private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
     private Rigidbody currentBalloon;

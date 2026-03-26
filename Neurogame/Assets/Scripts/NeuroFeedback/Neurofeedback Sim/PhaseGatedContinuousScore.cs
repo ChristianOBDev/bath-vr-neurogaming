@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using NeuroFeedback;
+using System.Collections;
 
 public class PhaseGatedContinuousScore : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class PhaseGatedContinuousScore : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private bool showMessageBeforeStart = true;
     [SerializeField] private string waitingMessage = "Get Ready...";
+
+    [Header("Boss UI")]
+    [SerializeField] private string bossFightMessage = "Boss Fight!";
+    [SerializeField] private float bossMessageDuration = 2f;
 
     [Header("Phase Gate")]
     [SerializeField] private PhaseManager phaseManager;
@@ -22,6 +27,12 @@ public class PhaseGatedContinuousScore : MonoBehaviour
     [Tooltip("Bonus awarded when a shot is fired in Phase2+.")]
     [SerializeField] private int baseShotBonus = 80;
 
+    [Header("Boss Scoring")]
+    [SerializeField] private int shipsBeforeBoss = 3;
+    [SerializeField] private int bossHitsToDestroy = 5;
+    [SerializeField] private int pointsPerBossHit = 50;
+    [SerializeField] private int pointsPerBossKill = 1000;
+
     [Header("Display Smoothing")]
     [SerializeField] private float displayLerpSpeed = 12f;
 
@@ -32,8 +43,16 @@ public class PhaseGatedContinuousScore : MonoBehaviour
     private float score;
     private float displayedScore;
 
+    private int shipsDestroyedSinceBoss;
+    private int currentBossHits;
+    private bool bossActive;
+    private bool showingTemporaryMessage;
+    private Coroutine messageRoutine;
+
     public bool ScoringActive =>
         phaseManager != null && phaseManager.CurrentPhase >= startScoringPhase;
+
+    public bool BossActive => bossActive;
 
     private void Awake()
     {
@@ -61,22 +80,50 @@ public class PhaseGatedContinuousScore : MonoBehaviour
         if (scoreText != null)
         {
             if (!ScoringActive && showMessageBeforeStart)
+            {
                 scoreText.text = waitingMessage;
-            else
-                scoreText.text = Mathf.FloorToInt(displayedScore).ToString();
+            }
+            else if (!showingTemporaryMessage)
+            {
+                if (bossActive)
+                    scoreText.text = $"Boss HP: {Mathf.Max(0, bossHitsToDestroy - currentBossHits)}  |  Score: {Mathf.FloorToInt(displayedScore)}";
+                else
+                    scoreText.text = Mathf.FloorToInt(displayedScore).ToString();
+            }
         }
     }
 
     public void AddHit()
     {
         if (!ScoringActive) return;
+
+        if (bossActive)
+        {
+            AddBossHit();
+            return;
+        }
+
         score += pointsPerHit;
     }
 
     public void AddKill()
     {
         if (!ScoringActive) return;
+
+        if (bossActive)
+        {
+            // Ignore normal kill calls while boss is active.
+            return;
+        }
+
         score += pointsPerKill;
+
+        shipsDestroyedSinceBoss++;
+
+        if (shipsDestroyedSinceBoss >= shipsBeforeBoss)
+        {
+            StartBossFight();
+        }
     }
 
     public void OnShotFired(float stability01, bool optimal, float hitChance01)
@@ -94,9 +141,79 @@ public class PhaseGatedContinuousScore : MonoBehaviour
         score += baseShotBonus * mult;
     }
 
+    private void StartBossFight()
+    {
+        bossActive = true;
+        currentBossHits = 0;
+
+        ShowTemporaryMessage(bossFightMessage, bossMessageDuration);
+
+        // Put your boss spawn logic here, for example:
+        // BossSpawner.Instance.SpawnBoss();
+        // NormalShipSpawner.Instance.StopSpawning();
+    }
+
+    public void AddBossHit()
+    {
+        if (!ScoringActive || !bossActive) return;
+
+        currentBossHits++;
+        score += pointsPerBossHit;
+
+        if (currentBossHits >= bossHitsToDestroy)
+        {
+            DestroyBoss();
+        }
+    }
+
+    private void DestroyBoss()
+    {
+        bossActive = false;
+        currentBossHits = 0;
+        shipsDestroyedSinceBoss = 0;
+
+        score += pointsPerBossKill;
+
+        // Put your boss despawn / normal wave reset logic here, for example:
+        // BossSpawner.Instance.DespawnBoss();
+        // NormalShipSpawner.Instance.StartSpawning();
+    }
+
+    private void ShowTemporaryMessage(string message, float duration)
+    {
+        if (messageRoutine != null)
+            StopCoroutine(messageRoutine);
+
+        messageRoutine = StartCoroutine(ShowTemporaryMessageRoutine(message, duration));
+    }
+
+    private IEnumerator ShowTemporaryMessageRoutine(string message, float duration)
+    {
+        showingTemporaryMessage = true;
+
+        if (scoreText != null)
+            scoreText.text = message;
+
+        yield return new WaitForSeconds(duration);
+
+        showingTemporaryMessage = false;
+        messageRoutine = null;
+    }
+
     public void ResetScore()
     {
         score = 0f;
         displayedScore = 0f;
+
+        shipsDestroyedSinceBoss = 0;
+        currentBossHits = 0;
+        bossActive = false;
+        showingTemporaryMessage = false;
+
+        if (messageRoutine != null)
+        {
+            StopCoroutine(messageRoutine);
+            messageRoutine = null;
+        }
     }
 }

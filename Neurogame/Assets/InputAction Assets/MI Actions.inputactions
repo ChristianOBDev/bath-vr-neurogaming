@@ -1,0 +1,66 @@
+{
+    "version": 1,
+    "name": "MI Actions",
+    "maps": [
+        {
+            "name": "Kicker Controls",
+            "id": "1c5478a8-f8cb-4d4e-b6e0-7b7a5ba5a02e",
+            "actions": [
+                {
+                    "name": "KickerAxis",
+                    "type": "Value",
+                    "id": "e2868fa8-3d09-44f7-ae96-6146eaf1fc5d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PhaseMenu",
+                    "type": "Button",
+                    "id": "63fd9d68-bfbd-43f0-af6e-7c304d8a0d58",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "104d5af2-ca78-4b8a-b0d9-1f2d5d7b4964",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KickerAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b2e5867-ff8d-4442-86ac-cb6bb231bc2c",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PhaseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5e937e8-e605-4642-8362-83b22ea3bc75",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PhaseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

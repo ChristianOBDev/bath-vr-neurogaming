@@ -155,6 +155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NeuroPowerProjectile
   damage: 100
   maxLife: 10
-  hitVfxPrefab: {fileID: 0}
+  hitVfxPrefab: {fileID: 104829970813648393, guid: 957cb473483fa3247b286b14cb146ddc, type: 3}
   hitSound: {fileID: 8300000, guid: 8ec8be16f66acc449a5a7a5a34b722be, type: 3}
   armingDelay: 0.08

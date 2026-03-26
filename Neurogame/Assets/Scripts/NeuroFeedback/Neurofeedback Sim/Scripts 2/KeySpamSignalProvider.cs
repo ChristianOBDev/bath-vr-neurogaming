@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class KeySpamSignalProvider : MonoBehaviour, ISignalProvider, IResettableSignal
 {
-    public KeyCode inputKey = KeyCode.Space;
+    public Key inputKey = Key.Space;
 
     [Header("Signal")]
     [Range(0f, 1f)] public float signal = 0f;
@@ -19,9 +20,9 @@ public class KeySpamSignalProvider : MonoBehaviour, ISignalProvider, IResettable
         ResetSignal();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(inputKey))
+        if (Keyboard.current != null && Keyboard.current[inputKey].wasPressedThisFrame)
             signal += increasePerPress;
 
         signal -= decayPerSecond * Time.deltaTime;
