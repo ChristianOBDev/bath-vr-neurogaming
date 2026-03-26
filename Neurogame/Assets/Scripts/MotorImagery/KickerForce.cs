@@ -192,6 +192,10 @@ public class KickerForce : MonoBehaviour
         if (inputRouter == null) return;
 
         float strength = inputRouter.GetStrength(isLeftKicker, graduatedForce);
+
+        if (kickerDebugLogging)
+            Debug.Log($"UpdateGlowFromInput — strength: {strength}, controlValue: {inputRouter.controlValue}, isLeft: {isLeftKicker}");
+
         float targetIntensity = strength * maxGlowIntensity;
         float currentIntensity = Mathf.Lerp(
             GetCurrentGlowIntensity(),
@@ -250,6 +254,14 @@ public class KickerForce : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Glow update runs always, regardless of ball contact
+        if (PhaseManager.Instance != null &&
+            PhaseManager.Instance.CurrentPhase != GamePhase.PhaseOne)
+        {
+            UpdateGlowFromInput();
+        }
+
+        // Everything below only runs when ball is in contact
         if (currentBalloon == null || inputRouter == null) return;
 
         if (kickerDebugLogging)
@@ -257,6 +269,9 @@ public class KickerForce : MonoBehaviour
             Debug.Log($"PhaseManager null: {PhaseManager.Instance == null}, Phase: {PhaseManager.Instance?.CurrentPhase}");
 
         float playerStrength = inputRouter.GetStrength(isLeftKicker, graduatedForce);
+
+        if (kickerDebugLogging)
+            Debug.Log($"playerStrength: {playerStrength}, popOnNoInput: {popOnNoInput}, state: {currentBallController?.CurrentState}");
 
         if (popOnNoInput && playerStrength <= 0f)
         {

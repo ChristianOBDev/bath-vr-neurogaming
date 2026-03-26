@@ -188,15 +188,19 @@ public class GameManager : Singleton<GameManager>
         ? rightKickerEntry.position
         : leftKickerEntry.position;
 
-    UDPManager.Instance.Send(spawnRight ? 1 : 0); // Send spawn side info to EEG system
+    UDPManager.Instance.Send(spawnRight ? 2 : 1); // EEG class labels: 1 = left, 2 = right
 
-    currentBall.BeginReturnPhase(targetPos);
+        currentBall.BeginReturnPhase(targetPos);
 
-    // Notify the correct kicker to begin glow build
-    KickerForce targetKicker = spawnRight ? rightKickerForce : leftKickerForce;
-    if (targetKicker != null)
-      targetKicker.BeginGlowBuild(currentBall.returnDuration);
-  }
+        // Notify the correct kicker to begin glow build - Phase 1 only
+        if (PhaseManager.Instance != null &&
+            PhaseManager.Instance.CurrentPhase == GamePhase.PhaseOne)
+        {
+            KickerForce targetKicker = spawnRight ? rightKickerForce : leftKickerForce;
+            if (targetKicker != null)
+                targetKicker.BeginGlowBuild(currentBall.returnDuration);
+        }
+    }
 
   public void HandleBallDeath(BallController ball)
   {
@@ -241,7 +245,6 @@ public class GameManager : Singleton<GameManager>
   public void StartGame()
   {
     spawnIndex = 0;
-    PhaseManager.Instance?.SetPhase(GamePhase.PhaseOne);
     ResetAndRespawn();
     gameRunning = true;
   }

@@ -11199,7 +11199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3887382289699004670, guid: 90d96ca02cfeb5b41958458c81d442e4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13581,7 +13581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283607c4957ebc44093f6ab460030c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KickerInputRouter
-  autoFire: 1
+  autoFire: 0
   kickerAxis:
     m_UseReference: 1
     m_Action:
