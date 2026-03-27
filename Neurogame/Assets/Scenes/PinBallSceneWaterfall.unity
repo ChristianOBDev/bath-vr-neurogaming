@@ -262,6 +262,8 @@ MonoBehaviour:
   glowColor: {r: 0, g: 1, b: 1, a: 1}
   maxGlowIntensity: 1
   glowLerpSpeed: 5
+  glowThreshold: 0.75
+  glowLowMax: 0.1
   glowBuildTimeOffset: 1
   glowBuildCurve:
     serializedVersion: 2
@@ -534,6 +536,8 @@ MonoBehaviour:
   glowColor: {r: 1, g: 0, b: 0.98568726, a: 1}
   maxGlowIntensity: 1
   glowLerpSpeed: 5
+  glowThreshold: 0.75
+  glowLowMax: 0.1
   glowBuildTimeOffset: 1
   glowBuildCurve:
     serializedVersion: 2
@@ -7400,7 +7404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &374808847
 Transform:
   m_ObjectHideFlags: 0
@@ -14784,7 +14788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1721292101
 Transform:
   m_ObjectHideFlags: 0
