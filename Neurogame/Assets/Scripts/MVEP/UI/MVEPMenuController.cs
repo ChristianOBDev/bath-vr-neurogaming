@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class MVEPMenuController : MonoBehaviour
 {
@@ -128,13 +127,13 @@ public class MVEPMenuController : MonoBehaviour
 
   private void HandleGameQuit()
   {
-    gameObject.SetActive(false);
-    startButton.SetActive(false);
+    gameObject.SetActive(true);
+    startButton.SetActive(true);
     pauseButton.SetActive(false);
     resumeButton.SetActive(false);
     endButton.SetActive(false);
-    quitButton.SetActive(false);
-    phaseSelectButton.SetActive(false);
+    quitButton.SetActive(true);
+    phaseSelectButton.SetActive(true);
     phaseSelectTitle.SetActive(false);
 
     foreach (var button in phaseButtons)

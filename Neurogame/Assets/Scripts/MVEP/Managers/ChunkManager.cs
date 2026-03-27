@@ -90,6 +90,7 @@ public class ChunkManager : MonoBehaviour
 
   public void StartGame()
   {
+    chunksSpawned = 0;
     SpawnInitialChunks();
     gameOn = true;
   }

@@ -1,73 +1,66 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace NeuroFeedback
 {
     public class NeuroMenuManager : MonoBehaviour
     {
-        [Header("Optional Gameplay Reference")]
+        [Header("Gameplay References")]
         public NeuroChargeController neuroChargeController;
-
-        [Header("Manual Phase Reference")]
         public PhaseManager phaseManager;
+        public PhaseGatedContinuousScore scoreManager;
 
         [Header("UI Object Switching")]
         public GameObject mainMenuObject;
         public GameObject phaseSelectorObject;
 
-        [Header("Options")]
-        public bool pauseAudioListener = true;
-
         private void Awake()
         {
-            Time.timeScale = 1f;
-
-            if (pauseAudioListener)
-                AudioListener.pause = false;
+            if (scoreManager == null)
+                scoreManager = PhaseGatedContinuousScore.Instance;
         }
 
         public void StartGame()
         {
-            Time.timeScale = 1f;
-
-            if (pauseAudioListener)
-                AudioListener.pause = false;
-
             if (neuroChargeController != null)
                 neuroChargeController.BeginSession();
         }
 
         public void PauseGame()
         {
-            Time.timeScale = 0f;
-
-            if (pauseAudioListener)
-                AudioListener.pause = true;
-
             if (neuroChargeController != null)
                 neuroChargeController.PauseSession();
         }
 
         public void ResumeGame()
         {
-            Time.timeScale = 1f;
-
-            if (pauseAudioListener)
-                AudioListener.pause = false;
-
             if (neuroChargeController != null)
                 neuroChargeController.ResumeSession();
         }
 
         public void RestartGame()
         {
-            Time.timeScale = 1f;
+            // Stop current local session
+            if (neuroChargeController != null)
+            {
+                neuroChargeController.StopSession();
+                neuroChargeController.ResetCharge();
+                neuroChargeController.ManualRandomizeThreshold();
+            }
 
-            if (pauseAudioListener)
-                AudioListener.pause = false;
+            // Reset score only for this minigame
+            if (scoreManager == null)
+                scoreManager = PhaseGatedContinuousScore.Instance;
 
-            Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.buildIndex);
+            if (scoreManager != null)
+                scoreManager.ResetScore();
+
+            // Reset phase back to the first phase
+            if (phaseManager != null)
+                phaseManager.SetPhase1();
+
+            // Start again from the beginning
+            if (neuroChargeController != null)
+                neuroChargeController.BeginSession();
         }
 
         public void OpenPhaseSelector()
