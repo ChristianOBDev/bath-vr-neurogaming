@@ -108,7 +108,7 @@ Material:
     - _DstBlendAlpha: 0
     - _EdgePower: 0
     - _Enable_Animation: 1
-    - _Enable_Caustics: 1
+    - _Enable_Caustics: 0
     - _Enable_Distortion: 0
     - _Enable_Fresnel: 1
     - _Enable_Fresnel_Fade: 0
