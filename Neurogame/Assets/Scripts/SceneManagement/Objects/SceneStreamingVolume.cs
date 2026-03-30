@@ -4,9 +4,6 @@ public class SceneStreamingVolume : MonoBehaviour
 {
   [SerializeField] private SceneStreamingConfig config;
 
-  [SerializeField] private int loadSignal;
-  [SerializeField] private int unloadSignal;
-
   private void OnTriggerEnter(Collider other)
   {
     if (!other.CompareTag("Player"))
@@ -17,7 +14,8 @@ public class SceneStreamingVolume : MonoBehaviour
     if (config.scenesToUnload.Count > 0)
       SceneStreamingManager.Instance.RequestUnload(config);
 
-    UDPManager.Instance.Send(loadSignal);
+    UDPManager.Instance.Send(config.exitPassiveSignal);
+    UDPManager.Instance.Send(config.loadSignal);
   }
 
   private void OnTriggerExit(Collider other)
@@ -28,6 +26,7 @@ public class SceneStreamingVolume : MonoBehaviour
     if (config.scenesToLoad.Count > 0)
       SceneStreamingManager.Instance.RequestUnloadOnExit(config);
 
-    UDPManager.Instance.Send(unloadSignal);
+    UDPManager.Instance.Send(config.unloadSignal);
+    UDPManager.Instance.Send(config.enterPassiveSignal);
   }
 }
