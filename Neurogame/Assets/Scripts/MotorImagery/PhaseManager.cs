@@ -76,31 +76,40 @@ namespace MotorImagery
       SetPhase(currentPhase - 1);
     }
 
-    void ApplyPhase(GamePhase phase)
-    {
-      switch (phase)
-      {
-        case GamePhase.PhaseOne:
-          inputRouter.autoFire = true;
-          SetKickerPhase(leftKicker, graduated: false, minStrength: 0f, popOnNoInput: false);
-          SetKickerPhase(rightKicker, graduated: false, minStrength: 0f, popOnNoInput: false);
-          break;
+        void ApplyPhase(GamePhase phase)
+        {
+            //Debug.Log($"ApplyPhase: {phase}");
 
-        case GamePhase.PhaseTwo:
-          inputRouter.autoFire = false;
-          SetKickerPhase(leftKicker, graduated: true, minStrength: phaseTwoMinStrength, popOnNoInput: false);
-          SetKickerPhase(rightKicker, graduated: true, minStrength: phaseTwoMinStrength, popOnNoInput: false);
-          break;
+            switch (phase)
+            {
+                case GamePhase.PhaseOne:
+                    inputRouter.autoFire = true;
+                    SetKickerPhase(leftKicker, graduated: false, minStrength: 0f, popOnNoInput: false);
+                    SetKickerPhase(rightKicker, graduated: false, minStrength: 0f, popOnNoInput: false);
+                    break;
 
-        case GamePhase.PhaseThree:
-          inputRouter.autoFire = false;
-          SetKickerPhase(leftKicker, graduated: true, minStrength: 0f, popOnNoInput: true);
-          SetKickerPhase(rightKicker, graduated: true, minStrength: 0f, popOnNoInput: true);
-          break;
-      }
-    }
+                case GamePhase.PhaseTwo:
+                    inputRouter.autoFire = false;
+                    SetKickerPhase(leftKicker, graduated: true, minStrength: phaseTwoMinStrength, popOnNoInput: false);
+                    SetKickerPhase(rightKicker, graduated: true, minStrength: phaseTwoMinStrength, popOnNoInput: false);
+                    break;
 
-    void SetKickerPhase(KickerForce kicker, bool graduated, float minStrength, bool popOnNoInput)
+                case GamePhase.PhaseThree:
+                    inputRouter.autoFire = false;
+                    SetKickerPhase(leftKicker, graduated: true, minStrength: 0f, popOnNoInput: true);
+                    SetKickerPhase(rightKicker, graduated: true, minStrength: 0f, popOnNoInput: true);
+                    break;
+            }
+
+/*            if (leftKicker != null)
+                Debug.Log($"Left kicker — graduated: {leftKicker.graduatedForce}, minStrength: {leftKicker.minStrength}, popOnNoInput: {leftKicker.popOnNoInput}");
+            if (rightKicker != null)
+                Debug.Log($"Right kicker — graduated: {rightKicker.graduatedForce}, minStrength: {rightKicker.minStrength}, popOnNoInput: {rightKicker.popOnNoInput}");
+            if (inputRouter != null)
+                Debug.Log($"InputRouter — autoFire: {inputRouter.autoFire}");*/
+        }
+
+        void SetKickerPhase(KickerForce kicker, bool graduated, float minStrength, bool popOnNoInput)
     {
       if (kicker == null) return;
       kicker.graduatedForce = graduated;

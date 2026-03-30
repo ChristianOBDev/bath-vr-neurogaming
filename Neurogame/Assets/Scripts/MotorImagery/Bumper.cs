@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using MotorImagery;
 
 [RequireComponent(typeof(Collider))]
 public class Bumper : MonoBehaviour
@@ -36,16 +37,96 @@ public class Bumper : MonoBehaviour
     private bool activated;
     private bool dying;
     private BumperFlash flash;
+    private BumperTween bumperTween;
+    private Rigidbody rb;
+    private Collider col;
+    private AudioSource audioSource;
+    private Coroutine driftCoroutine;
+    private Coroutine flashBurstCoroutine;
+    private Coroutine killzoneCoroutine;
+    private Coroutine resetCoroutine;
 
     void Awake()
     {
         flash = GetComponent<BumperFlash>();
+        bumperTween = GetComponent<BumperTween>();
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    void Start()
+    void OnEnable()
     {
+        // Defer reset by one frame to avoid race condition with SetActive(true)
+        if (resetCoroutine != null)
+            StopCoroutine(resetCoroutine);
+        resetCoroutine = StartCoroutine(DeferredReset());
+    }
+
+    private IEnumerator DeferredReset()
+    {
+        // Wait one frame to let OnEnable fully complete
+        yield return null;
+        ResetBumper();
+        resetCoroutine = null;
+    }
+
+    /// <summary>
+    /// Reset bumper to initial state for reuse from pool.
+    /// </summary>
+    public void ResetBumper()
+    {
+        activated = false;
+        dying = false;
+
+        // Stop all running coroutines (but not the reset coroutine itself)
+        if (driftCoroutine != null)
+            StopCoroutine(driftCoroutine);
+        if (flashBurstCoroutine != null)
+            StopCoroutine(flashBurstCoroutine);
+        if (killzoneCoroutine != null)
+            StopCoroutine(killzoneCoroutine);
+
+        driftCoroutine = null;
+        flashBurstCoroutine = null;
+        killzoneCoroutine = null;
+
+        // Reset physics - keep kinematic, no velocity clearing needed
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+
+        // Reset collider
+        if (col != null)
+            col.enabled = true;
+
+        // Reset scale and visuals BEFORE tween
+        if (bumperTween != null)
+        {
+            // Force reset any corrupted tween state
+            bumperTween.ResetTweenState();
+            // Play spawn tween (which handles scale animation from 0 to target)
+            bumperTween.PlaySpawnTween();
+        }
+        else
+        {
+            // Fallback: manually reset scale to full size
+            transform.localScale = Vector3.one;
+            
+            if (flash != null)
+            {
+                Renderer rend = GetComponentInChildren<Renderer>();
+                if (rend != null)
+                {
+                    rend.material.DisableKeyword("_EMISSION");
+                }
+            }
+        }
+
+        // Initialize new drift for this activation
         driftSpeed = Random.Range(driftSpeedMin, driftSpeedMax);
-        StartCoroutine(BeginDrift());
+        driftCoroutine = StartCoroutine(BeginDrift());
     }
 
     IEnumerator BeginDrift()
@@ -63,8 +144,8 @@ public class Bumper : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         if (activated || dying) return;
-        Rigidbody rb = collision.rigidbody;
-        if (rb == null) return;
+        Rigidbody ballRb = collision.rigidbody;
+        if (ballRb == null) return;
 
         BallController ball = collision.gameObject.GetComponent<BallController>();
         if (ball == null) return;
@@ -72,12 +153,12 @@ public class Bumper : MonoBehaviour
 
         activated = true;
 
-        if (hitSound != null)
-            GetComponent<AudioSource>().PlayOneShot(hitSound);
+        if (hitSound != null && audioSource != null)
+            audioSource.PlayOneShot(hitSound);
 
-        Vector3 radial = (rb.position - transform.position).normalized;
+        Vector3 radial = (ballRb.position - transform.position).normalized;
         Vector3 force = radial * repulsionForce + Vector3.up * upwardForce;
-        rb.AddForce(force, ForceMode.Impulse);
+        ballRb.AddForce(force, ForceMode.Impulse);
 
         int pointsEarned = 0;
         int combo = 1;
@@ -88,20 +169,20 @@ public class Bumper : MonoBehaviour
         SpawnPopup(pointsEarned, combo);
 
         if (burstOnContact)
-            StartCoroutine(FlashThenBurst());
+            flashBurstCoroutine = StartCoroutine(FlashThenBurst());
         else
         {
-            if (flash != null) StartCoroutine(flash.DoFlash());
+            if (flash != null)
+                flashBurstCoroutine = StartCoroutine(flash.DoFlash());
             activated = false;
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Debug.Log($"Bumper trigger entered by: {other.gameObject.name} tag: {other.tag}"); // Debug log
         if (dying) return;
         if (other.CompareTag("Killzone"))
-            StartCoroutine(KillzoneBurst());
+            killzoneCoroutine = StartCoroutine(KillzoneBurst());
     }
 
     IEnumerator KillzoneBurst()
@@ -116,17 +197,13 @@ public class Bumper : MonoBehaviour
             if (burstEffect != null)
                 Instantiate(burstEffect, transform.position, Quaternion.identity);
 
-            if (hitSound != null)
-                GetComponent<AudioSource>().PlayOneShot(hitSound);
+            if (hitSound != null && audioSource != null)
+                audioSource.PlayOneShot(hitSound);
 
-            // Wait long enough for sound to audibly play before destroying
             yield return new WaitForSeconds(0.3f);
         }
 
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnBumperDestroyed(this);
-
-        Destroy(gameObject);
+        ReturnToPool();
     }
 
     void SpawnPopup(int points, int combo)
@@ -162,10 +239,15 @@ public class Bumper : MonoBehaviour
         if (burstEffect != null)
             Instantiate(burstEffect, transform.position, Quaternion.identity);
 
-        if (GameManager.Instance.verboseLogging)
-            Debug.Log($"Bumper destroyed: {gameObject.name}");
-        GameManager.Instance.OnBumperDestroyed(this);
+        if (GameManager.Instance != null && GameManager.Instance.verboseLogging)
+            Debug.Log("Bumper destroyed: " + gameObject.name);
 
-        Destroy(gameObject);
+        ReturnToPool();
+    }
+
+    private void ReturnToPool()
+    {
+        if (BumperPool.Instance != null)
+            BumperPool.Instance.ReturnBumper(this);
     }
 }
