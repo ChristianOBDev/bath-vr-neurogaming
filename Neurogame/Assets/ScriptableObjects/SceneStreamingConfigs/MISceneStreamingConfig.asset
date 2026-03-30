@@ -29,3 +29,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  loadSignal: 5
+  unloadSignal: 9
+  exitPassiveSignal: 39
+  enterPassiveSignal: 30
