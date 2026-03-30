@@ -34,8 +34,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Birds_01
-  m_Shader: {fileID: -6465566751694194690, guid: 0736e099ec10c9e46b9551b2337d0cc7,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0736e099ec10c9e46b9551b2337d0cc7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -53,6 +52,7 @@ Material:
   disabledShaderPasses:
   - GRABPASS
   - SHADOWCASTER
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -138,6 +138,7 @@ Material:
     - _UVSec: 0
     - _Use_View_Edge_Compensation: 0
     - _ViewEdgePower: 1
+    - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
@@ -150,3 +151,4 @@ Material:
     - _EmissionColor: {r: 0.4716981, g: 0.43883818, b: 0.40272337, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

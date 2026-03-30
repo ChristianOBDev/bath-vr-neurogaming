@@ -139,15 +139,15 @@ Material:
     - _DstBlendAlpha: 0
     - _EmissiveAmount: 0
     - _Emissive_Amount: 0
-    - _Enable_Breeze: 1
+    - _Enable_Breeze: 0
     - _Enable_Emission: 0
     - _Enable_Frosting: 0
     - _Enable_Leaf_Normal: 0
-    - _Enable_Light_Wind: 1
+    - _Enable_Light_Wind: 0
     - _Enable_Pulse: 0
-    - _Enable_Strong_Wind: 1
+    - _Enable_Strong_Wind: 0
     - _Enable_Trunk_Normal: 0
-    - _Enable_Wind_Twist: 1
+    - _Enable_Wind_Twist: 0
     - _EnvironmentReflections: 1
     - _FrostingFalloff: 1
     - _FrostingHeight: 1
@@ -214,11 +214,12 @@ Material:
     - _UVSec: 0
     - _Use_Color_Noise: 1
     - _Use_Global_Weather_Controller: 0
-    - _Use_Vertex_Color_Wind: 1
+    - _Use_Vertex_Color_Wind: 0
     - _WindBaseline: 0
     - _WindDirection: 0
     - _Wind_Twist_Strength: 0.15
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _Y_multiplier: 0.2
     - _ZTest: 4
     - _ZWrite: 1

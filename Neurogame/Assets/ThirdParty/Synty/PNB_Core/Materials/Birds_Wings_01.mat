@@ -43,7 +43,7 @@ Material:
   - _FLIPBOOKBLENDING_OFF
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2450
   stringTagMap:
     RenderType: TransparentCutout
@@ -137,6 +137,7 @@ Material:
     - _UVSec: 0
     - _Use_View_Edge_Compensation: 0
     - _ViewEdgePower: 1
+    - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0

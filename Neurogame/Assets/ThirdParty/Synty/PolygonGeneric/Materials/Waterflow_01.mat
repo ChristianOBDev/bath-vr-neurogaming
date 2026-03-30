@@ -173,6 +173,7 @@ Material:
     - _Triplanar_Normal_Top_To_Side_Difference: 0.2
     - _Triplanar_Top_To_Side_Difference: 0.2
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
