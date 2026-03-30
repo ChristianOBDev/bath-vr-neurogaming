@@ -25,7 +25,6 @@ public class GameManager : Singleton<GameManager>
   public float comboWindow = 1f;
   public int maxComboMultiplier = 5;
 
-
   [Header("Debug")]
   public bool verboseLogging = true;
   public int currentScore;
@@ -65,7 +64,7 @@ public class GameManager : Singleton<GameManager>
   private int pausedSpawnIndex = 0;
   private bool pausedDuringReturn = false;
 
-    void Start()
+  void Start()
   {
     // bool spawnRight = GetNextSpawnSide();
     // SpawnBall(spawnRight);
@@ -106,31 +105,84 @@ public class GameManager : Singleton<GameManager>
 
     if (bumperSpawners.Count == 0)
     {
-      if (verboseLogging)
-      {
-        Debug.Log($"OnBumperDestroyed called. List count: {bumperSpawners.Count}");
-        for (int i = 0; i < bumperSpawners.Count; i++)
-          Debug.Log($"Spawner[{i}]: {(bumperSpawners[i] == null ? "NULL" : bumperSpawners[i].name)}");
-      }
+        if (verboseLogging)
+            Debug.Log("OnBumperDestroyed: No spawners available.");
+        return;
     }
 
     if (chooseRandomSpawner)
     {
-      Spawner spawner = bumperSpawners[Random.Range(0, bumperSpawners.Count)];
-      spawner.RequestSpawn();
+        // Original: pure random
+        // Spawner spawner = bumperSpawners[Random.Range(0, bumperSpawners.Count)];
+        // spawner.RequestSpawn();
+
+        // Use density-aware selection instead of pure random
+        Spawner spawner = SelectSpawnerByDensity();
+        if (spawner != null)
+            spawner.RequestSpawn();
     }
     else
     {
-      foreach (var spawner in bumperSpawners)
-        spawner.RequestSpawn();
+        foreach (var spawner in bumperSpawners)
+            spawner.RequestSpawn();
     }
+
     if (verboseLogging)
     {
-      Debug.Log($"OnBumperDestroyed called. List count: {bumperSpawners.Count}");
-      for (int i = 0; i < bumperSpawners.Count; i++)
-        Debug.Log($"Spawner[{i}]: {(bumperSpawners[i] == null ? "NULL" : bumperSpawners[i].name)}");
+        Debug.Log($"OnBumperDestroyed: Spawners count: {bumperSpawners.Count}");
+        if (BumperPool.Instance != null)
+        {
+            Debug.Log($"BumperPool - Active: {BumperPool.Instance.GetActiveCount()}, " +
+                      $"Available: {BumperPool.Instance.GetAvailableCount()}");
+        }
     }
   }
+
+  /// <summary>
+  /// Optional: Select spawner with lowest bumper density.
+  /// Useful with multiple spawn cubes to distribute spawns evenly.
+  /// </summary>
+  private Spawner SelectSpawnerByDensity()
+  {
+      if (bumperSpawners.Count == 0) return null;
+      if (bumperSpawners.Count == 1) return bumperSpawners[0];
+
+      Spawner lowestDensitySpawner = bumperSpawners[0];
+      int lowestCount = CountBumpersNearSpawner(lowestDensitySpawner);
+
+      for (int i = 1; i < bumperSpawners.Count; i++)
+      {
+          int count = CountBumpersNearSpawner(bumperSpawners[i]);
+          if (count < lowestCount)
+          {
+              lowestCount = count;
+              lowestDensitySpawner = bumperSpawners[i];
+          }
+      }
+
+      return lowestDensitySpawner;
+  }
+
+  private int CountBumpersNearSpawner(Spawner spawner)
+  {
+      if (spawner == null) return int.MaxValue;
+      
+      BoxCollider box = spawner.GetComponent<BoxCollider>();
+      if (box == null) return 0;
+
+      // Count bumpers within this spawner's volume
+      Bumper[] allBumpers = FindObjectsByType<Bumper>(FindObjectsSortMode.None);
+      int count = 0;
+
+      foreach (var bumper in allBumpers)
+      {
+          if (box.bounds.Contains(bumper.transform.position))
+              count++;
+      }
+
+      return count;
+  }
+
   void CheckBumperPopulation()
   {
     int activeBumpers = FindObjectsByType<Bumper>(FindObjectsSortMode.None).Length;
@@ -154,6 +206,7 @@ public class GameManager : Singleton<GameManager>
       }
     }
   }
+
   public bool GetNextSpawnSide()
   {
     if (spawnDirectives == null || spawnDirectives.Length == 0)
@@ -188,14 +241,18 @@ public class GameManager : Singleton<GameManager>
         ? rightKickerEntry.position
         : leftKickerEntry.position;
 
-    UDPManager.Instance.Send(spawnRight ? 1 : 0); // Send spawn side info to EEG system
+    UDPManager.Instance.Send(spawnRight ? 2 : 1); // EEG class labels: 1 = left, 2 = right
 
     currentBall.BeginReturnPhase(targetPos);
 
-    // Notify the correct kicker to begin glow build
-    KickerForce targetKicker = spawnRight ? rightKickerForce : leftKickerForce;
-    if (targetKicker != null)
-      targetKicker.BeginGlowBuild(currentBall.returnDuration);
+    // Notify the correct kicker to begin glow build - Phase 1 only
+    if (PhaseManager.Instance != null &&
+        PhaseManager.Instance.CurrentPhase == GamePhase.PhaseOne)
+    {
+        KickerForce targetKicker = spawnRight ? rightKickerForce : leftKickerForce;
+        if (targetKicker != null)
+            targetKicker.BeginGlowBuild(currentBall.returnDuration);
+    }
   }
 
   public void HandleBallDeath(BallController ball)
@@ -241,7 +298,6 @@ public class GameManager : Singleton<GameManager>
   public void StartGame()
   {
     spawnIndex = 0;
-    PhaseManager.Instance?.SetPhase(GamePhase.PhaseOne);
     ResetAndRespawn();
     gameRunning = true;
   }

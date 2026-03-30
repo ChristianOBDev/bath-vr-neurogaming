@@ -39,6 +39,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
+  - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _ALPHABLEND_ON
@@ -51,6 +52,7 @@ Material:
     RenderType: Transparent
   disabledShaderPasses:
   - MOTIONVECTORS
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -116,7 +118,7 @@ Material:
     - _Base_Tiling: 0.5
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _CastShadows: 1
+    - _CastShadows: 0
     - _Cull: 2
     - _Deep_Power: 8.18
     - _Depth_Power_Multiplier: 1.99
@@ -137,7 +139,7 @@ Material:
     - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _Refraction_Power: 1.25
     - _Refraction_Tiling: 5
     - _Shallow_Power: 1.29

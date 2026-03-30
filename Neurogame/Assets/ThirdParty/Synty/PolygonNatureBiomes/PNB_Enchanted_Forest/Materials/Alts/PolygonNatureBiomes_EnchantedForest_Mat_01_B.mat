@@ -26,6 +26,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHATEST_ON
+  - _RECEIVE_SHADOWS_OFF
   m_InvalidKeywords:
   - _EMISSION
   - _OVERLAY_UV_CHANNEL_UV0
@@ -37,6 +38,7 @@ Material:
     RenderType: TransparentCutout
   disabledShaderPasses:
   - MOTIONVECTORS
+  - SHADOWCASTER
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -87,7 +89,7 @@ Material:
     - _Bottom_Metallic: 0
     - _Bottom_Smoothness: 0
     - _BumpScale: 1
-    - _CastShadows: 1
+    - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -98,7 +100,7 @@ Material:
     - _DstBlendAlpha: 0
     - _Enable_Ambient_Occlusion: 0
     - _Enable_Base_Texture: 1
-    - _Enable_Emission: 1
+    - _Enable_Emission: 0
     - _Enable_Emission_Texture: 1
     - _Enable_Normal_Texture: 0
     - _Enable_Overlay_Texture: 0
@@ -125,7 +127,7 @@ Material:
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ReceiveShadows: 1
+    - _ReceiveShadows: 0
     - _Sea_Level: 0
     - _Side_Metallic: 0
     - _Side_Smoothness: 0
@@ -169,6 +171,7 @@ Material:
     - _Wave_Scale: 1
     - _Wave_Speed: 1
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
