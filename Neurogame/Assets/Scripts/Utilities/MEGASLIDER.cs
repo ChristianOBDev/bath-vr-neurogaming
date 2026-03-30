@@ -21,7 +21,7 @@ public class MegaSlider : MonoBehaviour
 
     private float _lastApplied = -1f;
 
-    private const float RnboMinLinear = 0.5f;
+    private const float RnboMinLinear = 0.1f;
     private const float RnboMaxLinear = 1f;
     private const float SilenceDb = -80f;
 
@@ -54,7 +54,12 @@ public class MegaSlider : MonoBehaviour
         if (!mixer.SetFloat(focusedVolParam, focusedDb))
             Debug.LogWarning($"MegaSlider: '{focusedVolParam}' not exposed on mixer.");
 
-        float rnboLinear = Mathf.Lerp(RnboMaxLinear, RnboMinLinear, t);
+        float rnboLinear;
+        if (t < 0.6f)
+            rnboLinear = RnboMaxLinear; // full volume until Focused kicks in
+        else
+            rnboLinear = Mathf.Lerp(RnboMaxLinear, RnboMinLinear, (t - 0.6f) / 0.4f);
+
         float rnboDb = rnboLinear > 0.0001f ? 20f * Mathf.Log10(rnboLinear) : SilenceDb;
         if (!mixer.SetFloat(rnboVolParam, rnboDb))
             Debug.LogWarning($"MegaSlider: '{rnboVolParam}' not exposed on mixer.");
