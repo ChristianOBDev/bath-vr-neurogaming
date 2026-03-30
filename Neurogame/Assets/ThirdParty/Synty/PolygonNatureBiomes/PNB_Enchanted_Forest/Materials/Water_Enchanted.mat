@@ -14,7 +14,9 @@ Material:
   m_ValidKeywords:
   - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _ALPHABLEND_ON
+  - _ZWRITE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -103,15 +105,16 @@ Material:
     - _Distortion_Speed: 1
     - _Distortion_Strength: 0.38
     - _DstBlend: 10
+    - _DstBlendAlpha: 0
     - _EdgePower: 0
     - _Enable_Animation: 1
-    - _Enable_Caustics: 1
+    - _Enable_Caustics: 0
     - _Enable_Distortion: 0
     - _Enable_Fresnel: 1
     - _Enable_Fresnel_Fade: 0
     - _Enable_Fresnel_glancing_angle_fix: 1
     - _Enable_Global_Foam: 0
-    - _Enable_Normals: 1
+    - _Enable_Normals: 0
     - _Enable_Ocean_Wave: 0
     - _Enable_Shore_Animation: 1
     - _Enable_Shore_Foam: 1
@@ -181,6 +184,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
     - _UVSec: 0
     - _UseVoronoiNoiseForCaustics: 0
@@ -196,6 +200,7 @@ Material:
     - _Water_Normal_Pan_Speed: 1
     - _Water_Normal_Tiling: 0.04
     - _WorkflowMode: 1
+    - _XRMotionVectorsPass: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
