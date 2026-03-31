@@ -13,6 +13,13 @@ public class XRcameraFollow : MonoBehaviour
   private float[] _cutoffRadii;
   private float[] _fadeRadii;
   private bool _insideFence;
+
+  public void SetxrOriginAndCamera(GameObject origin, Transform camera)
+  {
+    xrOrigin = origin;
+    mainCamera = camera;
+  }
+
   void Start()
   {
     _startPos = transform.position;
@@ -49,7 +56,7 @@ public class XRcameraFollow : MonoBehaviour
     for (int i = 0; i < fenceZones.Length; i++)
     {
       if (fenceZones[i] == null) continue;
-      float dist = Vector3.Distance(playerPos, fenceZones[i].position);
+      float dist = Vector3.Distance(xrOrigin.transform.position, fenceZones[i].position);
       if (showDebug)
         Debug.Log($"Fence {fenceZones[i].name}: dist={dist}, cutoff={_cutoffRadii[i]}");
       if (dist <= _cutoffRadii[i])
