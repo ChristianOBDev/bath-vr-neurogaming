@@ -33,7 +33,7 @@ public class BCIStateController : MonoBehaviour
 
   [Header("State Tuning")]
   [SerializeField] private float stateSmoothing = 2f;
-  [SerializeField][Range(-0.1f, 1f)] private float manualOverride = -0.1f;
+  [SerializeField][Range(-0.1f, 1f)] public float manualOverride = -0.1f;
 
   [Header("Calibration � Log Power Ranges")]
   [SerializeField] private Vector2 frontalAlphaRange = new Vector2(-5.0f, -6.3f);
@@ -84,39 +84,71 @@ public class BCIStateController : MonoBehaviour
 
   private void OnEnable()
   {
-    // Subscribe to input actions
-    selectRelaxedCSV.action.performed += OnSelectRelaxedCSV;
-    selectFocusedCSV.action.performed += OnSelectFocusedCSV;
-    selectMixedCSV.action.performed += OnSelectMixedCSV;
-    forceRelaxed.action.performed += OnForceRelaxed;
-    forceFocused.action.performed += OnForceFocused;
-    backToCSV.action.performed += OnBackToCSV;
-
-    selectRelaxedCSV.action.Enable();
-    selectFocusedCSV.action.Enable();
-    selectMixedCSV.action.Enable();
-    forceRelaxed.action.Enable();
-    forceFocused.action.Enable();
-    backToCSV.action.Enable();
-  }
+        if (selectRelaxedCSV != null)
+        {
+            selectRelaxedCSV.action.performed += OnSelectRelaxedCSV;
+            selectRelaxedCSV.action.Enable();
+        }
+        if (selectFocusedCSV != null)
+        {
+            selectFocusedCSV.action.performed += OnSelectFocusedCSV;
+            selectFocusedCSV.action.Enable();
+        }
+        if (selectMixedCSV != null)
+        {
+            selectMixedCSV.action.performed += OnSelectMixedCSV;
+            selectMixedCSV.action.Enable();
+        }
+        if (forceRelaxed != null)
+        {
+            forceRelaxed.action.performed += OnForceRelaxed;
+            forceRelaxed.action.Enable();
+        }
+        if (forceFocused != null)
+        {
+            forceFocused.action.performed += OnForceFocused;
+            forceFocused.action.Enable();
+        }
+        if (backToCSV != null)
+        {
+            backToCSV.action.performed += OnBackToCSV;
+            backToCSV.action.Enable();
+        }
+    }
 
   private void OnDisable()
   {
-    // Unsubscribe from input actions
-    selectRelaxedCSV.action.performed -= OnSelectRelaxedCSV;
-    selectFocusedCSV.action.performed -= OnSelectFocusedCSV;
-    selectMixedCSV.action.performed -= OnSelectMixedCSV;
-    forceRelaxed.action.performed -= OnForceRelaxed;
-    forceFocused.action.performed -= OnForceFocused;
-    backToCSV.action.performed -= OnBackToCSV;
-
-    selectRelaxedCSV.action.Disable();
-    selectFocusedCSV.action.Disable();
-    selectMixedCSV.action.Disable();
-    forceRelaxed.action.Disable();
-    forceFocused.action.Disable();
-    backToCSV.action.Disable();
-  }
+        if (selectRelaxedCSV != null)
+        {
+            selectRelaxedCSV.action.performed -= OnSelectRelaxedCSV;
+            selectRelaxedCSV.action.Disable();
+        }
+        if (selectFocusedCSV != null)
+        {
+            selectFocusedCSV.action.performed -= OnSelectFocusedCSV;
+            selectFocusedCSV.action.Disable();
+        }
+        if (selectMixedCSV != null)
+        {
+            selectMixedCSV.action.performed -= OnSelectMixedCSV;
+            selectMixedCSV.action.Disable();
+        }
+        if (forceRelaxed != null)
+        {
+            forceRelaxed.action.performed -= OnForceRelaxed;
+            forceRelaxed.action.Disable();
+        }
+        if (forceFocused != null)
+        {
+            forceFocused.action.performed -= OnForceFocused;
+            forceFocused.action.Disable();
+        }
+        if (backToCSV != null)
+        {
+            backToCSV.action.performed -= OnBackToCSV;
+            backToCSV.action.Disable();
+        }
+    }
 
   private void Start()
   {

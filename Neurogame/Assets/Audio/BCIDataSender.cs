@@ -4,15 +4,15 @@ using UnityEngine.Audio;
 
 public class BCIDataSender : MonoBehaviour
 {
-    [Tooltip("Drag your Audio Mixer asset here (dearVRDemoMixer)")]
+    [Tooltip("Drag your Audio Mixer asset here (Music+SFX)")]
     public AudioMixer mixer;
 
     [Header("Mixer Group & Effect Names")]
-    [Tooltip("Name of the subgroup containing RNBO_MusicEngine (e.g. RNBOrelaxed)")]
-    public string groupName = "RNBOrelaxed";
+    [Tooltip("Name of the subgroup containing RNBO MusicEngine (e.g. RNBOpatch)")]
+    public string groupName = "RNBOpatch";
 
     [Tooltip("Name of the RNBO effect in the group")]
-    public string effectName = "RNBO_MusicEngine";
+    public string effectName = "QuestMusicEngine";
 
     [Header("Exposed Parameter Names (must match RNBO exposures)")]
     public string frontalAParam = "FrontalA";
@@ -108,10 +108,10 @@ public class BCIDataSender : MonoBehaviour
     {
         if (mixer == null) return;
 
-        mixer.SetFloat("MyExposedParam", values[0]);       // Column 1
-        mixer.SetFloat("MyExposedParam 1", values[1]);       // Column 2
-        mixer.SetFloat("MyExposedParam 2", values[2]);      // Column 3
-        mixer.SetFloat("MyExposedParam 3", values[3]);    // Column 4
+        mixer.SetFloat("frontalAParam", values[0]);       // Column 1
+        mixer.SetFloat("frontalBParam", values[1]);       // Column 2
+        mixer.SetFloat("parietalAParam", values[2]);      // Column 3
+        mixer.SetFloat("frontalMidTParam", values[3]);    // Column 4
 
         // Debug to check success
         //bool success = mixer.SetFloat("MyExposedParam", values[0]);
