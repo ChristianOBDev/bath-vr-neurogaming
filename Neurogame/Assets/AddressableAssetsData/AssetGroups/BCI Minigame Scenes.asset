@@ -15,13 +15,18 @@ MonoBehaviour:
   m_GroupName: BCI Minigame Scenes
   m_GUID: ac932b26379df4d43bcf3107cfb36af9
   m_SerializeEntries:
+  - m_GUID: 34e90134b66ea594fb438f2813f42941
+    m_Address: Assets/Scenes/PinBallSceneWaterfall.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d50cda24a7fb8e9439c1e1eb70d6b0ce
     m_Address: Assets/Scenes/MVEP.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f2cdc3d2dbd31c147a4636cb2f4797cd
-    m_Address: Assets/Scenes/NFLevelBuilding.unity
+  - m_GUID: ff07e6ec1f5c8bf43b0b1612958a034a
+    m_Address: Assets/Scenes/NFVersion2.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
