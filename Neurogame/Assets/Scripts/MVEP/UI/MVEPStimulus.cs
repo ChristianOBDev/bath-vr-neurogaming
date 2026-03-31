@@ -25,6 +25,7 @@ public class MVEPStimulus : MonoBehaviour
 
   // Configuration - Identity
   [SerializeField] private int stimulusIndex;
+  [SerializeField] private int udpSignal;
 
   // Events
   /// <summary>
@@ -39,6 +40,8 @@ public class MVEPStimulus : MonoBehaviour
   private void Start()
   {
     pulseDuration = MVEPGameManager.Instance.timingConfig.PulseDuration;
+
+    if (udpSignal == 0) udpSignal = stimulusIndex + MVEPGameManager.Instance.inputOffset;
   }
 
   /// <summary>
@@ -56,7 +59,7 @@ public class MVEPStimulus : MonoBehaviour
       .setOnComplete(OnPulseComplete);
 
     //Send UDP signal
-    UDPManager.Instance.Send(stimulusIndex);
+    UDPManager.Instance.Send(udpSignal);
   }
 
   /// <summary>

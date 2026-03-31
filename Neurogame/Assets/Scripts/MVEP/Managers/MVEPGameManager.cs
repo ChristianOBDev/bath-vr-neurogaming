@@ -60,6 +60,10 @@ public class MVEPGameManager : Singleton<MVEPGameManager>
 
   #endregion
 
+  #region Other settings
+  public int inputOffset = 1; // This might have to be 11 because of trigger schema.
+  #endregion
+
   #region Unity callbacks
 
   private void OnEnable()

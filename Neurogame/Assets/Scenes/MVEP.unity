@@ -432,6 +432,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: aef6b833bbea9ea4585e4a15256a0ae6, type: 3}
+    - target: {fileID: 362463271222957092, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
+      propertyPath: udpSignal
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 418367317599924696, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
       propertyPath: m_Pivot.y
       value: 0
@@ -707,6 +711,22 @@ PrefabInstance:
     - target: {fileID: 5953323096150014591, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640812769758341221, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
+      propertyPath: udpSignal
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6834096695902375954, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
+      propertyPath: udpSignal
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857039511104291279, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
+      propertyPath: udpSignal
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6899223955192949588, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
+      propertyPath: udpSignal
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6963047868571372748, guid: 7497cd2146d78f44dac68b00285da3a0, type: 3}
       propertyPath: m_Sprite
@@ -22505,7 +22525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &788838263
 Transform:
   m_ObjectHideFlags: 0
@@ -54598,7 +54618,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2121440431
 Transform:
   m_ObjectHideFlags: 0
