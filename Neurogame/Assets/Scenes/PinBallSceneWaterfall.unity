@@ -14047,6 +14047,7 @@ GameObject:
   - component: {fileID: 2051962679}
   - component: {fileID: 2051962681}
   - component: {fileID: 2051962682}
+  - component: {fileID: 2051962683}
   m_Layer: 0
   m_Name: PhaseMenuCanvas
   m_TagString: Untagged
@@ -14205,6 +14206,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 1
   m_VerticalFit: 1
+--- !u!114 &2051962683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051962674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b97c5c8df54b94db8850818ee8a3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSpaceCanvas
 --- !u!4 &2056559943 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 51394742328077807, guid: 0e4cc025b03add841be61426bd02caf4, type: 3}

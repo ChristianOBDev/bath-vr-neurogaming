@@ -2746,6 +2746,8 @@ GameObject:
   - component: {fileID: 299054225}
   - component: {fileID: 299054224}
   - component: {fileID: 299054223}
+  - component: {fileID: 299054228}
+  - component: {fileID: 299054227}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2836,6 +2838,37 @@ RectTransform:
   m_AnchoredPosition: {x: -0.7769928, y: 0.5470009}
   m_SizeDelta: {x: 1102, y: 506}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &299054227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299054222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b97c5c8df54b94db8850818ee8a3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSpaceCanvas
+--- !u!114 &299054228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299054222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.UI.TrackedDeviceGraphicRaycaster
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
 --- !u!1 &299639867
 GameObject:
   m_ObjectHideFlags: 0
@@ -14290,6 +14323,7 @@ GameObject:
   - component: {fileID: 1723115459}
   - component: {fileID: 1723115458}
   - component: {fileID: 1723115457}
+  - component: {fileID: 1723115462}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -14401,6 +14435,18 @@ RectTransform:
   m_AnchoredPosition: {x: -3.480011, y: 0.29999542}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1723115462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723115456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b97c5c8df54b94db8850818ee8a3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSpaceCanvas
 --- !u!1 &1724600599
 GameObject:
   m_ObjectHideFlags: 0
