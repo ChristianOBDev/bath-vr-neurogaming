@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Island.unity
     guid: a47fc0564c5c65a45890685478a8b722
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PinBallSceneWaterfall.unity
     guid: 34e90134b66ea594fb438f2813f42941
   m_configObjects:
