@@ -5928,7 +5928,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -9886,8 +9886,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 200
   DopplerLevel: 1
-  MinDistance: 3
-  MaxDistance: 30
+  MinDistance: 5
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -9937,7 +9937,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.027777778
+      value: 0.055555556
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -19980,14 +19980,14 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 200
   DopplerLevel: 1
-  MinDistance: 3
-  MaxDistance: 30
+  MinDistance: 5
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -20037,7 +20037,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.14166667
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -25396,7 +25396,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.219
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -36871,7 +36871,7 @@ Transform:
   m_GameObject: {fileID: 891818544}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -83.1, y: 5.2, z: 265.1}
+  m_LocalPosition: {x: -83.1, y: 22.95, z: 265.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40001,7 +40001,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -42831,7 +42831,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -62266,8 +62266,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 200
   DopplerLevel: 1
-  MinDistance: 3
-  MaxDistance: 30
+  MinDistance: 5
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -62317,7 +62317,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.108333334
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -69782,8 +69782,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 200
   DopplerLevel: 1
-  MinDistance: 3
-  MaxDistance: 30
+  MinDistance: 5
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -69833,7 +69833,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.11666667
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -82432,8 +82432,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 200
   DopplerLevel: 1
-  MinDistance: 3
-  MaxDistance: 30
+  MinDistance: 5
+  MaxDistance: 40
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -82483,7 +82483,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.15555556
       inSlope: 0
       outSlope: 0
       tangentMode: 0
