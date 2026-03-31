@@ -42259,6 +42259,11 @@ MonoBehaviour:
   constraintSource: {fileID: 3734027598816246475}
   constraintOffset: {x: 0, y: 0.1919994, z: 0}
   resetPoint: {fileID: 1997987157}
+  flatScreenPCVersion: 0
+  pcSpawnPoint: {fileID: 1033312204}
+  pcResetPoint: {fileID: 1997987157}
+  playerController: {fileID: 0}
+  disableMovement: 1
 --- !u!65 &1773596190
 BoxCollider:
   m_ObjectHideFlags: 0

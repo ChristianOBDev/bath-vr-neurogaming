@@ -7946,6 +7946,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22a05a849fafafa4a91631ddc9a80734, type: 3}
+--- !u!1 &826670027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 826670028}
+  m_Layer: 0
+  m_Name: Spawn PC
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &826670028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826670027}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 251.05, y: 35.11, z: 473.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &847955980
 GameObject:
   m_ObjectHideFlags: 0
@@ -9781,7 +9812,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5312741001786462339, guid: ec546d033fbe13f42a0a7efb164718a7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16243,7 +16274,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1854355060}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1860136302}
+        m_TargetAssemblyTypeName: XRRigProfileTrigger, Assembly-CSharp
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1854355060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16300,10 +16343,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XRRigProfileTrigger
   profile: {fileID: 11400000, guid: 78b827f53a0aaa845bc8a910237416c6, type: 2}
-  spawnPoint: {fileID: 0}
+  spawnPoint: {fileID: 1363049346589639230}
   constraintSource: {fileID: 0}
   constraintOffset: {x: 0, y: 0, z: 0}
-  resetPoint: {fileID: 0}
+  resetPoint: {fileID: 9192866299650738971}
+  flatScreenPCVersion: 0
+  pcSpawnPoint: {fileID: 826670028}
+  pcResetPoint: {fileID: 1946610811}
+  playerController: {fileID: 0}
+  disableMovement: 0
 --- !u!65 &1860136303
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17268,6 +17316,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 764453236861100293, guid: c09983bb200395447b59f76d8753e557, type: 3}
   m_PrefabInstance: {fileID: 1923303352}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1946610810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1946610811}
+  m_Layer: 0
+  m_Name: Reset PC
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1946610811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946610810}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 251.00766, y: 34.27046, z: 468.276}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1976409424
 GameObject:
   m_ObjectHideFlags: 0
@@ -18756,6 +18835,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6712026851819815980, guid: 11a58b1103311d244bf05e39ab0de3bf, type: 3}
   m_PrefabInstance: {fileID: 658795795}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1363049346589639229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1363049346589639230}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1363049346589639230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363049346589639229}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 251.05, y: 36.1587, z: 473.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1989663221821684445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18914,6 +19024,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3464820309339952880, guid: f3459bb4d1acc584ab4cf2863bd22ad7, type: 3}
   m_PrefabInstance: {fileID: 2366746489523438887}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9192866299650738968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9192866299650738971}
+  m_Layer: 0
+  m_Name: Reset
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9192866299650738971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192866299650738968}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 251.00766, y: 35.319157, z: 468.276}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -18922,3 +19063,7 @@ SceneRoots:
   - {fileID: 1131164268}
   - {fileID: 2055791485}
   - {fileID: 1397083674}
+  - {fileID: 1363049346589639230}
+  - {fileID: 826670028}
+  - {fileID: 9192866299650738971}
+  - {fileID: 1946610811}

@@ -9075,6 +9075,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreDisplay
   scoreText: {fileID: 895669709}
+--- !u!1 &925963316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 925963317}
+  m_Layer: 0
+  m_Name: Standing Point (PC
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &925963317
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925963316}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.000810057, z: -0, w: 0.9999997}
+  m_LocalPosition: {x: 0.19, y: 2.05, z: -4.935}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1177395052}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &926433446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10110,6 +10141,7 @@ Transform:
   - {fileID: 1902858812}
   - {fileID: 282358234}
   - {fileID: 2713208292072455958}
+  - {fileID: 925963317}
   - {fileID: 2085130435}
   - {fileID: 1954698071}
   - {fileID: 373142229}
@@ -13224,6 +13256,11 @@ MonoBehaviour:
   constraintSource: {fileID: 0}
   constraintOffset: {x: 0, y: 0, z: 0}
   resetPoint: {fileID: 2978127031780363773}
+  flatScreenPCVersion: 0
+  pcSpawnPoint: {fileID: 925963317}
+  pcResetPoint: {fileID: 2978127031780363773}
+  playerController: {fileID: 0}
+  disableMovement: 1
 --- !u!65 &1902858815
 BoxCollider:
   m_ObjectHideFlags: 0
