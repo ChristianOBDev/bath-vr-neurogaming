@@ -183,6 +183,8 @@ public class NeuroChargeController : MonoBehaviour
 
         if (timer >= sessionDuration)
         {
+            SendUDP(22);
+
             Fire();
 
             timer = 0f;
@@ -217,11 +219,28 @@ public class NeuroChargeController : MonoBehaviour
         userReset = userSignalProviderBehaviour as IResettableSignal;
     }
 
+    private void SendUDP(int value)
+    {
+        if (UDPManager.Instance != null)
+        {
+            UDPManager.Instance.Send(value);
+
+            if (enableDebugLogs)
+                Debug.Log($"[NeuroChargeController] UDP SENT: {value}");
+        }
+        else if (enableDebugLogs)
+        {
+            Debug.LogWarning("[NeuroChargeController] UDPManager instance not found.");
+        }
+    }
+
     public void BeginSession()
     {
         timer = 0f;
         charge = 0f;
         sessionRunning = true;
+
+        SendUDP(21);
 
         phase1Gimmick?.ResetSignal();
         userReset?.ResetSignal();
