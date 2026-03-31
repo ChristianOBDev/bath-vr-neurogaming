@@ -222,8 +222,7 @@ public class NeuroMultiTargetManager : MonoBehaviour
 
     private void HandleBossKilled(NeuroTargetHealth killed)
     {
-        if (enableDebugLogs)
-            Debug.Log("[TARGET MANAGER] Boss defeated.");
+        
 
         if (respawnRoutine != null)
             StopCoroutine(respawnRoutine);
@@ -256,8 +255,7 @@ public class NeuroMultiTargetManager : MonoBehaviour
 
         PlayBaseAudio();
 
-        if (enableDebugLogs)
-            Debug.Log("[TARGET MANAGER] Base ships respawned. Loop reset.");
+        
 
         respawnRoutine = null;
     }
@@ -297,14 +295,12 @@ public class NeuroMultiTargetManager : MonoBehaviour
         {
             if (bossTarget != null && bossTarget.IsAlive)
             {
-                if (enableDebugLogs)
-                    Debug.Log($"[TARGET MANAGER] Returning boss target: {bossTarget.name}");
+                
 
                 return bossTarget;
             }
 
-            if (enableDebugLogs)
-                Debug.LogWarning("[TARGET MANAGER] Boss phase active, but boss target is null or not alive.");
+           
 
             return null;
         }
@@ -318,15 +314,13 @@ public class NeuroMultiTargetManager : MonoBehaviour
             {
                 currentIndex = idx;
 
-                if (enableDebugLogs)
-                    Debug.Log($"[TARGET MANAGER] Returning base target: {t.name}");
+                
 
                 return t;
             }
         }
 
-        if (enableDebugLogs)
-            Debug.LogWarning("[TARGET MANAGER] No alive base target found.");
+        
 
         return null;
     }

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CannonChargeVisualFeedback : MonoBehaviour
 {
@@ -7,11 +7,14 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     public Transform fireRoot;
 
     [Header("Barrel Visual")]
-    [Tooltip("Assign the transform that should tilt up/down.")]
+    [Tooltip("Assign the exact transform that should tilt up/down.")]
     public Transform barrelPivot;
 
+    [Tooltip("Usually local X for cannon elevation. Try X, Y, or Z depending on the model setup.")]
+    public Vector3 barrelLocalRotationAxis = Vector3.right;
+
     [Header("Spark Visual")]
-    [Tooltip("Rear spark particle system.")]
+    [Tooltip("Rear spark particle system. Make it a child of the barrel or of a barrel attachment point.")]
     public ParticleSystem rearSpark;
 
     [Header("Front Fire Timing")]
@@ -36,8 +39,6 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     public Vector3 maxFireScale = new Vector3(1.2f, 1.2f, 1.2f);
 
     [Header("Barrel Rotation")]
-    [Tooltip("Usually X for cannon elevation.")]
-    public Vector3 barrelLocalRotationAxis = Vector3.right;
     public float minBarrelAngle = -10f;
     public float maxBarrelAngle = 25f;
     public bool invertBarrelDirection = false;
@@ -47,6 +48,7 @@ public class CannonChargeVisualFeedback : MonoBehaviour
 
     [Header("Debug")]
     public bool enableDebugLogs = false;
+    public bool enableKeyboardTest = false;
 
     [Range(0f, 1f)] public float targetCharge;
     [Range(0f, 1f)] public float currentCharge;
@@ -55,6 +57,8 @@ public class CannonChargeVisualFeedback : MonoBehaviour
     [SerializeField] private float displayedFireCharge;
     [SerializeField] private Vector3 debugAppliedFireScale;
     [SerializeField] private float debugBarrelAngle;
+    [SerializeField] private Vector3 debugInitialBarrelEuler;
+    [SerializeField] private Vector3 debugCurrentBarrelEuler;
 
     private Quaternion initialBarrelLocalRotation;
     private float debugLogTimer;
@@ -65,7 +69,10 @@ public class CannonChargeVisualFeedback : MonoBehaviour
             fireRoot = transform;
 
         if (barrelPivot != null)
+        {
             initialBarrelLocalRotation = barrelPivot.localRotation;
+            debugInitialBarrelEuler = barrelPivot.localEulerAngles;
+        }
 
         targetCharge = 0f;
         currentCharge = 0f;
@@ -73,19 +80,31 @@ public class CannonChargeVisualFeedback : MonoBehaviour
         forceFrontFireToMinimum = false;
 
         ApplyFireScale(0f);
-        ApplyBarrelRotation(0f);
+        ApplyBarrelRotationImmediate(0f);
         SetSparkActive(false);
 
         if (enableDebugLogs)
         {
-            Debug.Log($"[CannonChargeVisualFeedback] Awake | barrelPivot={(barrelPivot != null ? barrelPivot.name : "NULL")}");
+            Debug.Log(
+                $"[CannonChargeVisualFeedback] Awake | barrelPivot={(barrelPivot != null ? barrelPivot.name : "NULL")} | " +
+                $"rearSpark={(rearSpark != null ? rearSpark.name : "NULL")}",
+                this
+            );
+
             if (barrelPivot != null)
-                Debug.Log($"[CannonChargeVisualFeedback] Awake | initial local rotation={barrelPivot.localEulerAngles}");
+            {
+                Debug.Log(
+                    $"[CannonChargeVisualFeedback] Awake | initial local rotation={barrelPivot.localEulerAngles} | axis={barrelLocalRotationAxis}",
+                    barrelPivot
+                );
+            }
         }
     }
 
     private void Update()
     {
+        HandleKeyboardTest();
+
         float k = 1f - Mathf.Exp(-Mathf.Max(0.01f, feedbackLerpSpeed) * Time.deltaTime);
 
         currentCharge = Mathf.Lerp(currentCharge, targetCharge, k);
@@ -96,7 +115,6 @@ public class CannonChargeVisualFeedback : MonoBehaviour
         displayedFireCharge = Mathf.Clamp01(displayedFireCharge);
 
         ApplyFireScale(displayedFireCharge);
-        ApplyBarrelRotation(currentCharge);
 
         if (enableDebugLogs)
         {
@@ -106,15 +124,30 @@ public class CannonChargeVisualFeedback : MonoBehaviour
             {
                 debugLogTimer = 0f;
                 Debug.Log(
-                    $"[CannonChargeVisualFeedback] currentCharge={currentCharge:F3} | displayedFireCharge={displayedFireCharge:F3} | barrelAngle={debugBarrelAngle:F3} | barrelLocalEuler={(barrelPivot != null ? barrelPivot.localEulerAngles.ToString() : "NULL")}"
+                    $"[CannonChargeVisualFeedback] " +
+                    $"targetCharge={targetCharge:F3} | " +
+                    $"currentCharge={currentCharge:F3} | " +
+                    $"displayedFireCharge={displayedFireCharge:F3} | " +
+                    $"barrelAngle={debugBarrelAngle:F3} | " +
+                    $"barrelLocalEuler={(barrelPivot != null ? barrelPivot.localEulerAngles.ToString() : "NULL")}",
+                    barrelPivot != null ? barrelPivot : this
                 );
             }
         }
     }
 
+    private void LateUpdate()
+    {
+        // Barrel rotation applied in LateUpdate so it always wins over animators
+        ApplyBarrelRotationImmediate(currentCharge);
+    }
+
     public void SetChargeValue(float charge01)
     {
         targetCharge = Mathf.Clamp01(charge01);
+
+        if (enableDebugLogs)
+            Debug.Log($"[CannonChargeVisualFeedback] SetChargeValue({targetCharge:F3})", this);
     }
 
     public void SetChargeImmediate(float charge01)
@@ -126,7 +159,16 @@ public class CannonChargeVisualFeedback : MonoBehaviour
             displayedFireCharge = currentCharge;
 
         ApplyFireScale(forceFrontFireToMinimum ? 0f : displayedFireCharge);
-        ApplyBarrelRotation(currentCharge);
+        ApplyBarrelRotationImmediate(currentCharge);
+
+        if (enableDebugLogs)
+        {
+            Debug.Log(
+                $"[CannonChargeVisualFeedback] SetChargeImmediate({targetCharge:F3}) | " +
+                $"barrelEuler={(barrelPivot != null ? barrelPivot.localEulerAngles.ToString() : "NULL")}",
+                barrelPivot != null ? barrelPivot : this
+            );
+        }
     }
 
     public void UpdateSparkByTimer(float timeRemaining, float totalDuration)
@@ -169,7 +211,7 @@ public class CannonChargeVisualFeedback : MonoBehaviour
         displayedFireCharge = 0f;
 
         ApplyFireScale(0f);
-        ApplyBarrelRotation(0f);
+        ApplyBarrelRotationImmediate(0f);
         SetSparkActive(false);
     }
 
@@ -183,16 +225,40 @@ public class CannonChargeVisualFeedback : MonoBehaviour
         debugAppliedFireScale = scale;
     }
 
-    private void ApplyBarrelRotation(float charge01)
+    private void ApplyBarrelRotationImmediate(float charge01)
     {
         if (barrelPivot == null)
+        {
+            if (enableDebugLogs)
+                Debug.LogWarning("[CannonChargeVisualFeedback] barrelPivot is NULL.", this);
             return;
+        }
+
+        Vector3 axis = barrelLocalRotationAxis.normalized;
+
+        if (axis.sqrMagnitude < 0.0001f)
+        {
+            Debug.LogWarning("[CannonChargeVisualFeedback] barrelLocalRotationAxis is zero. Rotation skipped.", this);
+            return;
+        }
 
         float angle = GetMappedBarrelAngle(charge01);
         debugBarrelAngle = angle;
 
-        Quaternion offset = Quaternion.AngleAxis(angle, barrelLocalRotationAxis.normalized);
+        Quaternion offset = Quaternion.AngleAxis(angle, axis);
         barrelPivot.localRotation = initialBarrelLocalRotation * offset;
+
+        debugCurrentBarrelEuler = barrelPivot.localEulerAngles;
+
+        if (enableDebugLogs)
+        {
+            Debug.Log(
+                $"[CannonChargeVisualFeedback] ApplyBarrelRotation | " +
+                $"charge={charge01:F3} | angle={angle:F3} | axis={axis} | " +
+                $"initialEuler={debugInitialBarrelEuler} | currentEuler={debugCurrentBarrelEuler}",
+                barrelPivot
+            );
+        }
     }
 
     private float GetMappedBarrelAngle(float charge01)
@@ -221,4 +287,28 @@ public class CannonChargeVisualFeedback : MonoBehaviour
                 rearSpark.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
     }
+
+    private void HandleKeyboardTest()
+    {
+        if (!enableKeyboardTest)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            SetChargeImmediate(0f);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            SetChargeImmediate(0.5f);
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            SetChargeImmediate(1f);
+    }
+
+    [ContextMenu("Test Barrel At 0")]
+    private void TestBarrelAtZero() => SetChargeImmediate(0f);
+
+    [ContextMenu("Test Barrel At 0.5")]
+    private void TestBarrelAtHalf() => SetChargeImmediate(0.5f);
+
+    [ContextMenu("Test Barrel At 1")]
+    private void TestBarrelAtFull() => SetChargeImmediate(1f);
 }
