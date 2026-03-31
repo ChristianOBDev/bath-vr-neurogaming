@@ -24,8 +24,12 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  - m_AssetGUID: f2cdc3d2dbd31c147a4636cb2f4797cd
+  - m_AssetGUID: ff07e6ec1f5c8bf43b0b1612958a034a
     m_SubObjectName: 
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
+  loadSignal: 10
+  unloadSignal: 19
+  exitPassiveSignal: 39
+  enterPassiveSignal: 30

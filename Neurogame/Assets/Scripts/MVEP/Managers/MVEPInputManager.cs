@@ -37,6 +37,6 @@ public class MVEPInputManager : MonoBehaviour
 
   private void HandleInput(int laneIndex)
   {
-    OnLaneInput?.Invoke(laneIndex - 1); // Convert to 0-based index
+    OnLaneInput?.Invoke(laneIndex - MVEPGameManager.Instance.inputOffset); // Convert to 0-based index
   }
 }
