@@ -146,6 +146,13 @@ public class BasicFPCC : MonoBehaviour
   [Space(5)]
   public bool cursorActive = false;                // cursor state
 
+  public bool movementEnabled = true;
+
+  public void EnableMovement(bool active)
+  {
+    movementEnabled = active;
+  }
+
   private void Awake()
   {
     // create list of input actions for easy enable/disable
@@ -188,7 +195,7 @@ public class BasicFPCC : MonoBehaviour
   {
     ProcessInputs();
     ProcessLook();
-    ProcessMovement();
+    if (movementEnabled) ProcessMovement();
   }
 
   void EnableAction(InputActionReference actionRef)
