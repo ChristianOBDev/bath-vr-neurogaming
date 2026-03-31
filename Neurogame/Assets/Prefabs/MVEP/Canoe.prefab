@@ -1368,6 +1368,7 @@ GameObject:
   - component: {fileID: 2297206354380441309}
   - component: {fileID: 2449041014841109556}
   - component: {fileID: 4939145084820439851}
+  - component: {fileID: 8226303112494399228}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -1682,6 +1683,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8226303112494399228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3074042578881708547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b97c5c8df54b94db8850818ee8a3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSpaceCanvas
 --- !u!1 &3390341640496176328
 GameObject:
   m_ObjectHideFlags: 0
