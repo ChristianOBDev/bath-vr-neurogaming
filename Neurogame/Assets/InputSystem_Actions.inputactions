@@ -16,6 +16,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Activate Look",
+                    "type": "Button",
+                    "id": "dc418952-b6e4-4112-806f-777ac2ba0058",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Toggle Cursor",
+                    "type": "Button",
+                    "id": "845f1747-cac2-4fd4-a820-6db68427f81f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Look",
                     "type": "Value",
                     "id": "6b444451-8a00-4d00-a97e-f47457f736a8",
@@ -218,6 +236,28 @@
                     "processors": "",
                     "groups": "Joystick",
                     "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0635c07f-d199-46c7-9717-a01380d1dd3f",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Activate Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6518404e-dcbb-486e-a335-7b6c06340a22",
+                    "path": "<Keyboard>/backslash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Cursor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
